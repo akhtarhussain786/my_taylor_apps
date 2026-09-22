@@ -5,6 +5,7 @@ require_once __DIR__ . '/includes/admin_header.php';
 $msg = null;
 $error = null;
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Handle Settings Save
     if (isset($_POST['save_settings'])) {
         $cashfreeAppId = trim($_POST['cashfree_app_id'] ?? '');
