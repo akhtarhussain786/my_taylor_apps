@@ -33,7 +33,7 @@ require_once __DIR__ . '/database.php';
 
 // Helper: Format Currency
 function formatPrice($amount) {
-    return CURRENCY_SYMBOL . number_format((float)$amount, 2);
+    return '₹' . number_format((float)$amount, 2);
 }
 
 // Helper: Sanitize string output

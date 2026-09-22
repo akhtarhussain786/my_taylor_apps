@@ -2,6 +2,7 @@
 /**
  * MY TAYLOR - Modern Dedicated Admin Header & Sidebar Layout
  */
+header('Content-Type: text/html; charset=UTF-8');
 require_once __DIR__ . '/../../config/config.php';
 require_once __DIR__ . '/../../config/database.php';
 require_once __DIR__ . '/../../config/settings.php';
