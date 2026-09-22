@@ -5,13 +5,10 @@ require_once __DIR__ . '/../includes/auth.php';
 
 $pdo = getDbConnection();
 
-// Allow demo access or require login
 $currentUser = getCurrentUser();
 if (!$currentUser || !in_array($currentUser['role'], ['measurement_executive', 'admin'])) {
-    // Auto-login demo executive for frictionless demonstration
-    $demo = $pdo->query("SELECT * FROM `users` WHERE `role` = 'measurement_executive' LIMIT 1")->fetch();
-    if ($demo) loginUser($demo);
-    $currentUser = getCurrentUser();
+    header("Location: " . APP_URL . "/portal/login.php");
+    exit;
 }
 
 $execId = $currentUser['id'];

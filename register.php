@@ -64,13 +64,13 @@ require_once __DIR__ . '/includes/header.php';
       <form action="<?= APP_URL ?>/register.php" method="POST">
         <div class="form-group">
           <label class="form-label">Full Name *</label>
-          <input type="text" name="name" class="form-control" placeholder="e.g. Vikramaditya Singhania" required>
+          <input type="text" name="name" class="form-control" placeholder="Enter your full name" required>
         </div>
 
         <div class="grid-2">
           <div class="form-group">
             <label class="form-label">Mobile Number *</label>
-            <input type="tel" name="mobile" class="form-control" placeholder="e.g. 9876500000" maxlength="15" required>
+            <input type="tel" name="mobile" class="form-control" placeholder="Enter 10-digit mobile number" maxlength="15" required>
           </div>
           <div class="form-group">
             <label class="form-label">Gender</label>
@@ -84,17 +84,17 @@ require_once __DIR__ . '/includes/header.php';
 
         <div class="form-group">
           <label class="form-label">Email Address *</label>
-          <input type="email" name="email" class="form-control" placeholder="e.g. vikram@example.com" required>
+          <input type="email" name="email" class="form-control" placeholder="Enter your email address" required>
         </div>
 
         <div class="grid-2">
           <div class="form-group">
             <label class="form-label">Password *</label>
-            <input type="password" name="password" class="form-control" placeholder="Min 6 characters" required>
+            <input type="password" name="password" class="form-control" placeholder="Enter password (min 6 characters)" required>
           </div>
           <div class="form-group">
             <label class="form-label">Confirm Password *</label>
-            <input type="password" name="confirm_password" class="form-control" placeholder="Repeat password" required>
+            <input type="password" name="confirm_password" class="form-control" placeholder="Confirm your password" required>
           </div>
         </div>
 

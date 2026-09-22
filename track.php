@@ -58,7 +58,7 @@ if (!empty($bookingId)) {
     <!-- Search Bar -->
     <form action="<?= APP_URL ?>/track.php" method="GET" style="max-width:560px; margin:24px auto 0;">
       <div style="display:flex; gap:10px;">
-        <input type="text" name="booking_id" class="form-control" placeholder="Enter Booking ID (e.g. MYT-20260920-001245)" value="<?= e($bookingId ?: 'MYT-20260920-001245') ?>" required>
+        <input type="text" name="booking_id" class="form-control" placeholder="Enter Booking ID (e.g. MYT-20260920-001245)" value="<?= e($bookingId) ?>" required>
         <button type="submit" class="btn btn-gold" style="white-space:nowrap;"><i class="fa-solid fa-magnifying-glass"></i> Track Live</button>
       </div>
     </form>
@@ -242,25 +242,6 @@ if (!empty($bookingId)) {
               <?= e($order['street']) ?>, <?= e($order['area']) ?><br>
               <?= e($order['city']) ?> - <strong><?= e($order['pincode']) ?></strong>
             </p>
-          </div>
-
-          <!-- Quick Operations Shortcuts (for pair programming demo) -->
-          <div class="card" style="background:#070D1E; color:#FFFFFF; border:1px solid var(--border-dark);">
-            <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
-              <i class="fa-solid fa-sliders text-gold"></i>
-              <strong style="font-size:13px; color:var(--gold-primary);">Operations Control Links</strong>
-            </div>
-            <p style="font-size:12px; color:var(--text-light-muted); margin-bottom:12px;">
-              Click below to simulate or progress this order through the respective staff modules:
-            </p>
-            <div style="display:flex; flex-direction:column; gap:6px;">
-              <a href="<?= APP_URL ?>/portal/cutting.php" class="btn btn-dark btn-sm" style="text-align:left; justify-content:flex-start;"><i class="fa-solid fa-scissors text-gold"></i> 1. Master Cutter Panel</a>
-              <a href="<?= APP_URL ?>/portal/tailor.php" class="btn btn-dark btn-sm" style="text-align:left; justify-content:flex-start;"><i class="fa-solid fa-shirt text-gold"></i> 2. Tailor Stitching Panel</a>
-              <a href="<?= APP_URL ?>/portal/qc.php" class="btn btn-dark btn-sm" style="text-align:left; justify-content:flex-start;"><i class="fa-solid fa-award text-gold"></i> 3. QC Inspector Panel</a>
-              <a href="<?= APP_URL ?>/portal/packing.php" class="btn btn-dark btn-sm" style="text-align:left; justify-content:flex-start;"><i class="fa-solid fa-box-open text-gold"></i> 4. Packaging & Dispatch</a>
-              <a href="<?= APP_URL ?>/portal/delivery.php" class="btn btn-dark btn-sm" style="text-align:left; justify-content:flex-start;"><i class="fa-solid fa-signature text-gold"></i> 5. Delivery Signature Pad</a>
-            </div>
-          </div>
         </div>
 
       </div>

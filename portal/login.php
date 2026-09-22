@@ -80,12 +80,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <form action="<?= APP_URL ?>/portal/login.php" method="POST">
       <div class="form-group">
         <label class="form-label" style="color:#CBD5E1;">Staff Email or Mobile *</label>
-        <input type="text" name="identifier" class="form-control" placeholder="e.g. exec.vikram@mytaylor.com" value="exec.vikram@mytaylor.com" required style="background:rgba(255,255,255,0.06); border-color:var(--border-dark); color:#FFFFFF;">
+        <input type="text" name="identifier" class="form-control" placeholder="Enter staff email or mobile" value="" required style="background:rgba(255,255,255,0.06); border-color:var(--border-dark); color:#FFFFFF;">
       </div>
 
       <div class="form-group">
         <label class="form-label" style="color:#CBD5E1;">Password *</label>
-        <input type="password" name="password" class="form-control" value="password123" required style="background:rgba(255,255,255,0.06); border-color:var(--border-dark); color:#FFFFFF;">
+        <input type="password" name="password" class="form-control" placeholder="Enter password" value="" required style="background:rgba(255,255,255,0.06); border-color:var(--border-dark); color:#FFFFFF;">
       </div>
 
       <button type="submit" class="btn btn-gold btn-block btn-lg" style="margin-top:10px;">
@@ -93,22 +93,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </button>
     </form>
 
-    <!-- Quick Role Switcher for Pair Programming / Review -->
-    <div style="margin-top:30px; padding-top:20px; border-top:1px solid rgba(255,255,255,0.1); font-size:12px;">
-      <span style="display:block; font-weight:700; color:var(--gold-primary); margin-bottom:10px; text-transform:uppercase;">
-        <i class="fa-solid fa-bolt"></i> 1-Click Operations Role Direct Portals:
-      </span>
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
-        <a href="<?= APP_URL ?>/portal/executive.php" class="btn btn-dark btn-sm" style="font-size:11px; justify-content:flex-start;"><i class="fa-solid fa-ruler-combined text-gold"></i> Measurement Exec</a>
-        <a href="<?= APP_URL ?>/portal/cutting.php" class="btn btn-dark btn-sm" style="font-size:11px; justify-content:flex-start;"><i class="fa-solid fa-scissors text-gold"></i> Master Cutter</a>
-        <a href="<?= APP_URL ?>/portal/tailor.php" class="btn btn-dark btn-sm" style="font-size:11px; justify-content:flex-start;"><i class="fa-solid fa-shirt text-gold"></i> Tailor Workshop</a>
-        <a href="<?= APP_URL ?>/portal/qc.php" class="btn btn-dark btn-sm" style="font-size:11px; justify-content:flex-start;"><i class="fa-solid fa-award text-gold"></i> QC Lead Inspector</a>
-        <a href="<?= APP_URL ?>/portal/packing.php" class="btn btn-dark btn-sm" style="font-size:11px; justify-content:flex-start;"><i class="fa-solid fa-box-open text-gold"></i> Packaging & QR</a>
-        <a href="<?= APP_URL ?>/portal/delivery.php" class="btn btn-dark btn-sm" style="font-size:11px; justify-content:flex-start;"><i class="fa-solid fa-truck-fast text-gold"></i> Delivery Rider</a>
-      </div>
-      <div style="margin-top:10px; text-align:center;">
-        <a href="<?= APP_URL ?>/admin/index.php" style="color:var(--text-light-muted); text-decoration:none; font-size:12px;"><i class="fa-solid fa-shield-halved text-gold"></i> Master Admin Control Hub</a>
-      </div>
+    <div style="margin-top:24px; text-align:center;">
+      <a href="<?= APP_URL ?>/index.php" style="color:var(--text-light-muted); text-decoration:none; font-size:12px;"><i class="fa-solid fa-arrow-left"></i> Back to Website</a>
     </div>
   </div>
 </div>

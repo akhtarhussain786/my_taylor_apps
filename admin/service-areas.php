@@ -6,8 +6,8 @@ require_once __DIR__ . '/../includes/auth.php';
 $pdo = getDbConnection();
 $currentUser = getCurrentUser();
 if (!$currentUser || $currentUser['role'] !== 'admin') {
-    $demo = $pdo->query("SELECT * FROM `users` WHERE `role` = 'admin' LIMIT 1")->fetch();
-    if ($demo) loginUser($demo);
+    header("Location: " . APP_URL . "/login.php");
+    exit;
 }
 
 // Handle Add / Toggle Area

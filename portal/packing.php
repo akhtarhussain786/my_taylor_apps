@@ -7,9 +7,8 @@ $pdo = getDbConnection();
 
 $currentUser = getCurrentUser();
 if (!$currentUser || !in_array($currentUser['role'], ['packing_staff', 'admin'])) {
-    $demo = $pdo->query("SELECT * FROM `users` WHERE `role` = 'packing_staff' LIMIT 1")->fetch();
-    if ($demo) loginUser($demo);
-    $currentUser = getCurrentUser();
+    header("Location: " . APP_URL . "/portal/login.php");
+    exit;
 }
 
 $packId = $currentUser['id'];

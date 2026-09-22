@@ -7,9 +7,8 @@ $pdo = getDbConnection();
 
 $currentUser = getCurrentUser();
 if (!$currentUser || !in_array($currentUser['role'], ['delivery_executive', 'admin'])) {
-    $demo = $pdo->query("SELECT * FROM `users` WHERE `role` = 'delivery_executive' LIMIT 1")->fetch();
-    if ($demo) loginUser($demo);
-    $currentUser = getCurrentUser();
+    header("Location: " . APP_URL . "/portal/login.php");
+    exit;
 }
 
 $riderId = $currentUser['id'];

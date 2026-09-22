@@ -11,9 +11,8 @@ $pdo = getDbConnection();
 $currentUser = getCurrentUser();
 
 if (!$currentUser || $currentUser['role'] !== 'admin') {
-    $demo = $pdo->query("SELECT * FROM `users` WHERE `role` = 'admin' LIMIT 1")->fetch();
-    if ($demo) loginUser($demo);
-    $currentUser = getCurrentUser();
+    header("Location: " . APP_URL . "/login.php");
+    exit;
 }
 
 $activeAdminPage = basename($_SERVER['PHP_SELF'], '.php');
