@@ -584,6 +584,62 @@ h1, h2, h3, h4, h5, h6 {
   margin-top: 24px;
 }
 
+.tracking-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 0.7fr;
+  gap: 36px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .tracking-grid {
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
+  }
+  .tracking-wrapper {
+    padding: 20px 14px !important;
+    margin-top: 16px !important;
+    border-radius: var(--radius-md) !important;
+  }
+  .tracking-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 16px !important;
+    padding-bottom: 20px !important;
+    margin-bottom: 24px !important;
+  }
+  .countdown-box {
+    width: 100% !important;
+    text-align: left !important;
+    padding: 14px 18px !important;
+    box-sizing: border-box !important;
+  }
+  .countdown-box .time {
+    font-size: 20px !important;
+  }
+  .timeline-step {
+    padding-bottom: 24px !important;
+  }
+  .step-marker {
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 14px !important;
+    margin-right: 14px !important;
+  }
+  .timeline-step::before {
+    left: 17px !important;
+    top: 32px !important;
+  }
+  .step-content h4 {
+    font-size: 15px !important;
+    margin-bottom: 4px !important;
+  }
+  .step-content p {
+    font-size: 13px !important;
+    line-height: 1.4 !important;
+  }
+}
+
 .tracking-header {
   display: flex;
   justify-content: space-between;

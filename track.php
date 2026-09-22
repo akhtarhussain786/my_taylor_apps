@@ -140,8 +140,8 @@ if (!empty($bookingId)) {
         <?php endif; ?>
       </div>
 
-      <!-- Main Grid: Timeline + Order Details -->
-      <div class="grid-2" style="grid-template-columns: 1.3fr 0.7fr; gap:40px;">
+      <!-- Main Grid: Timeline + Order Details (Responsive) -->
+      <div class="tracking-grid">
         
         <!-- Left: Flipkart / Amazon Vertical Timeline -->
         <div>
