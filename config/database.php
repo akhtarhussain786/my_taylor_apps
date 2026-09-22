@@ -4,6 +4,19 @@
  */
 
 function getDbConfig() {
+    $isLive = (isset($_SERVER['HTTP_HOST']) && strpos($_SERVER['HTTP_HOST'], 'mytaylor.in') !== false);
+    
+    if ($isLive) {
+        return [
+            'host' => 'localhost',
+            'port' => '3306',
+            'user' => 'u586401351_MyTaylor',
+            'pass' => 'MyTaylor@1122',
+            'name' => 'u586401351_MyTaylor'
+        ];
+    }
+
+    // Local / XAMPP Environment (or Default)
     return [
         'host' => '127.0.0.1',
         'port' => '3306',

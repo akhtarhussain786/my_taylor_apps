@@ -3,8 +3,8 @@
 -- Doorstep Tailoring & 24-Hour Express Delivery Platform
 -- ==========================================================
 
-CREATE DATABASE IF NOT EXISTS `my_taylor_db` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE `my_taylor_db`;
+CREATE DATABASE IF NOT EXISTS `u586401351_MyTaylor` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE `u586401351_MyTaylor`;
 
 -- 1. Users Table (Core Auth & Roles)
 CREATE TABLE IF NOT EXISTS `users` (
