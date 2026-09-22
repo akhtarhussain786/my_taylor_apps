@@ -11,7 +11,19 @@ if (session_status() === PHP_SESSION_NONE) {
 define('APP_NAME', 'MY TAYLOR');
 define('APP_TAGLINE', 'Tailored for You. Delivered in 24 Hours.');
 define('APP_SUB_PROMISE', 'Doorstep Measurement • Premium Tailoring • Live Tracking • 24H Delivery');
-define('APP_URL', 'http://localhost/my%20talor');
+// Dynamic App URL detection
+$isHttps = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+    || (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443)
+    || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https');
+$protocol = $isHttps ? 'https://' : 'http://';
+$host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+
+if (strpos($host, 'localhost') !== false || strpos($host, '127.0.0.1') !== false) {
+    define('APP_URL', $protocol . $host . '/my%20talor');
+} else {
+    // Live Server (e.g. https://mytaylor.in)
+    define('APP_URL', $protocol . $host);
+}
 define('CURRENCY_SYMBOL', '₹');
 
 // Timezone
