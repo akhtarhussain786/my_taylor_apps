@@ -295,7 +295,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     controller: _serverController,
                     style: const TextStyle(color: AppColors.textPrimary, fontSize: 12),
                     decoration: InputDecoration(
-                      hintText: 'http://localhost/my%20talor/api',
+                      hintText: 'https://mytaylor.in/api',
                       hintStyle: const TextStyle(color: AppColors.textMuted, fontSize: 12),
                       filled: true,
                       fillColor: AppColors.inputBg,
