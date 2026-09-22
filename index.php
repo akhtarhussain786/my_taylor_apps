@@ -24,11 +24,16 @@ $p3Desc = getSetting('promise_3_desc', 'Complete luxury concierge at your home o
 
 $whatsapp = getSetting('company_whatsapp', '9800000000');
 
-// Fetch active services
-$services = $pdo->query("SELECT * FROM `services` WHERE `status` = 'active' ORDER BY `id` ASC LIMIT 6")->fetchAll();
-
-// Fetch active testimonials (Admin Uploaded & Managed)
-$testimonials = $pdo->query("SELECT * FROM `testimonials` WHERE `status` = 'active' ORDER BY `display_order` ASC, `id` DESC")->fetchAll();
+// Fetch active services safely
+$services = [];
+$testimonials = [];
+try {
+    $services = $pdo->query("SELECT * FROM `services` WHERE `status` = 'active' ORDER BY `id` ASC LIMIT 6")->fetchAll();
+    $testimonials = $pdo->query("SELECT * FROM `testimonials` WHERE `status` = 'active' ORDER BY `display_order` ASC, `id` DESC")->fetchAll();
+} catch (Exception $e) {
+    // Database tables might not be migrated yet
+    $dbErrorNotice = true;
+}
 ?>
 
 <!-- 1. Ultra-Luxury Hero Section with GSAP Animations -->

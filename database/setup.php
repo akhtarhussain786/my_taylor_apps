@@ -19,23 +19,37 @@ try {
     $pass = $dbConfig['pass'];
     $dbname = $dbConfig['name'];
 
-    echo "[1/4] Connecting to MySQL server at {$host}:{$port}...\n";
-    $pdo = new PDO("mysql:host={$host};port={$port};charset=utf8mb4", $user, $pass, [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-    ]);
+    echo "[1/4] Connecting to MySQL database `{$dbname}` at {$host}:{$port}...\n";
+    try {
+        $pdo = new PDO("mysql:host={$host};port={$port};dbname={$dbname};charset=utf8mb4", $user, $pass, [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+        ]);
+    } catch (PDOException $e) {
+        // Try connecting to server root if db doesn't exist (Localhost only)
+        $pdoRoot = new PDO("mysql:host={$host};port={$port};charset=utf8mb4", $user, $pass, [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+        ]);
+        $pdoRoot->exec("CREATE DATABASE IF NOT EXISTS `{$dbname}` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
+        $pdo = new PDO("mysql:host={$host};port={$port};dbname={$dbname};charset=utf8mb4", $user, $pass, [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+        ]);
+    }
     echo "  -> Connected successfully!\n\n";
 
-    echo "[2/4] Initializing database `{$dbname}` & schema...\n";
+    echo "[2/4] Initializing database schema...\n";
     $schemaSql = file_get_contents(ROOT_PATH . '/database/schema.sql');
-    $pdo->exec($schemaSql);
+    // Remove any CREATE DATABASE or USE statements that fail in shared hosting
+    $cleanSchema = preg_replace('/CREATE\s+DATABASE[^;]+;/i', '', $schemaSql);
+    $cleanSchema = preg_replace('/USE\s+[^;]+;/i', '', $cleanSchema);
+    $pdo->exec($cleanSchema);
     echo "  -> Schema created / verified successfully!\n\n";
-
-    $pdo->exec("USE `{$dbname}`");
 
     echo "[3/4] Seeding initial data (services, staff, sample 24H orders)...\n";
     $seedSql = file_get_contents(ROOT_PATH . '/database/seed.sql');
-    $pdo->exec($seedSql);
+    $cleanSeed = preg_replace('/USE\s+[^;]+;/i', '', $seedSql);
+    $pdo->exec($cleanSeed);
 
     // Update password hashes with fresh bcrypt for password123
     $defaultHash = password_hash('password123', PASSWORD_BCRYPT);
