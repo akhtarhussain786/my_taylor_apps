@@ -2,6 +2,21 @@
 $pageTitle = "24H Express Orders";
 require_once __DIR__ . '/includes/admin_header.php';
 
+$msg = null;
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_order'])) {
+    $orderId = (int)$_POST['order_id'];
+    $bookingId = $pdo->query("SELECT `booking_id` FROM `orders` WHERE `id` = {$orderId}")->fetchColumn();
+    
+    $pdo->prepare("DELETE FROM `production_tasks` WHERE `order_id` = ?")->execute([$orderId]);
+    $pdo->prepare("DELETE FROM `delivery_proofs` WHERE `order_id` = ?")->execute([$orderId]);
+    $pdo->prepare("DELETE FROM `reviews` WHERE `order_id` = ?")->execute([$orderId]);
+    $pdo->prepare("DELETE FROM `order_items` WHERE `order_id` = ?")->execute([$orderId]);
+    $pdo->prepare("DELETE FROM `orders` WHERE `id` = ?")->execute([$orderId]);
+    
+    logAudit($orderId, null, $currentUser['id'], 'ORDER_DELETED', null, 'DELETED', "Admin deleted order {$bookingId} (#{$orderId})");
+    $msg = "Order '{$bookingId}' successfully deleted!";
+}
+
 // Fetch all orders
 $orders = $pdo->query("
   SELECT o.*, s.name as service_name, s.category as service_category,
@@ -29,6 +44,12 @@ $orders = $pdo->query("
     <span class="admin-badge-count admin-badge-gold" style="font-size:14px; padding:6px 14px;">Total Orders: <?= count($orders) ?></span>
   </div>
 </div>
+
+<?php if (!empty($msg)): ?>
+  <div class="card" style="background:#F0FDF4; border:1px solid #86EFAC; color:#166534; padding:14px 18px; margin-bottom:20px; border-radius:var(--admin-radius-sm); font-weight:600;">
+    <i class="fa-solid fa-circle-check"></i> <?= e($msg) ?>
+  </div>
+<?php endif; ?>
 
 <div class="admin-card">
   <div class="admin-card-header">
@@ -88,14 +109,21 @@ $orders = $pdo->query("
                 <?= str_replace('_', ' ', $o['order_status']) ?>
               </span>
             </td>
-            <td style="text-align:right;">
-              <div style="display:inline-flex; gap:8px;">
-                <a href="<?= APP_URL ?>/track.php?booking_id=<?= urlencode($o['booking_id']) ?>" target="_blank" class="btn btn-sm" style="background:#0F172A; color:#D4AF37; font-size:11.5px; padding:5px 10px; border-radius:6px;" title="Live Customer Tracking">
+            <td style="text-align:right; white-space:nowrap;">
+              <div style="display:inline-flex; gap:6px; align-items:center;">
+                <a href="<?= APP_URL ?>/track.php?booking_id=<?= urlencode($o['booking_id']) ?>" target="_blank" class="btn btn-sm" style="background:#0F172A; color:#D4AF37; font-size:11.5px; padding:5px 9px; border-radius:6px; text-decoration:none;" title="Live Customer Tracking">
                   <i class="fa-solid fa-location-crosshairs"></i> Track
                 </a>
-                <a href="<?= APP_URL ?>/invoice.php?booking_id=<?= urlencode($o['booking_id']) ?>" target="_blank" class="btn btn-sm" style="background:#F1F5F9; color:#0F172A; font-size:11.5px; padding:5px 10px; border-radius:6px; border:1px solid #CBD5E1;" title="Print Invoice">
-                  <i class="fa-solid fa-print"></i> Invoice
+                <a href="<?= APP_URL ?>/invoice.php?booking_id=<?= urlencode($o['booking_id']) ?>" target="_blank" class="btn btn-sm" style="background:#F1F5F9; color:#0F172A; font-size:11.5px; padding:5px 9px; border-radius:6px; border:1px solid #CBD5E1; text-decoration:none;" title="Print Invoice">
+                  <i class="fa-solid fa-print"></i>
                 </a>
+                <form action="<?= APP_URL ?>/admin/orders.php" method="POST" style="margin:0; display:inline;" onsubmit="return confirm('Kya aap sach me order <?= e($o['booking_id']) ?> ko delete karna chahte hain?');">
+                  <input type="hidden" name="delete_order" value="1">
+                  <input type="hidden" name="order_id" value="<?= $o['id'] ?>">
+                  <button type="submit" class="btn btn-sm" style="background:#FEE2E2; color:#DC2626; border:1px solid #FCA5A5; font-size:11.5px; padding:5px 8px; border-radius:6px; cursor:pointer;" title="Delete Order">
+                    <i class="fa-solid fa-trash-can"></i>
+                  </button>
+                </form>
               </div>
             </td>
           </tr>

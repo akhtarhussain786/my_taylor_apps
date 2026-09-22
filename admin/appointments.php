@@ -4,14 +4,27 @@ require_once __DIR__ . '/includes/admin_header.php';
 
 $executives = $pdo->query("SELECT * FROM `users` WHERE `role` = 'measurement_executive' AND `status` = 'active'")->fetchAll();
 
-// Handle Reassignment
+// Handle Reassignment and Deletion
 $msg = null;
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['assign_exec'])) {
-    $aptId = (int)$_POST['appointment_id'];
-    $newExecId = (int)$_POST['executive_id'];
-    $pdo->prepare("UPDATE `appointments` SET `executive_id` = ?, `status` = 'EXECUTIVE_ASSIGNED' WHERE `id` = ?")->execute([$newExecId, $aptId]);
-    logAudit(null, $aptId, $currentUser['id'], 'APPOINTMENT_DISPATCHED', null, 'EXECUTIVE_ASSIGNED', "Admin assigned executive #{$newExecId} to appointment #{$aptId}");
-    $msg = "Executive assigned successfully!";
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['assign_exec'])) {
+        $aptId = (int)$_POST['appointment_id'];
+        $newExecId = (int)$_POST['executive_id'];
+        $pdo->prepare("UPDATE `appointments` SET `executive_id` = ?, `status` = 'EXECUTIVE_ASSIGNED' WHERE `id` = ?")->execute([$newExecId, $aptId]);
+        logAudit(null, $aptId, $currentUser['id'], 'APPOINTMENT_DISPATCHED', null, 'EXECUTIVE_ASSIGNED', "Admin assigned executive #{$newExecId} to appointment #{$aptId}");
+        $msg = "Executive assigned successfully!";
+    }
+
+    if (isset($_POST['delete_appointment'])) {
+        $aptId = (int)$_POST['appointment_id'];
+        $code = $pdo->query("SELECT `appointment_code` FROM `appointments` WHERE `id` = {$aptId}")->fetchColumn();
+        
+        $pdo->prepare("UPDATE `orders` SET `appointment_id` = NULL WHERE `appointment_id` = ?")->execute([$aptId]);
+        $pdo->prepare("DELETE FROM `appointments` WHERE `id` = ?")->execute([$aptId]);
+        
+        logAudit(null, $aptId, $currentUser['id'], 'APPOINTMENT_DELETED', null, 'DELETED', "Admin deleted appointment {$code} (#{$aptId})");
+        $msg = "Appointment '{$code}' successfully deleted!";
+    }
 }
 
 $apts = $pdo->query("
@@ -106,10 +119,19 @@ $apts = $pdo->query("
                 <?= str_replace('_', ' ', $a['status']) ?>
               </span>
             </td>
-            <td style="text-align:right;">
-              <a href="<?= APP_URL ?>/portal/executive.php" target="_blank" class="btn btn-sm" style="background:#0F172A; color:#D4AF37; font-size:11.5px; padding:5px 10px; border-radius:6px;">
-                <i class="fa-solid fa-ruler"></i> Measurement Pad
-              </a>
+            <td style="text-align:right; white-space:nowrap;">
+              <div style="display:inline-flex; gap:6px; align-items:center;">
+                <a href="<?= APP_URL ?>/portal/executive.php" target="_blank" class="btn btn-sm" style="background:#0F172A; color:#D4AF37; font-size:11.5px; padding:6px 10px; border-radius:6px; text-decoration:none;">
+                  <i class="fa-solid fa-ruler"></i> Measurement Pad
+                </a>
+                <form action="<?= APP_URL ?>/admin/appointments.php" method="POST" style="margin:0; display:inline;" onsubmit="return confirm('Kya aap sach me appointment <?= e($a['appointment_code']) ?> ko delete karna chahte hain?');">
+                  <input type="hidden" name="delete_appointment" value="1">
+                  <input type="hidden" name="appointment_id" value="<?= $a['id'] ?>">
+                  <button type="submit" class="btn btn-sm" style="background:#FEE2E2; color:#DC2626; border:1px solid #FCA5A5; font-size:11.5px; padding:6px 10px; border-radius:6px; cursor:pointer;" title="Delete Appointment">
+                    <i class="fa-solid fa-trash-can"></i> Delete
+                  </button>
+                </form>
+              </div>
             </td>
           </tr>
         <?php endforeach; ?>
