@@ -10,16 +10,16 @@ USE `my_taylor_db`;
 -- '$2y$10$wTf4Jv81m7L7r7.o3b3rveE7XjY8FzO7Hj/mJc2i21Y5R7x.qU7K6'
 
 INSERT INTO `users` (`id`, `name`, `email`, `mobile`, `password_hash`, `role`, `status`, `gender`) VALUES
-(1, 'Admin Master', 'admin@mytaylor.com', '9800000000', '$2y$10$4.oP2nE5yqYmE4G6p1uJ..O7J9W4fD1E5yqYmE4G6p1uJ9W4fD1E5', 'admin', 'active', 'male'),
-(2, 'Vikram Singh (Executive)', 'exec.vikram@mytaylor.com', '9800000001', '$2y$10$4.oP2nE5yqYmE4G6p1uJ..O7J9W4fD1E5yqYmE4G6p1uJ9W4fD1E5', 'measurement_executive', 'active', 'male'),
-(3, 'Ramesh Kumar (Master Cutter)', 'cutting.ramesh@mytaylor.com', '9800000002', '$2y$10$4.oP2nE5yqYmE4G6p1uJ..O7J9W4fD1E5yqYmE4G6p1uJ9W4fD1E5', 'cutting_staff', 'active', 'male'),
-(4, 'Master Anwar (Senior Tailor)', 'tailor.anwar@mytaylor.com', '9800000003', '$2y$10$4.oP2nE5yqYmE4G6p1uJ..O7J9W4fD1E5yqYmE4G6p1uJ9W4fD1E5', 'tailor', 'active', 'male'),
-(5, 'Meera Deshmukh (QC Lead)', 'qc.meera@mytaylor.com', '9800000004', '$2y$10$4.oP2nE5yqYmE4G6p1uJ..O7J9W4fD1E5yqYmE4G6p1uJ9W4fD1E5', 'qc_staff', 'active', 'female'),
-(6, 'Suresh Verma (Packaging)', 'pack.suresh@mytaylor.com', '9800000005', '$2y$10$4.oP2nE5yqYmE4G6p1uJ..O7J9W4fD1E5yqYmE4G6p1uJ9W4fD1E5', 'packing_staff', 'active', 'male'),
-(7, 'Rohit Sharma (Express Rider)', 'delivery.rohit@mytaylor.com', '9800000006', '$2y$10$4.oP2nE5yqYmE4G6p1uJ..O7J9W4fD1E5yqYmE4G6p1uJ9W4fD1E5', 'delivery_executive', 'active', 'male'),
-(8, 'Rahul Sharma', 'rahul.sharma@example.com', '9876543210', '$2y$10$4.oP2nE5yqYmE4G6p1uJ..O7J9W4fD1E5yqYmE4G6p1uJ9W4fD1E5', 'customer', 'active', 'male'),
-(9, 'Priya Patel', 'priya.patel@example.com', '9876543211', '$2y$10$4.oP2nE5yqYmE4G6p1uJ..O7J9W4fD1E5yqYmE4G6p1uJ9W4fD1E5', 'customer', 'active', 'female')
-ON DUPLICATE KEY UPDATE `name`=VALUES(`name`);
+(1, 'Admin Master', 'admin@mytaylor.com', '9800000000', '$2y$10$VLD/S4qI11FBJdk1GVvzwuo06mgLCRNeciGElL72q8VFdoOLRceW2', 'admin', 'active', 'male'),
+(2, 'Vikram Singh (Executive)', 'exec.vikram@mytaylor.com', '9800000001', '$2y$10$VLD/S4qI11FBJdk1GVvzwuo06mgLCRNeciGElL72q8VFdoOLRceW2', 'measurement_executive', 'active', 'male'),
+(3, 'Ramesh Kumar (Master Cutter)', 'cutting.ramesh@mytaylor.com', '9800000002', '$2y$10$VLD/S4qI11FBJdk1GVvzwuo06mgLCRNeciGElL72q8VFdoOLRceW2', 'cutting_staff', 'active', 'male'),
+(4, 'Master Anwar (Senior Tailor)', 'tailor.anwar@mytaylor.com', '9800000003', '$2y$10$VLD/S4qI11FBJdk1GVvzwuo06mgLCRNeciGElL72q8VFdoOLRceW2', 'tailor', 'active', 'male'),
+(5, 'Meera Deshmukh (QC Lead)', 'qc.meera@mytaylor.com', '9800000004', '$2y$10$VLD/S4qI11FBJdk1GVvzwuo06mgLCRNeciGElL72q8VFdoOLRceW2', 'qc_staff', 'active', 'female'),
+(6, 'Suresh Verma (Packaging)', 'pack.suresh@mytaylor.com', '9800000005', '$2y$10$VLD/S4qI11FBJdk1GVvzwuo06mgLCRNeciGElL72q8VFdoOLRceW2', 'packing_staff', 'active', 'male'),
+(7, 'Rohit Sharma (Express Rider)', 'delivery.rohit@mytaylor.com', '9800000006', '$2y$10$VLD/S4qI11FBJdk1GVvzwuo06mgLCRNeciGElL72q8VFdoOLRceW2', 'delivery_executive', 'active', 'male'),
+(8, 'Rahul Sharma', 'rahul.sharma@example.com', '9876543210', '$2y$10$VLD/S4qI11FBJdk1GVvzwuo06mgLCRNeciGElL72q8VFdoOLRceW2', 'customer', 'active', 'male'),
+(9, 'Priya Patel', 'priya.patel@example.com', '9876543211', '$2y$10$VLD/S4qI11FBJdk1GVvzwuo06mgLCRNeciGElL72q8VFdoOLRceW2', 'customer', 'active', 'female')
+ON DUPLICATE KEY UPDATE `password_hash`=VALUES(`password_hash`), `name`=VALUES(`name`);
 
 -- Customer Profiles
 INSERT INTO `customer_profiles` (`user_id`, `preferred_language`, `notes`, `total_orders`) VALUES
