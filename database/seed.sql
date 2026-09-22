@@ -59,7 +59,7 @@ INSERT INTO `services` (`id`, `category`, `name`, `slug`, `description`, `base_p
 (9, 'custom', 'Bespoke Custom Tailoring', 'bespoke-custom-tailoring', 'Submit your custom design sketch or reference photograph for artisanal fabrication.', 1299.00, 299.00, 99.00, 1, 24, 'custom.jpg')
 ON DUPLICATE KEY UPDATE `name`=VALUES(`name`);
 
--- Fabrics
+-- Fabrics Catalog
 INSERT INTO `fabrics` (`id`, `sku`, `name`, `category`, `color`, `pattern`, `price_per_meter`, `stock_meters`, `reorder_level`) VALUES
 (1, 'FAB-EGY-001', 'Egyptian Giza Cotton 100s', 'Cotton', 'Crisp White', 'Solid Twill', 899.00, 120.00, 20.00),
 (2, 'FAB-ITA-002', 'Italian Superfine Linen', 'Linen', 'Sky Blue', 'Chambray', 1199.00, 85.00, 15.00),
@@ -68,51 +68,3 @@ INSERT INTO `fabrics` (`id`, `sku`, `name`, `category`, `color`, `pattern`, `pri
 (5, 'FAB-SAT-005', 'Royal Satin Cotton', 'Satin Cotton', 'Midnight Black', 'Solid Satin', 799.00, 95.00, 20.00)
 ON DUPLICATE KEY UPDATE `name`=VALUES(`name`);
 
--- Measurements Profile
-INSERT INTO `measurements` (`id`, `measurement_code`, `customer_id`, `garment_category`, `measurements_json`, `fit_preference`, `design_specs_json`, `notes`, `created_by_user_id`) VALUES
-(1, 'MT-M-0001028', 8, 'Shirt', '{"neck": 16.0, "shoulder": 18.5, "chest": 40.0, "waist": 34.0, "hip": 41.0, "sleeve_length": 25.5, "bicep": 14.5, "wrist": 7.5, "shirt_length": 30.0}', 'Slim Fit', '{"collar": "Semi-Cutaway", "cuff": "French Cuff (Double)", "pocket": "Single Left V-Pocket", "placket": "French Front", "button": "Mother of Pearl"}', 'Customer prefers snug fit on biceps, extra room around wrist for watch.', 2),
-(2, 'MT-M-0001029', 8, 'Trouser', '{"waist": 34.0, "hip": 41.0, "rise": 10.5, "thigh": 24.0, "knee": 17.0, "calf": 15.0, "bottom": 14.5, "inseam": 32.0, "outseam": 41.5}', 'Slim Fit', '{"waistband": "Side Adjusters (No Loops)", "pleat": "Flat Front", "bottom_style": "Turn-Up Cuff 1.5 inch"}', 'Slanted side pockets and one coin pocket.', 2),
-(3, 'MT-M-0001030', 9, 'Blouse', '{"bust": 36.0, "underbust": 30.0, "waist": 28.0, "shoulder": 14.5, "sleeve_length": 11.0, "armhole": 16.0, "front_neck_depth": 7.0, "back_neck_depth": 9.5, "blouse_length": 14.5}', 'Regular Fit', '{"neck_style": "Boat Neck", "cut": "Princess Cut Padded", "closure": "Back Hooks with Dori & Tassels"}', 'Padding thickness medium, contrast gold piping.', 2)
-ON DUPLICATE KEY UPDATE `measurement_code`=VALUES(`measurement_code`);
-
--- Appointments
-INSERT INTO `appointments` (`id`, `appointment_code`, `customer_id`, `service_id`, `address_id`, `executive_id`, `appointment_date`, `time_slot`, `status`, `notes`, `delivery_preference`, `completed_at`) VALUES
-(1, 'APT-20260920-001', 8, 1, 1, 2, '2026-09-20', '10:00 AM – 11:00 AM', 'MEASUREMENT_COMPLETED', 'Doorstep measurement done at Bandra West residence.', '24H_EXPRESS', '2026-09-20 10:45:00'),
-(2, 'APT-20260920-002', 9, 5, 3, 2, '2026-09-20', '02:00 PM – 03:00 PM', 'EXECUTIVE_ON_THE_WAY', 'Silk blouse measurement with sample reference.', '24H_EXPRESS', NULL),
-(3, 'APT-20260921-003', 8, 4, 2, 2, '2026-09-21', '11:00 AM – 12:00 PM', 'BOOKED', 'Bespoke suit measurement at Nariman Point office.', '24H_EXPRESS', NULL)
-ON DUPLICATE KEY UPDATE `appointment_code`=VALUES(`appointment_code`);
-
--- Active Orders
-INSERT INTO `orders` (`id`, `booking_id`, `customer_id`, `appointment_id`, `measurement_id`, `service_id`, `fabric_source`, `fabric_id`, `delivery_address_id`, `priority`, `is_24h_delivery`, `tailoring_charge`, `fabric_charge`, `measurement_fee`, `express_fee`, `discount_amount`, `total_amount`, `payment_method`, `payment_status`, `order_status`, `sla_start_time`, `sla_deadline`, `assigned_cutting_id`, `assigned_tailor_id`, `assigned_qc_id`, `assigned_packing_id`, `assigned_delivery_id`, `special_instructions`) VALUES
-(1, 'MYT-20260920-001245', 8, 1, 1, 1, 'MY_TAYLOR_FABRIC', 1, 1, 'EXPRESS', 1, 599.00, 899.00, 99.00, 199.00, 100.00, 1696.00, 'UPI', 'PAID', 'STITCHING_IN_PROGRESS', '2026-09-20 11:00:00', '2026-09-21 11:00:00', 3, 4, 5, 6, 7, '24-Hour Express guarantee. Customer requested contrast dark blue inner collar piping.'),
-(2, 'MYT-20260919-001240', 8, 1, 2, 2, 'CUSTOMER_PROVIDED', NULL, 1, 'EXPRESS', 1, 699.00, 0.00, 99.00, 199.00, 0.00, 997.00, 'CARD', 'PAID', 'DELIVERED', '2026-09-19 09:00:00', '2026-09-20 09:00:00', 3, 4, 5, 6, 7, 'Navy Italian Wool Trouser, Delivered with signature confirmation.')
-ON DUPLICATE KEY UPDATE `booking_id`=VALUES(`booking_id`);
-
--- Production Tasks for Active Order 1
-INSERT INTO `production_tasks` (`order_id`, `stage`, `assigned_user_id`, `status`, `notes`, `started_at`, `completed_at`) VALUES
-(1, 'MEASUREMENT', 2, 'COMPLETED', 'Doorstep measurement completed in 25 mins.', '2026-09-20 10:15:00', '2026-09-20 10:45:00'),
-(1, 'FABRIC_PREP', 3, 'COMPLETED', 'Egyptian Giza Cotton 100s issued from inventory (2.2m).', '2026-09-20 11:15:00', '2026-09-20 11:30:00'),
-(1, 'CUTTING', 3, 'COMPLETED', 'Cut with French collar and double-cuff pattern template.', '2026-09-20 11:35:00', '2026-09-20 12:45:00'),
-(1, 'STITCHING', 4, 'IN_PROGRESS', 'Stitching in progress by Master Anwar. Collars fused and aligned.', '2026-09-20 13:00:00', NULL),
-(1, 'FINISHING', 4, 'PENDING', 'Buttonhole threading and steam press pending.', NULL, NULL),
-(1, 'QC', 5, 'PENDING', 'Final 10-point measurement and stitch inspection pending.', NULL, NULL),
-(1, 'PACKING', 6, 'PENDING', 'Custom garment bag and QR code sealing pending.', NULL, NULL),
-(1, 'DELIVERY', 7, 'PENDING', 'Express courier route queued for Bandra West.', NULL, NULL)
-ON DUPLICATE KEY UPDATE `notes`=VALUES(`notes`);
-
--- Completed Delivery Proof for Order 2
-INSERT INTO `delivery_proofs` (`order_id`, `delivery_executive_id`, `verification_type`, `customer_signature_svg`, `delivery_photo_url`, `recipient_name`, `recipient_relation`, `delivered_timestamp`) VALUES
-(2, 7, 'SIGNATURE_AND_PHOTO', 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="100"><path d="M 10 50 Q 80 10 150 50 T 280 50" stroke="#000" fill="none" stroke-width="2"/></svg>', 'proof_myt20260919001240.jpg', 'Rahul Sharma', 'Self', '2026-09-20 08:35:00')
-ON DUPLICATE KEY UPDATE `recipient_name`=VALUES(`recipient_name`);
-
--- Reviews for Delivered Order
-INSERT INTO `reviews` (`order_id`, `customer_id`, `overall_rating`, `measurement_rating`, `stitching_rating`, `delivery_rating`, `comment`) VALUES
-(2, 8, 5, 5, 5, 5, 'Remarkable service! The measurement executive arrived right on time, and the trousers fit like a dream. Delivered in under 24 hours!')
-ON DUPLICATE KEY UPDATE `comment`=VALUES(`comment`);
-
--- Audit Logs
-INSERT INTO `audit_logs` (`order_id`, `appointment_id`, `user_id`, `action`, `previous_state`, `new_state`, `description`) VALUES
-(1, 1, 2, 'MEASUREMENT_RECORDED', 'EXECUTIVE_ARRIVED', 'MEASUREMENT_COMPLETED', 'Doorstep measurement recorded by Vikram Singh for Booking MYT-20260920-001245'),
-(1, NULL, 3, 'CUTTING_COMPLETED', 'CUTTING_IN_PROGRESS', 'CUTTING_COMPLETED', 'Master Cutter Ramesh finished pattern cutting and handed over to Tailor'),
-(1, NULL, 4, 'STITCHING_STARTED', 'STITCHING_ASSIGNED', 'STITCHING_IN_PROGRESS', 'Master Anwar started stitching assembly')
-ON DUPLICATE KEY UPDATE `action`=VALUES(`action`);

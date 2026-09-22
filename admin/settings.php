@@ -5,35 +5,57 @@ require_once __DIR__ . '/includes/admin_header.php';
 $msg = null;
 $error = null;
 
-// Handle Settings Save
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $cashfreeAppId = trim($_POST['cashfree_app_id'] ?? '');
-    $cashfreeSecret = trim($_POST['cashfree_secret_key'] ?? '');
-    $cashfreeMode = $_POST['cashfree_mode'] ?? 'TEST';
-    $cashfreeEnabled = isset($_POST['cashfree_enabled']) ? '1' : '0';
-    $codEnabled = isset($_POST['cod_enabled']) ? '1' : '0';
-    
-    $measFee = (float)($_POST['default_measurement_fee'] ?? 99.00);
-    $expressFee = (float)($_POST['default_express_fee'] ?? 199.00);
-    $phone = trim($_POST['company_phone'] ?? '+91 98000 00000');
-    $email = trim($_POST['company_email'] ?? 'concierge@mytaylor.com');
-    $slaHours = (int)($_POST['sla_guarantee_hours'] ?? 24);
+    // Handle Settings Save
+    if (isset($_POST['save_settings'])) {
+        $cashfreeAppId = trim($_POST['cashfree_app_id'] ?? '');
+        $cashfreeSecret = trim($_POST['cashfree_secret_key'] ?? '');
+        $cashfreeMode = $_POST['cashfree_mode'] ?? 'TEST';
+        $cashfreeEnabled = isset($_POST['cashfree_enabled']) ? '1' : '0';
+        $codEnabled = isset($_POST['cod_enabled']) ? '1' : '0';
+        
+        $measFee = (float)($_POST['default_measurement_fee'] ?? 99.00);
+        $expressFee = (float)($_POST['default_express_fee'] ?? 199.00);
+        $phone = trim($_POST['company_phone'] ?? '+91 98000 00000');
+        $email = trim($_POST['company_email'] ?? 'concierge@mytaylor.com');
+        $slaHours = (int)($_POST['sla_guarantee_hours'] ?? 24);
 
-    saveSettings([
-        'cashfree_app_id'        => $cashfreeAppId,
-        'cashfree_secret_key'    => $cashfreeSecret,
-        'cashfree_mode'          => $cashfreeMode,
-        'cashfree_enabled'       => $cashfreeEnabled,
-        'cod_enabled'            => $codEnabled,
-        'default_measurement_fee'=> $measFee,
-        'default_express_fee'    => $expressFee,
-        'company_phone'          => $phone,
-        'company_email'          => $email,
-        'sla_guarantee_hours'    => $slaHours
-    ]);
+        saveSettings([
+            'cashfree_app_id'        => $cashfreeAppId,
+            'cashfree_secret_key'    => $cashfreeSecret,
+            'cashfree_mode'          => $cashfreeMode,
+            'cashfree_enabled'       => $cashfreeEnabled,
+            'cod_enabled'            => $codEnabled,
+            'default_measurement_fee'=> $measFee,
+            'default_express_fee'    => $expressFee,
+            'company_phone'          => $phone,
+            'company_email'          => $email,
+            'sla_guarantee_hours'    => $slaHours
+        ]);
 
-    logAudit(null, null, $currentUser['id'], 'SETTINGS_UPDATED', null, 'SAVED', "Admin updated Cashfree API keys and platform fees");
-    $msg = "Settings & Cashfree Gateway configuration saved successfully!";
+        logAudit(null, null, $currentUser['id'], 'SETTINGS_UPDATED', null, 'SAVED', "Admin updated Cashfree API keys and platform fees");
+        $msg = "Settings & Cashfree Gateway configuration saved successfully!";
+    }
+
+    // Handle Reset / Clear Demo Orders & Revenue
+    if (isset($_POST['reset_demo_orders'])) {
+        try {
+            $pdo->exec("SET FOREIGN_KEY_CHECKS = 0;");
+            $pdo->exec("TRUNCATE TABLE `delivery_proofs`;");
+            $pdo->exec("TRUNCATE TABLE `production_tasks`;");
+            $pdo->exec("TRUNCATE TABLE `order_items`;");
+            $pdo->exec("TRUNCATE TABLE `orders`;");
+            $pdo->exec("TRUNCATE TABLE `appointments`;");
+            $pdo->exec("TRUNCATE TABLE `measurements`;");
+            $pdo->exec("TRUNCATE TABLE `reviews`;");
+            $pdo->exec("TRUNCATE TABLE `audit_logs`;");
+            $pdo->exec("SET FOREIGN_KEY_CHECKS = 1;");
+
+            logAudit(null, null, $currentUser['id'], 'PRODUCTION_RESET', null, 'CLEAN', "Admin reset demo orders and cleared sample revenue");
+            $msg = "All demo orders, appointments, and fake revenue have been wiped! Total Revenue is now reset to ₹0.00 (Ready for real customers).";
+        } catch (Exception $e) {
+            $error = "Reset failed: " . $e->getMessage();
+        }
+    }
 }
 
 // Current Values
@@ -169,7 +191,7 @@ $slaHours = getSetting('sla_guarantee_hours', '24');
       </div>
 
       <div style="display:flex; justify-content:flex-end; margin-top:24px;">
-        <button type="submit" class="btn btn-sm" style="background:var(--admin-gold); color:#0F172A; font-weight:800; border-radius:8px; padding:12px 30px; font-size:14px;">
+        <button type="submit" name="save_settings" value="1" class="btn btn-sm" style="background:var(--admin-gold); color:#0F172A; font-weight:800; border-radius:8px; padding:12px 30px; font-size:14px;">
           <i class="fa-solid fa-floppy-disk"></i> Save & Apply Configuration
         </button>
       </div>
@@ -177,5 +199,25 @@ $slaHours = getSetting('sla_guarantee_hours', '24');
   </div>
 
 </form>
+
+<!-- Database Production Clean / Reset Card -->
+<div class="admin-card" style="border: 1px solid #FECACA; background: #FFF5F5; margin-top: 30px;">
+  <div class="admin-card-header" style="border-bottom: 1px solid #FEE2E2;">
+    <h3 style="color: #991B1B;">
+      <i class="fa-solid fa-broom text-gold"></i>
+      Production Database Cleanup (Wipe Demo Orders & Revenue)
+    </h3>
+  </div>
+  <div class="admin-card-body">
+    <p style="font-size: 13.5px; color: #7F1D1D; margin-bottom: 16px;">
+      Agar aap demo/test ke dauran bane hue dummy orders aur fake revenue ko hatana chahte hain, toh neeche diye gaye button par click karein. Isse <strong>Services (Kapde/Rates)</strong> aur <strong>Staff Accounts</strong> safe rahenge, lekin fake orders aur fake revenue delete hokar strictly <strong>₹0.00</strong> par reset ho jayenge.
+    </p>
+    <form method="POST" onsubmit="return confirm('Kya aap sach me saare dummy orders aur sample revenue ko reset karna chahte hain?');">
+      <button type="submit" name="reset_demo_orders" value="1" class="btn btn-sm" style="background: #DC2626; color: #FFFFFF; font-weight: 700; border-radius: 8px; padding: 10px 20px;">
+        <i class="fa-solid fa-trash-can"></i> Reset Demo Orders & Set Revenue to ₹0.00
+      </button>
+    </form>
+  </div>
+</div>
 
 <?php require_once __DIR__ . '/includes/admin_footer.php'; ?>
