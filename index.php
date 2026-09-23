@@ -381,35 +381,35 @@ try {
 <!-- 6. 15-Point Digital Doorstep Measurement Quality -->
 <section class="section gsap-reveal-section measurement-section" style="padding: 80px 0; background:#FFFFFF;">
   <div class="container">
-    <div class="measurement-layout">
+    <div class="measurement-layout" style="display:grid; grid-template-columns: 1.1fr 1fr; gap:40px; align-items:center;">
       <div>
         <span class="section-tag">Anatomical Precision</span>
         <h2 class="section-title">15 Anatomical Measurement Points</h2>
         <p class="section-desc">Why do off-the-rack garments never fit like bespoke? Because our certified measurement specialists record 15 distinct biometric coordinates right in your living room.</p>
         
-        <div class="measurement-points-grid">
-          <div class="measurement-point-card">
-            <strong style="color:var(--gold-primary); font-size:13px;">1. Collar Circumference & Posture</strong>
+        <div class="measurement-points-grid" style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-top:24px;">
+          <div class="measurement-point-card" style="background:#F8FAFC; border:1px solid #E2E8F0; padding:12px 16px; border-radius:8px;">
+            <strong style="color:var(--gold-primary); font-size:13px; display:block;">1. Collar Circumference & Posture</strong>
             <p style="font-size:12px; color:#64748B; margin:2px 0 0;">Zero collar gap</p>
           </div>
-          <div class="measurement-point-card">
-            <strong style="color:var(--gold-primary); font-size:13px;">2. Shoulder Slope Angle</strong>
+          <div class="measurement-point-card" style="background:#F8FAFC; border:1px solid #E2E8F0; padding:12px 16px; border-radius:8px;">
+            <strong style="color:var(--gold-primary); font-size:13px; display:block;">2. Shoulder Slope Angle</strong>
             <p style="font-size:12px; color:#64748B; margin:2px 0 0;">Anatomical shoulder pads</p>
           </div>
-          <div class="measurement-point-card">
-            <strong style="color:var(--gold-primary); font-size:13px;">3. Chest & Full Bust Arc</strong>
+          <div class="measurement-point-card" style="background:#F8FAFC; border:1px solid #E2E8F0; padding:12px 16px; border-radius:8px;">
+            <strong style="color:var(--gold-primary); font-size:13px; display:block;">3. Chest & Full Bust Arc</strong>
             <p style="font-size:12px; color:#64748B; margin:2px 0 0;">Princess seam contour</p>
           </div>
-          <div class="measurement-point-card">
-            <strong style="color:var(--gold-primary); font-size:13px;">4. Bicep, Forearm & Wrist</strong>
+          <div class="measurement-point-card" style="background:#F8FAFC; border:1px solid #E2E8F0; padding:12px 16px; border-radius:8px;">
+            <strong style="color:var(--gold-primary); font-size:13px; display:block;">4. Bicep, Forearm & Wrist</strong>
             <p style="font-size:12px; color:#64748B; margin:2px 0 0;">Tapered modern sleeves</p>
           </div>
-          <div class="measurement-point-card">
-            <strong style="color:var(--gold-primary); font-size:13px;">5. Waist & Hip Drop Ratio</strong>
+          <div class="measurement-point-card" style="background:#F8FAFC; border:1px solid #E2E8F0; padding:12px 16px; border-radius:8px;">
+            <strong style="color:var(--gold-primary); font-size:13px; display:block;">5. Waist & Hip Drop Ratio</strong>
             <p style="font-size:12px; color:#64748B; margin:2px 0 0;">Clean silhouette lines</p>
           </div>
-          <div class="measurement-point-card">
-            <strong style="color:var(--gold-primary); font-size:13px;">6. Inseam, Outseam & Rise</strong>
+          <div class="measurement-point-card" style="background:#F8FAFC; border:1px solid #E2E8F0; padding:12px 16px; border-radius:8px;">
+            <strong style="color:var(--gold-primary); font-size:13px; display:block;">6. Inseam, Outseam & Rise</strong>
             <p style="font-size:12px; color:#64748B; margin:2px 0 0;">No-break trouser hem</p>
           </div>
         </div>

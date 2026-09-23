@@ -35,8 +35,8 @@ $activeStaffCount = (int)$pdo->query("SELECT COUNT(*) FROM `users` WHERE `role` 
   
   <!-- FontAwesome 6 & Google Fonts -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-  <link rel="stylesheet" href="<?= APP_URL ?>/assets/css/style.css">
-  <link rel="stylesheet" href="<?= APP_URL ?>/assets/css/admin.css">
+  <link rel="stylesheet" href="<?= APP_URL ?>/assets/css/style.css?v=<?= time() ?>">
+  <link rel="stylesheet" href="<?= APP_URL ?>/assets/css/admin.css?v=<?= time() ?>">
 </head>
 <body class="admin-body">
 
