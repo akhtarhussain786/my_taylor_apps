@@ -6,10 +6,25 @@ $pdo = getDbConnection();
 $message = null;
 $error = null;
 
+// Ensure testimonials table exists
+$pdo->exec("CREATE TABLE IF NOT EXISTS `testimonials` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `customer_name` VARCHAR(100) NOT NULL,
+    `customer_role` VARCHAR(100) DEFAULT 'Verified Client',
+    `location` VARCHAR(100) DEFAULT 'Mumbai',
+    `rating` INT DEFAULT 5,
+    `review_text` TEXT NOT NULL,
+    `image_url` VARCHAR(255) DEFAULT NULL,
+    `garment_type` VARCHAR(100) DEFAULT 'Bespoke Suit',
+    `status` ENUM('active', 'inactive') DEFAULT 'active',
+    `display_order` INT DEFAULT 0,
+    `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
+
 // Ensure upload directory exists
 $uploadDir = __DIR__ . '/../uploads/testimonials/';
 if (!is_dir($uploadDir)) {
-    mkdir($uploadDir, 0777, true);
+    @mkdir($uploadDir, 0777, true);
 }
 
 // Handle Actions: Add, Edit, Delete, Toggle Status
