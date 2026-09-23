@@ -59,12 +59,12 @@ body.sidebar-open {
   color: #F8FAFC;
   display: flex;
   flex-direction: column;
-  flex-shrink: 0;
   height: 100vh;
-  max-height: 100vh;
   border-right: 1px solid rgba(212, 175, 55, 0.15);
-  position: sticky;
+  position: fixed;
   top: 0;
+  bottom: 0;
+  left: 0;
   z-index: 1000;
   overflow: hidden;
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
@@ -320,7 +320,9 @@ body.sidebar-open {
   display: flex;
   flex-direction: column;
   min-width: 0;
-  width: 100%;
+  margin-left: 250px;
+  width: calc(100% - 250px);
+  min-height: 100vh;
 }
 
 .admin-topbar {
@@ -721,8 +723,12 @@ body.sidebar-open {
    RESPONSIVE BREAKPOINTS (TABLET & MOBILE)
    ========================================================== */
 
-/* Tablet (Under 1024px) */
 @media (max-width: 1024px) {
+  .admin-main {
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+
   .admin-sidebar {
     position: fixed;
     left: 0;
@@ -733,6 +739,7 @@ body.sidebar-open {
     height: 100vh;
     transform: translateX(-100%);
     box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5);
+    z-index: 10000;
   }
 
   .admin-sidebar.show {
