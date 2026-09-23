@@ -379,48 +379,48 @@ try {
 </section>
 
 <!-- 6. 15-Point Digital Doorstep Measurement Quality -->
-<section class="section gsap-reveal-section" style="padding: 80px 0; background:#FFFFFF;">
+<section class="section gsap-reveal-section measurement-section" style="padding: 80px 0; background:#FFFFFF;">
   <div class="container">
-    <div style="display:grid; grid-template-columns:1.1fr 1fr; gap:40px; align-items:center;">
+    <div class="measurement-layout">
       <div>
         <span class="section-tag">Anatomical Precision</span>
         <h2 class="section-title">15 Anatomical Measurement Points</h2>
         <p class="section-desc">Why do off-the-rack garments never fit like bespoke? Because our certified measurement specialists record 15 distinct biometric coordinates right in your living room.</p>
         
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:24px;">
-          <div style="background:#F8FAFC; border:1px solid #E2E8F0; padding:12px 16px; border-radius:8px;">
+        <div class="measurement-points-grid">
+          <div class="measurement-point-card">
             <strong style="color:var(--gold-primary); font-size:13px;">1. Collar Circumference & Posture</strong>
             <p style="font-size:12px; color:#64748B; margin:2px 0 0;">Zero collar gap</p>
           </div>
-          <div style="background:#F8FAFC; border:1px solid #E2E8F0; padding:12px 16px; border-radius:8px;">
+          <div class="measurement-point-card">
             <strong style="color:var(--gold-primary); font-size:13px;">2. Shoulder Slope Angle</strong>
             <p style="font-size:12px; color:#64748B; margin:2px 0 0;">Anatomical shoulder pads</p>
           </div>
-          <div style="background:#F8FAFC; border:1px solid #E2E8F0; padding:12px 16px; border-radius:8px;">
+          <div class="measurement-point-card">
             <strong style="color:var(--gold-primary); font-size:13px;">3. Chest & Full Bust Arc</strong>
             <p style="font-size:12px; color:#64748B; margin:2px 0 0;">Princess seam contour</p>
           </div>
-          <div style="background:#F8FAFC; border:1px solid #E2E8F0; padding:12px 16px; border-radius:8px;">
+          <div class="measurement-point-card">
             <strong style="color:var(--gold-primary); font-size:13px;">4. Bicep, Forearm & Wrist</strong>
             <p style="font-size:12px; color:#64748B; margin:2px 0 0;">Tapered modern sleeves</p>
           </div>
-          <div style="background:#F8FAFC; border:1px solid #E2E8F0; padding:12px 16px; border-radius:8px;">
+          <div class="measurement-point-card">
             <strong style="color:var(--gold-primary); font-size:13px;">5. Waist & Hip Drop Ratio</strong>
             <p style="font-size:12px; color:#64748B; margin:2px 0 0;">Clean silhouette lines</p>
           </div>
-          <div style="background:#F8FAFC; border:1px solid #E2E8F0; padding:12px 16px; border-radius:8px;">
+          <div class="measurement-point-card">
             <strong style="color:var(--gold-primary); font-size:13px;">6. Inseam, Outseam & Rise</strong>
             <p style="font-size:12px; color:#64748B; margin:2px 0 0;">No-break trouser hem</p>
           </div>
         </div>
 
         <div style="margin-top:24px;">
-          <a href="<?= APP_URL ?>/book.php" class="btn btn-gold"><i class="fa-solid fa-tape"></i> Experience Doorstep Measurement</a>
+          <a href="<?= APP_URL ?>/book.php" class="btn btn-gold btn-measurement-cta"><i class="fa-solid fa-tape"></i> Experience Doorstep Measurement</a>
         </div>
       </div>
 
       <!-- Feature Card -->
-      <div style="background:#070D1E; border-radius:var(--radius-lg); padding:36px; color:#FFFFFF; border:1px solid rgba(212,175,55,0.3); box-shadow:var(--shadow-lg);">
+      <div class="cloud-docket-card" style="background:#070D1E; border-radius:var(--radius-lg); padding:36px; color:#FFFFFF; border:1px solid rgba(212,175,55,0.3); box-shadow:var(--shadow-lg);">
         <div style="width:50px; height:50px; border-radius:50%; background:rgba(212,175,55,0.2); color:var(--gold-primary); display:flex; align-items:center; justify-content:center; font-size:22px; margin-bottom:18px;">
           <i class="fa-solid fa-fingerprint"></i>
         </div>
@@ -446,7 +446,7 @@ try {
       <p class="section-desc">Real stories from corporate executives, brides, and style connoisseurs across Mumbai & prime hubs.</p>
     </div>
 
-    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:24px; margin-top:36px;">
+    <div class="testimonials-grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap:24px; margin-top:36px;">
       <?php foreach ($testimonials as $t): ?>
         <div class="card gsap-testi-card" style="padding:28px; border-radius:var(--radius-lg); box-shadow:var(--shadow-sm); display:flex; flex-direction:column; justify-content:space-between; border-top:4px solid var(--gold-primary); transition:transform 0.3s, box-shadow 0.3s;">
           <div>
