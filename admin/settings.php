@@ -2,6 +2,8 @@
 $pageTitle = "Cashfree Gateway & System Settings";
 require_once __DIR__ . '/includes/admin_header.php';
 
+require_once __DIR__ . '/../../includes/mail.php';
+
 $msg = null;
 $error = null;
 
@@ -17,8 +19,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $measFee = (float)($_POST['default_measurement_fee'] ?? 99.00);
         $expressFee = (float)($_POST['default_express_fee'] ?? 199.00);
         $phone = trim($_POST['company_phone'] ?? '+91 98000 00000');
-        $email = trim($_POST['company_email'] ?? 'concierge@mytaylor.com');
+        $email = trim($_POST['company_email'] ?? 'concierge@mytaylor.in');
         $slaHours = (int)($_POST['sla_guarantee_hours'] ?? 24);
+
+        // SMTP Settings
+        $smtpEnabled = isset($_POST['smtp_enabled']) ? '1' : '0';
+        $smtpHost = trim($_POST['smtp_host'] ?? 'smtp.gmail.com');
+        $smtpPort = (int)($_POST['smtp_port'] ?? 587);
+        $smtpEncryption = $_POST['smtp_encryption'] ?? 'tls';
+        $smtpUsername = trim($_POST['smtp_username'] ?? '');
+        $smtpPassword = trim($_POST['smtp_password'] ?? '');
+        $smtpFromEmail = trim($_POST['smtp_from_email'] ?? '');
+        $smtpFromName = trim($_POST['smtp_from_name'] ?? 'MY TAYLOR Concierge');
 
         saveSettings([
             'cashfree_app_id'        => $cashfreeAppId,
@@ -30,11 +42,49 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'default_express_fee'    => $expressFee,
             'company_phone'          => $phone,
             'company_email'          => $email,
-            'sla_guarantee_hours'    => $slaHours
+            'sla_guarantee_hours'    => $slaHours,
+            'smtp_enabled'           => $smtpEnabled,
+            'smtp_host'              => $smtpHost,
+            'smtp_port'              => $smtpPort,
+            'smtp_encryption'        => $smtpEncryption,
+            'smtp_username'          => $smtpUsername,
+            'smtp_password'          => $smtpPassword,
+            'smtp_from_email'        => $smtpFromEmail,
+            'smtp_from_name'         => $smtpFromName
         ]);
 
-        logAudit(null, null, $currentUser['id'], 'SETTINGS_UPDATED', null, 'SAVED', "Admin updated Cashfree API keys and platform fees");
-        $msg = "Settings & Cashfree Gateway configuration saved successfully!";
+        logAudit(null, null, $currentUser['id'], 'SETTINGS_UPDATED', null, 'SAVED', "Admin updated Cashfree and SMTP mail settings");
+        $msg = "Configuration saved successfully! All payment and email settings have been updated.";
+    }
+
+    // Handle Send Test Email
+    if (isset($_POST['send_test_email'])) {
+        $testRecipient = trim($_POST['test_email_recipient'] ?? '');
+        if (empty($testRecipient) || !filter_var($testRecipient, FILTER_VALIDATE_EMAIL)) {
+            $error = "Please enter a valid recipient email address for testing.";
+        } else {
+            $dispatchTime = date('d M Y, h:i A');
+            $hostVal = getSetting('smtp_host', 'smtp.gmail.com');
+            $portVal = getSetting('smtp_port', '587');
+            $encVal = getSetting('smtp_encryption', 'tls');
+            $testHtml = <<<HTML
+<h2 style="color:#0F172A; margin-top:0; font-size:22px;">SMTP Test Successful! 🚀</h2>
+<p>Congratulations! Your Gmail SMTP configuration is working seamlessly.</p>
+<div class="info-box">
+  <p style="margin:0; font-size:13.5px; color:#334155;">
+    <strong>Sender Server:</strong> {$hostVal}:{$portVal} ({$encVal})<br>
+    <strong>Dispatch Time:</strong> {$dispatchTime}
+  </p>
+</div>
+<p>Your customers will now automatically receive instant luxury confirmation emails for bookings and real-time 24H status tracking updates.</p>
+HTML;
+            $res = sendSmtpEmail($testRecipient, 'Admin Tester', 'SMTP Test Notification | MY TAYLOR', getEmailLayoutTemplate($testHtml, 'SMTP Test Verification'));
+            if ($res['success']) {
+                $msg = "Test email sent successfully to <strong>{$testRecipient}</strong>! Please check your Gmail Inbox/Spam.";
+            } else {
+                $error = "SMTP Test Failed: " . htmlspecialchars($res['message']);
+            }
+        }
     }
 
     // Handle Reset / Clear Demo Orders & Revenue
@@ -68,8 +118,18 @@ $codEnabled = getSetting('cod_enabled', '1') === '1';
 $measFee = getSetting('default_measurement_fee', '99.00');
 $expressFee = getSetting('default_express_fee', '199.00');
 $phone = getSetting('company_phone', '+91 98000 00000');
-$email = getSetting('company_email', 'concierge@mytaylor.com');
+$email = getSetting('company_email', 'concierge@mytaylor.in');
 $slaHours = getSetting('sla_guarantee_hours', '24');
+
+// SMTP Settings
+$smtpEnabled = getSetting('smtp_enabled', '0') === '1';
+$smtpHost = getSetting('smtp_host', 'smtp.gmail.com');
+$smtpPort = getSetting('smtp_port', '587');
+$smtpEncryption = getSetting('smtp_encryption', 'tls');
+$smtpUsername = getSetting('smtp_username', '');
+$smtpPassword = getSetting('smtp_password', '');
+$smtpFromEmail = getSetting('smtp_from_email', '');
+$smtpFromName = getSetting('smtp_from_name', 'MY TAYLOR Concierge');
 ?>
 
 <!-- Title & Action Header -->
@@ -190,6 +250,79 @@ $slaHours = getSetting('sla_guarantee_hours', '24');
           <input type="email" name="company_email" class="form-control" value="<?= e($email) ?>">
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- 3. Gmail & SMTP Automated Customer Email Configuration -->
+  <div class="admin-card" style="border-top: 4px solid #3B82F6;">
+    <div class="admin-card-header">
+      <h3>
+        <i class="fa-solid fa-envelope-circle-check" style="color:#3B82F6;"></i>
+        Gmail / SMTP Automated Email Engine
+      </h3>
+      <span class="badge-status <?= $smtpEnabled ? 'delivered' : 'qc' ?>">
+        <?= $smtpEnabled ? '🟢 EMAIL NOTIFICATIONS ACTIVE' : '⚪ EMAIL DISPATCH DISABLED' ?>
+      </span>
+    </div>
+
+    <div class="admin-card-body">
+      <div style="background:#EFF6FF; border:1px solid #BFDBFE; border-radius:var(--admin-radius-sm); padding:14px; margin-bottom:20px; color:#1E40AF; font-size:13px; line-height:1.6;">
+        <strong><i class="fa-brands fa-google text-gold"></i> Gmail App Password Setup Guide:</strong>
+        <ol style="margin:6px 0 0; padding-left:20px;">
+          <li>Apne Google Account me <strong>Security</strong> section me jayein (<a href="https://myaccount.google.com/apppasswords" target="_blank" style="color:#2563EB; font-weight:700;">myaccount.google.com/apppasswords</a>).</li>
+          <li><strong>2-Step Verification</strong> ON karein aur <strong>App Passwords</strong> generate karein (App Name: <em>MY TAYLOR</em>).</li>
+          <li>Google jo <strong>16-digit App Password</strong> dega, use neeche <strong>SMTP Password</strong> me paste karein.</li>
+        </ol>
+      </div>
+
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:16px; margin-bottom:18px;">
+        <div>
+          <label style="font-size:12.5px; font-weight:700; color:#0F172A; display:block; margin-bottom:4px;">SMTP Host Server *</label>
+          <input type="text" name="smtp_host" class="form-control" value="<?= e($smtpHost) ?>" placeholder="smtp.gmail.com" required>
+        </div>
+
+        <div>
+          <label style="font-size:12.5px; font-weight:700; color:#0F172A; display:block; margin-bottom:4px;">SMTP Port *</label>
+          <input type="number" name="smtp_port" class="form-control" value="<?= e($smtpPort) ?>" placeholder="587" required>
+        </div>
+
+        <div>
+          <label style="font-size:12.5px; font-weight:700; color:#0F172A; display:block; margin-bottom:4px;">Encryption Security *</label>
+          <select name="smtp_encryption" class="form-control form-select">
+            <option value="tls" <?= $smtpEncryption === 'tls' ? 'selected' : '' ?>>TLS (Port 587 - Recommended)</option>
+            <option value="ssl" <?= $smtpEncryption === 'ssl' ? 'selected' : '' ?>>SSL (Port 465)</option>
+            <option value="none" <?= $smtpEncryption === 'none' ? 'selected' : '' ?>>None (Port 25)</option>
+          </select>
+        </div>
+
+        <div>
+          <label style="font-size:12.5px; font-weight:700; color:#0F172A; display:block; margin-bottom:4px;">SMTP Username / Gmail ID *</label>
+          <input type="email" name="smtp_username" class="form-control" value="<?= e($smtpUsername) ?>" placeholder="yourbrand@gmail.com" autocomplete="off">
+        </div>
+
+        <div>
+          <label style="font-size:12.5px; font-weight:700; color:#0F172A; display:block; margin-bottom:4px;">SMTP App Password (16-digits) *</label>
+          <input type="password" name="smtp_password" class="form-control" value="<?= e($smtpPassword) ?>" placeholder="••••••••••••••••" autocomplete="new-password">
+        </div>
+
+        <div>
+          <label style="font-size:12.5px; font-weight:700; color:#0F172A; display:block; margin-bottom:4px;">From Sender Name</label>
+          <input type="text" name="smtp_from_name" class="form-control" value="<?= e($smtpFromName) ?>" placeholder="MY TAYLOR Concierge">
+        </div>
+
+        <div>
+          <label style="font-size:12.5px; font-weight:700; color:#0F172A; display:block; margin-bottom:4px;">From Email Address</label>
+          <input type="email" name="smtp_from_email" class="form-control" value="<?= e($smtpFromEmail) ?>" placeholder="concierge@mytaylor.in">
+        </div>
+      </div>
+
+      <!-- Email Notification Trigger Toggles -->
+      <div style="background:#F8FAFC; border:1px solid var(--admin-border); border-radius:var(--admin-radius-sm); padding:16px; margin-top:16px;">
+        <label style="display:flex; align-items:center; gap:10px; cursor:pointer; font-weight:700; font-size:14px; color:#0F172A;">
+          <input type="checkbox" name="smtp_enabled" value="1" <?= $smtpEnabled ? 'checked' : '' ?> style="width:20px; height:20px; accent-color:#3B82F6;">
+          <span><i class="fa-solid fa-paper-plane" style="color:#3B82F6;"></i> Enable Automated Customer Emails (Instant Booking Confirmation & Real-Time 24H Status Updates)</span>
+        </label>
+      </div>
 
       <div style="display:flex; justify-content:flex-end; margin-top:24px;">
         <button type="submit" name="save_settings" value="1" class="btn btn-sm" style="background:var(--admin-gold); color:#0F172A; font-weight:800; border-radius:8px; padding:12px 30px; font-size:14px;">
@@ -200,6 +333,27 @@ $slaHours = getSetting('sla_guarantee_hours', '24');
   </div>
 
 </form>
+
+<!-- Test SMTP Email Dispatch Card -->
+<div class="admin-card" style="border: 1px solid #BFDBFE; background: #F8FAFC; margin-top: 24px;">
+  <div class="admin-card-header" style="border-bottom: 1px solid #E2E8F0;">
+    <h3 style="color: #1E40AF;">
+      <i class="fa-solid fa-flask text-gold"></i>
+      Instant SMTP Test Email Sender
+    </h3>
+  </div>
+  <div class="admin-card-body">
+    <p style="font-size: 13.5px; color: #475569; margin-bottom: 14px;">
+      Apne SMTP credentials verify karne ke liye yahan koi bhi recipient email address daalein aur <strong>Send Test Email</strong> par click karein.
+    </p>
+    <form method="POST" action="<?= APP_URL ?>/admin/settings.php" style="display:flex; gap:10px; max-width:550px; flex-wrap:wrap;">
+      <input type="email" name="test_email_recipient" class="form-control" placeholder="Enter recipient email (e.g. yourpersonal@gmail.com)" style="flex:1; min-width:260px;" required>
+      <button type="submit" name="send_test_email" value="1" class="btn btn-sm" style="background:#2563EB; color:#FFFFFF; font-weight:700; border-radius:8px; padding:10px 22px; white-space:nowrap;">
+        <i class="fa-solid fa-paper-plane"></i> Send Test Email
+      </button>
+    </form>
+  </div>
+</div>
 
 <!-- Database Production Clean / Reset Card -->
 <div class="admin-card" style="border: 1px solid #FECACA; background: #FFF5F5; margin-top: 30px;">

@@ -1,6 +1,7 @@
 <?php
 $pageTitle = "Command Center";
 require_once __DIR__ . '/includes/admin_header.php';
+require_once __DIR__ . '/../includes/mail.php';
 
 $successMsg = null;
 $errorMsg = null;
@@ -67,6 +68,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         logAudit($orderId, null, $currentUser['id'], 'ADMIN_STATUS_UPDATE', $prevStatus, $newStatus, "Admin updated order status to {$newStatus}");
+        
+        // Trigger Automated Status Email to Customer
+        sendOrderStatusEmail($pdo, $orderId, $newStatus);
+
         $successMsg = "Order status updated to: " . str_replace('_', ' ', $newStatus);
     }
 
@@ -132,6 +137,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             logAudit($newOrderId, $aptId, $currentUser['id'], 'ORDER_CREATED_BY_ADMIN', 'BOOKED', 'STITCHING_IN_PROGRESS', "Admin recorded measurement and created Order {$bookingId}");
 
             $pdo->commit();
+            
+            // Dispatch Order Confirmed Email to Customer
+            sendOrderStatusEmail($pdo, $newOrderId, 'STITCHING_IN_PROGRESS', "Measurement recorded. Garment moved to artisanal tailoring.");
+
             $successMsg = "Appointment converted! Order {$bookingId} created and moved to Stitching!";
         } catch (Exception $e) {
             $pdo->rollBack();

@@ -2,6 +2,7 @@
 $pageTitle = "Express Delivery Boy Portal";
 require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../includes/mail.php';
 
 $pdo = getDbConnection();
 
@@ -23,6 +24,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($action === 'out_for_delivery') {
         $pdo->prepare("UPDATE `orders` SET `order_status` = 'OUT_FOR_DELIVERY', `assigned_delivery_id` = ? WHERE `id` = ?")->execute([$riderId, $orderId]);
         logAudit($orderId, null, $riderId, 'OUT_FOR_DELIVERY', 'READY_FOR_DISPATCH', 'OUT_FOR_DELIVERY', 'Delivery boy started last-mile route');
+        
+        sendOrderStatusEmail($pdo, $orderId, 'OUT_FOR_DELIVERY', 'Your express delivery rider is en route to your doorstep.');
+
         $successMsg = "Order #{$orderId} marked: OUT FOR DELIVERY!";
     } elseif ($action === 'complete_delivery') {
         $recipientName = trim($_POST['recipient_name'] ?? 'Customer');
@@ -44,6 +48,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             logAudit($orderId, null, $riderId, 'DELIVERED', 'OUT_FOR_DELIVERY', 'DELIVERED', "Delivered to {$recipientName} ({$relation}) with customer signature.");
 
             $pdo->commit();
+            
+            sendOrderStatusEmail($pdo, $orderId, 'DELIVERED', "Delivered to {$recipientName} ({$relation}) with digital signature confirmation.");
+
             $successMsg = "Order #{$orderId} DELIVERED SUCCESSFULLY! Verified with Customer Signature.";
 
         } catch (Exception $e) {

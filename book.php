@@ -3,6 +3,7 @@ $pageTitle = "Book Doorstep Measurement Appointment";
 require_once __DIR__ . '/includes/header.php';
 require_once __DIR__ . '/config/settings.php';
 require_once __DIR__ . '/includes/cashfree.php';
+require_once __DIR__ . '/includes/mail.php';
 
 $pdo = getDbConnection();
 
@@ -98,6 +99,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             logAudit(null, $appointmentId, $userId, 'APPOINTMENT_BOOKED', null, 'BOOKED', "Appointment {$aptCode} booked by {$customerName}. Payment: {$payMethodLabel}");
 
             $pdo->commit();
+
+            // Send Automated Booking Confirmation Email to Customer
+            sendAppointmentConfirmationEmail($pdo, $appointmentId);
 
             // Cashfree PG Order Generation
             $cashfreePaymentUrl = null;

@@ -11,6 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../includes/mail.php';
 
 $pdo = getDbConnection();
 
@@ -96,7 +97,9 @@ switch ($action) {
         $pdo->prepare("UPDATE `orders` SET `order_status` = 'OUT_FOR_DELIVERY', `assigned_delivery_id` = ? WHERE `id` = ?")
             ->execute([$riderId, $orderId]);
 
-        logAudit($orderId, null, $riderId, 'OUT_FOR_DELIVERY_MOBILE', 'READY_FOR_DISPATCH', 'OUT_FOR_DELIVERY', 'Delivery partner started last-mile route via Mobile App');
+        logAudit($orderId, null, $riderId, 'OUT_FOR_DELIVERY_MOBILE', 'READY_FOR_DISPATCH', 'OUT_FOR_DELIVERY', "Rider started delivery route via mobile app.");
+
+        sendOrderStatusEmail($pdo, $orderId, 'OUT_FOR_DELIVERY', 'Your express delivery rider is en route to your doorstep.');
 
         echo json_encode([
             'status' => 'success',
@@ -148,9 +151,9 @@ switch ($action) {
             $pdo->prepare("UPDATE `production_tasks` SET `status` = 'COMPLETED', `completed_at` = NOW() WHERE `order_id` = ? AND `stage` = 'DELIVERY'")
                 ->execute([$orderId]);
 
-            logAudit($orderId, null, $riderId, 'DELIVERED_MOBILE', 'OUT_FOR_DELIVERY', 'DELIVERED', "Delivered by Mobile App to {$recipientName} ({$recipientRelation}) with signature proof.");
-
             $pdo->commit();
+
+            sendOrderStatusEmail($pdo, $orderId, 'DELIVERED', "Delivered to {$recipientName} ({$recipientRelation}) with customer signature confirmation.");
 
             echo json_encode([
                 'status' => 'success',

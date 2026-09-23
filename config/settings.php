@@ -25,8 +25,16 @@ function initSettingsTable($pdo) {
         'default_measurement_fee'=> '99.00',
         'default_express_fee'    => '199.00',
         'company_phone'          => '+91 98000 00000',
-        'company_email'          => 'concierge@mytaylor.com',
-        'sla_guarantee_hours'    => '24'
+        'company_email'          => 'concierge@mytaylor.in',
+        'sla_guarantee_hours'    => '24',
+        'smtp_enabled'           => '0',
+        'smtp_host'              => 'smtp.gmail.com',
+        'smtp_port'              => '587',
+        'smtp_encryption'        => 'tls',
+        'smtp_username'          => '',
+        'smtp_password'          => '',
+        'smtp_from_email'        => '',
+        'smtp_from_name'         => 'MY TAYLOR Atelier'
     ];
 
     foreach ($defaults as $k => $v) {
