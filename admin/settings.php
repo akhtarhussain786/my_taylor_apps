@@ -1,8 +1,7 @@
 <?php
 $pageTitle = "Cashfree Gateway & System Settings";
 require_once __DIR__ . '/includes/admin_header.php';
-
-require_once __DIR__ . '/../../includes/mail.php';
+require_once __DIR__ . '/../includes/mail.php';
 
 $msg = null;
 $error = null;
