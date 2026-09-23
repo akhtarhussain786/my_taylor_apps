@@ -63,6 +63,12 @@
         closeSidebar();
       }
     });
+
+    // Ensure active menu item is scrolled into view smoothly if needed
+    const activeNavLink = document.querySelector('.admin-sidebar .admin-nav-link.active');
+    if (activeNavLink) {
+      activeNavLink.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    }
   </script>
 </body>
 </html>
