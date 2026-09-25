@@ -9,6 +9,56 @@ $pdo = getDbConnection();
 $heroBadge = getSetting('hero_badge', "India's #1 Doorstep Tailoring Atelier");
 $heroHeadline = getSetting('hero_headline', 'Bespoke Luxury Tailoring. Delivered in 24 Hours.');
 $heroTagline = getSetting('hero_tagline', 'No physical tailor visits. Master measurement specialist visits your doorstep, takes 15 anatomical points, and your bespoke handcrafted garment arrives within 24 hours.');
+$heroImageUrl = getSetting('hero_image_url', 'assets/images/hero_tailor.jpg');
+
+$stat1Num = getSetting('hero_stat_1_num', '24');
+$stat1Label = getSetting('hero_stat_1_label', 'Hours');
+$stat1Desc = getSetting('hero_stat_1_desc', 'Guaranteed Handover SLA');
+
+$stat2Num = getSetting('hero_stat_2_num', '15');
+$stat2Label = getSetting('hero_stat_2_label', 'Points');
+$stat2Desc = getSetting('hero_stat_2_desc', 'Doorstep Body Measurements');
+
+$stat3Num = getSetting('hero_stat_3_num', '100');
+$stat3Label = getSetting('hero_stat_3_label', '%');
+$stat3Desc = getSetting('hero_stat_3_desc', 'Perfect Fit Guarantee');
+
+// Category Section
+$catSectionTag = getSetting('cat_section_tag', 'Master Atelier Collections');
+$catSectionTitle = getSetting('cat_section_title', 'Bespoke Tailoring Across Categories');
+$catSectionDesc = getSetting('cat_section_desc', 'Handcrafted for men and women with Savile Row craftsmanship and Italian finishing standards.');
+
+$cat1Tag = getSetting('cat_1_tag', "Men's Atelier");
+$cat1Title = getSetting('cat_1_title', "Men's Bespoke Suits & Shirts");
+$cat1Desc = getSetting('cat_1_desc', "Formal Shirts, 2-Piece & 3-Piece Tuxedos, Tailored Trousers, Bandhgalas, and Kurta Pajama sets.");
+$cat1Price = getSetting('cat_1_price', 'From ₹599');
+$cat1Image = getSetting('cat_1_image', 'assets/images/men_bespoke.jpg');
+$cat1BtnText = getSetting('cat_1_btn_text', 'Book Measurement');
+$cat1BtnLink = getSetting('cat_1_btn_link', 'book.php');
+
+$cat2Tag = getSetting('cat_2_tag', "Women's Atelier");
+$cat2Title = getSetting('cat_2_title', "Designer Blouses & Lehengas");
+$cat2Desc = getSetting('cat_2_desc', "Saree Blouses (Princess cut, Padded, Backless), Anarkalis, Salwar Kameez, and Bridal Lehengas.");
+$cat2Price = getSetting('cat_2_price', 'From ₹699');
+$cat2Image = getSetting('cat_2_image', 'assets/images/women_atelier.jpg');
+$cat2BtnText = getSetting('cat_2_btn_text', 'Book Measurement');
+$cat2BtnLink = getSetting('cat_2_btn_link', 'book.php');
+
+$cat3Tag = getSetting('cat_3_tag', "24H Express");
+$cat3Title = getSetting('cat_3_title', "Custom Fitting & Alterations");
+$cat3Desc = getSetting('cat_3_desc', "Emergency suit alterations, waist tapering, sleeve adjustments, and hem reshaping in record time.");
+$cat3Price = getSetting('cat_3_price', 'From ₹299');
+$cat3Image = getSetting('cat_3_image', 'assets/images/hero_tailor.jpg');
+$cat3BtnText = getSetting('cat_3_btn_text', 'Book Alteration');
+$cat3BtnLink = getSetting('cat_3_btn_link', 'book.php');
+
+function resolveCmsImg($imgPath) {
+    if (empty($imgPath)) return APP_URL . '/assets/images/hero_tailor.jpg';
+    if (str_starts_with($imgPath, 'http://') || str_starts_with($imgPath, 'https://')) {
+        return $imgPath;
+    }
+    return APP_URL . '/' . ltrim($imgPath, '/');
+}
 
 $aboutTitle = getSetting('about_title', 'Crafted by Master Artisans. Delivered at Express Speed.');
 $aboutText = getSetting('about_text', 'MY TAYLOR redefines modern sartorial luxury. We combine bespoke Italian & Savile Row construction standards with precision digital workflows and guaranteed 24-hour express doorstep delivery.');
@@ -37,7 +87,7 @@ try {
 ?>
 
 <!-- 1. Ultra-Luxury Hero Section with GSAP Animations -->
-<section class="hero-section" style="position:relative; overflow:hidden; background: linear-gradient(135deg, rgba(7,13,30,0.92) 0%, rgba(10,17,40,0.85) 60%, rgba(7,13,30,0.95) 100%), url('<?= APP_URL ?>/assets/images/hero_tailor.jpg') center/cover no-repeat; padding: 75px 0 95px;">
+<section class="hero-section" style="position:relative; overflow:hidden; background: linear-gradient(135deg, rgba(7,13,30,0.92) 0%, rgba(10,17,40,0.85) 60%, rgba(7,13,30,0.95) 100%), url('<?= resolveCmsImg($heroImageUrl) ?>') center/cover no-repeat; padding: 75px 0 95px;">
   <div class="container hero-grid" style="position:relative; z-index:2;">
     <div>
       <div class="gsap-hero-badge" style="display:inline-flex; align-items:center; gap:8px; margin-bottom:18px;">
@@ -62,19 +112,19 @@ try {
       <!-- Hero Value Counters with GSAP Increment -->
       <div class="hero-stats gsap-hero-stats" style="border-top:1px solid rgba(212,175,55,0.25); padding-top:24px;">
         <div class="stat-item">
-          <h4 class="counter-num" data-target="24" style="color:var(--gold-primary); font-size:32px; margin:0; font-weight:800;">24</h4>
-          <span style="font-size:14px; font-weight:700; color:var(--gold-primary);">Hours</span>
-          <p style="color:#94A3B8; font-size:12px; margin:2px 0 0;">Guaranteed Handover SLA</p>
+          <h4 class="counter-num" data-target="<?= (int)preg_replace('/\D/', '', $stat1Num) ?>" style="color:var(--gold-primary); font-size:32px; margin:0; font-weight:800;"><?= e($stat1Num) ?></h4>
+          <span style="font-size:14px; font-weight:700; color:var(--gold-primary);"><?= e($stat1Label) ?></span>
+          <p style="color:#94A3B8; font-size:12px; margin:2px 0 0;"><?= e($stat1Desc) ?></p>
         </div>
         <div class="stat-item">
-          <h4 class="counter-num" data-target="15" style="color:#FFFFFF; font-size:32px; margin:0; font-weight:800;">15</h4>
-          <span style="font-size:14px; font-weight:700; color:#FFFFFF;">Points</span>
-          <p style="color:#94A3B8; font-size:12px; margin:2px 0 0;">Doorstep Body Measurements</p>
+          <h4 class="counter-num" data-target="<?= (int)preg_replace('/\D/', '', $stat2Num) ?>" style="color:#FFFFFF; font-size:32px; margin:0; font-weight:800;"><?= e($stat2Num) ?></h4>
+          <span style="font-size:14px; font-weight:700; color:#FFFFFF;"><?= e($stat2Label) ?></span>
+          <p style="color:#94A3B8; font-size:12px; margin:2px 0 0;"><?= e($stat2Desc) ?></p>
         </div>
         <div class="stat-item">
-          <h4 class="counter-num" data-target="100" style="color:var(--accent-emerald); font-size:32px; margin:0; font-weight:800;">100</h4>
-          <span style="font-size:14px; font-weight:700; color:var(--accent-emerald);">%</span>
-          <p style="color:#94A3B8; font-size:12px; margin:2px 0 0;">Perfect Fit Guarantee</p>
+          <h4 class="counter-num" data-target="<?= (int)preg_replace('/\D/', '', $stat3Num) ?>" style="color:var(--accent-emerald); font-size:32px; margin:0; font-weight:800;"><?= e($stat3Num) ?></h4>
+          <span style="font-size:14px; font-weight:700; color:var(--accent-emerald);"><?= e($stat3Label) ?></span>
+          <p style="color:#94A3B8; font-size:12px; margin:2px 0 0;"><?= e($stat3Desc) ?></p>
         </div>
       </div>
     </div>
@@ -192,13 +242,13 @@ try {
   </div>
 </section>
 
-<!-- 4. Featured Bespoke Collections Grid -->
+<!-- 4. Featured Bespoke Collections Grid (CMS Dynamic) -->
 <section class="section gsap-reveal-section" style="background:#F1F5F9; padding:80px 0;">
   <div class="container">
     <div class="section-header">
-      <span class="section-tag">Master Atelier Collections</span>
-      <h2 class="section-title">Bespoke Tailoring Across Categories</h2>
-      <p class="section-desc">Handcrafted for men and women with Savile Row craftsmanship and Italian finishing standards.</p>
+      <span class="section-tag"><?= e($catSectionTag) ?></span>
+      <h2 class="section-title"><?= e($catSectionTitle) ?></h2>
+      <p class="section-desc"><?= e($catSectionDesc) ?></p>
     </div>
 
     <div class="category-grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:24px; margin-top:30px;">
@@ -206,15 +256,15 @@ try {
       <!-- Men's Bespoke Card -->
       <div class="card gsap-cat-card" style="padding:0; overflow:hidden; border-radius:var(--radius-lg); box-shadow:var(--shadow-md); transition:transform 0.3s, box-shadow 0.3s;">
         <div style="height:240px; overflow:hidden; position:relative;">
-          <img src="<?= APP_URL ?>/assets/images/men_bespoke.jpg" alt="Men's Bespoke Tailoring" style="width:100%; height:100%; object-fit:cover; transition:transform 0.4s;">
-          <span style="position:absolute; top:16px; left:16px; background:#070D1E; color:var(--gold-primary); font-size:11px; font-weight:800; padding:4px 10px; border-radius:20px; text-transform:uppercase;">Men's Atelier</span>
+          <img src="<?= resolveCmsImg($cat1Image) ?>" alt="<?= e($cat1Title) ?>" style="width:100%; height:100%; object-fit:cover; transition:transform 0.4s;">
+          <span style="position:absolute; top:16px; left:16px; background:#070D1E; color:var(--gold-primary); font-size:11px; font-weight:800; padding:4px 10px; border-radius:20px; text-transform:uppercase;"><?= e($cat1Tag) ?></span>
         </div>
         <div style="padding:24px;">
-          <h3 style="font-size:20px; margin-bottom:8px; color:#0F172A;">Men's Bespoke Suits & Shirts</h3>
-          <p style="font-size:13.5px; color:var(--text-muted); margin-bottom:16px;">Formal Shirts, 2-Piece & 3-Piece Tuxedos, Tailored Trousers, Bandhgalas, and Kurta Pajama sets.</p>
+          <h3 style="font-size:20px; margin-bottom:8px; color:#0F172A;"><?= e($cat1Title) ?></h3>
+          <p style="font-size:13.5px; color:var(--text-muted); margin-bottom:16px;"><?= e($cat1Desc) ?></p>
           <div style="display:flex; justify-content:space-between; align-items:center;">
-            <strong style="color:var(--gold-primary); font-size:18px;">From ₹599</strong>
-            <a href="<?= APP_URL ?>/book.php" class="btn btn-dark btn-sm"><i class="fa-solid fa-tape"></i> Book Measurement</a>
+            <strong style="color:var(--gold-primary); font-size:18px;"><?= e($cat1Price) ?></strong>
+            <a href="<?= (str_starts_with($cat1BtnLink, 'http') ? e($cat1BtnLink) : APP_URL . '/' . ltrim($cat1BtnLink, '/')) ?>" class="btn btn-dark btn-sm"><i class="fa-solid fa-tape"></i> <?= e($cat1BtnText) ?></a>
           </div>
         </div>
       </div>
@@ -222,15 +272,15 @@ try {
       <!-- Women's Designer Card -->
       <div class="card gsap-cat-card" style="padding:0; overflow:hidden; border-radius:var(--radius-lg); box-shadow:var(--shadow-md); transition:transform 0.3s, box-shadow 0.3s;">
         <div style="height:240px; overflow:hidden; position:relative;">
-          <img src="<?= APP_URL ?>/assets/images/women_atelier.jpg" alt="Women's Designer Atelier" style="width:100%; height:100%; object-fit:cover; transition:transform 0.4s;">
-          <span style="position:absolute; top:16px; left:16px; background:#070D1E; color:var(--gold-primary); font-size:11px; font-weight:800; padding:4px 10px; border-radius:20px; text-transform:uppercase;">Women's Atelier</span>
+          <img src="<?= resolveCmsImg($cat2Image) ?>" alt="<?= e($cat2Title) ?>" style="width:100%; height:100%; object-fit:cover; transition:transform 0.4s;">
+          <span style="position:absolute; top:16px; left:16px; background:#070D1E; color:var(--gold-primary); font-size:11px; font-weight:800; padding:4px 10px; border-radius:20px; text-transform:uppercase;"><?= e($cat2Tag) ?></span>
         </div>
         <div style="padding:24px;">
-          <h3 style="font-size:20px; margin-bottom:8px; color:#0F172A;">Designer Blouses & Lehengas</h3>
-          <p style="font-size:13.5px; color:var(--text-muted); margin-bottom:16px;">Saree Blouses (Princess cut, Padded, Backless), Anarkalis, Salwar Kameez, and Bridal Lehengas.</p>
+          <h3 style="font-size:20px; margin-bottom:8px; color:#0F172A;"><?= e($cat2Title) ?></h3>
+          <p style="font-size:13.5px; color:var(--text-muted); margin-bottom:16px;"><?= e($cat2Desc) ?></p>
           <div style="display:flex; justify-content:space-between; align-items:center;">
-            <strong style="color:var(--gold-primary); font-size:18px;">From ₹699</strong>
-            <a href="<?= APP_URL ?>/book.php" class="btn btn-dark btn-sm"><i class="fa-solid fa-tape"></i> Book Measurement</a>
+            <strong style="color:var(--gold-primary); font-size:18px;"><?= e($cat2Price) ?></strong>
+            <a href="<?= (str_starts_with($cat2BtnLink, 'http') ? e($cat2BtnLink) : APP_URL . '/' . ltrim($cat2BtnLink, '/')) ?>" class="btn btn-dark btn-sm"><i class="fa-solid fa-tape"></i> <?= e($cat2BtnText) ?></a>
           </div>
         </div>
       </div>
@@ -238,15 +288,15 @@ try {
       <!-- Custom & 24H Express Alterations -->
       <div class="card gsap-cat-card" style="padding:0; overflow:hidden; border-radius:var(--radius-lg); box-shadow:var(--shadow-md); transition:transform 0.3s, box-shadow 0.3s;">
         <div style="height:240px; overflow:hidden; position:relative; background:#0A1128;">
-          <img src="<?= APP_URL ?>/assets/images/hero_tailor.jpg" alt="Express Alterations" style="width:100%; height:100%; object-fit:cover; transition:transform 0.4s;">
-          <span style="position:absolute; top:16px; left:16px; background:#B45309; color:#FFFFFF; font-size:11px; font-weight:800; padding:4px 10px; border-radius:20px; text-transform:uppercase;"><i class="fa-solid fa-bolt"></i> 24H Express</span>
+          <img src="<?= resolveCmsImg($cat3Image) ?>" alt="<?= e($cat3Title) ?>" style="width:100%; height:100%; object-fit:cover; transition:transform 0.4s;">
+          <span style="position:absolute; top:16px; left:16px; background:#B45309; color:#FFFFFF; font-size:11px; font-weight:800; padding:4px 10px; border-radius:20px; text-transform:uppercase;"><i class="fa-solid fa-bolt"></i> <?= e($cat3Tag) ?></span>
         </div>
         <div style="padding:24px;">
-          <h3 style="font-size:20px; margin-bottom:8px; color:#0F172A;">Custom Fitting & Alterations</h3>
-          <p style="font-size:13.5px; color:var(--text-muted); margin-bottom:16px;">Emergency suit alterations, waist tapering, sleeve adjustments, and hem reshaping in record time.</p>
+          <h3 style="font-size:20px; margin-bottom:8px; color:#0F172A;"><?= e($cat3Title) ?></h3>
+          <p style="font-size:13.5px; color:var(--text-muted); margin-bottom:16px;"><?= e($cat3Desc) ?></p>
           <div style="display:flex; justify-content:space-between; align-items:center;">
-            <strong style="color:var(--gold-primary); font-size:18px;">From ₹299</strong>
-            <a href="<?= APP_URL ?>/book.php" class="btn btn-gold btn-sm"><i class="fa-solid fa-scissors"></i> Book Alteration</a>
+            <strong style="color:var(--gold-primary); font-size:18px;"><?= e($cat3Price) ?></strong>
+            <a href="<?= (str_starts_with($cat3BtnLink, 'http') ? e($cat3BtnLink) : APP_URL . '/' . ltrim($cat3BtnLink, '/')) ?>" class="btn btn-gold btn-sm"><i class="fa-solid fa-scissors"></i> <?= e($cat3BtnText) ?></a>
           </div>
         </div>
       </div>
