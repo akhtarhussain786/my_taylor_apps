@@ -19,7 +19,7 @@ $errorMessage = null;
 
 // Handle Booking Form Submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $serviceId = (int)($_POST['service_id'] ?? 1);
+    $serviceId = (int)($_POST['service_id'] ?? 0);
     $customerName = trim($_POST['customer_name'] ?? '');
     $customerMobile = trim($_POST['customer_mobile'] ?? '');
     $customerEmail = trim($_POST['customer_email'] ?? '');
@@ -30,20 +30,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $street = trim($_POST['street'] ?? '');
     $area = trim($_POST['area'] ?? '');
     $landmark = trim($_POST['landmark'] ?? '');
-    $city = trim($_POST['city'] ?? 'Mumbai');
+    $city = trim($_POST['city'] ?? '');
     $state = trim($_POST['state'] ?? 'Maharashtra');
-    $pincode = trim($_POST['pincode'] ?? '400050');
+    $pincode = trim($_POST['pincode'] ?? '');
     $lat = !empty($_POST['latitude']) ? (float)$_POST['latitude'] : null;
     $lng = !empty($_POST['longitude']) ? (float)$_POST['longitude'] : null;
 
-    $appointmentDate = $_POST['appointment_date'] ?? date('Y-m-d');
-    $timeSlot = $_POST['time_slot'] ?? '10:00 AM – 11:00 AM';
-    $deliveryPref = $_POST['delivery_preference'] ?? '24H_EXPRESS';
-    $paymentChoice = $_POST['payment_method'] ?? 'COD'; // COD or CASHFREE_ONLINE
+    $appointmentDate = trim($_POST['appointment_date'] ?? '');
+    $timeSlot = trim($_POST['time_slot'] ?? '');
+    $deliveryPref = trim($_POST['delivery_preference'] ?? '24H_EXPRESS');
+    $paymentChoice = trim($_POST['payment_method'] ?? 'COD'); // COD or CASHFREE_ONLINE
     $specialNotes = trim($_POST['special_notes'] ?? '');
 
-    if (empty($customerName) || empty($customerMobile) || empty($houseNo) || empty($pincode)) {
-        $errorMessage = "Please fill in all mandatory details (Name, Mobile, House/Street & Pincode).";
+    // Strict Validation: Every booking field must be filled
+    $missingFields = [];
+    if (empty($serviceId)) $missingFields[] = 'Garment Service';
+    if (empty($houseNo)) $missingFields[] = 'House / Flat / Unit No.';
+    if (empty($building)) $missingFields[] = 'Building / Apartment / Society';
+    if (empty($street)) $missingFields[] = 'Street / Road / Lane';
+    if (empty($landmark)) $missingFields[] = 'Landmark';
+    if (empty($area)) $missingFields[] = 'Area / Locality';
+    if (empty($city)) $missingFields[] = 'City';
+    if (empty($pincode)) $missingFields[] = '6-Digit Pincode';
+    if (empty($appointmentDate)) $missingFields[] = 'Appointment Date';
+    if (empty($timeSlot)) $missingFields[] = 'Arrival Time Slot';
+    if (empty($paymentChoice)) $missingFields[] = 'Payment Method';
+    if (empty($customerName)) $missingFields[] = 'Full Name';
+    if (empty($customerMobile)) $missingFields[] = 'Mobile Number';
+    if (empty($customerEmail)) $missingFields[] = 'Email Address';
+
+    $cleanMobile = preg_replace('/\D/', '', $customerMobile);
+
+    if (!empty($missingFields)) {
+        $errorMessage = "Booking aage badhane ke liye sabhi details bharna anivarya (Required) hai: " . implode(', ', $missingFields) . ".";
+    } elseif (strlen($cleanMobile) !== 10) {
+        $errorMessage = "Kripya sahi 10-digit mobile number enter karein (e.g. 9876543210).";
+    } elseif (!filter_var($customerEmail, FILTER_VALIDATE_EMAIL)) {
+        $errorMessage = "Kripya valid email address enter karein (e.g. name@example.com).";
+    } elseif (!preg_match('/^[0-9]{6}$/', $pincode)) {
+        $errorMessage = "Kripya valid 6-digit Indian Pincode enter karein (e.g. 400050).";
+    } elseif (strtotime($appointmentDate) < strtotime(date('Y-m-d'))) {
+        $errorMessage = "Appointment date aaj ya aane wale dino ki honi chahiye.";
     } else {
         try {
             $pdo->beginTransaction();
@@ -61,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $userId = $existingUser['id'];
                 } else {
                     $hash = password_hash($customerPassword ?: 'password123', PASSWORD_BCRYPT);
-                    $emailToUse = !empty($customerEmail) ? $customerEmail : "user_" . preg_replace('/\D/', '', $customerMobile) . "@mytaylor.local";
+                    $emailToUse = !empty($customerEmail) ? $customerEmail : "user_" . $cleanMobile . "@mytaylor.local";
                     $ins = $pdo->prepare("INSERT INTO `users` (`name`, `email`, `mobile`, `password_hash`, `role`, `status`) VALUES (?, ?, ?, ?, 'customer', 'active')");
                     $ins->execute([$customerName, $emailToUse, $customerMobile, $hash]);
                     $userId = $pdo->lastInsertId();
@@ -191,31 +218,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="section-header">
       <span class="section-tag">Frictionless Experience</span>
       <h1 class="section-title">Schedule Doorstep Measurement</h1>
-      <p class="section-desc">Zero shop visits. Pick your garment, specify your address, and choose Cashfree Online or Cash on Doorstep.</p>
+      <p class="section-desc">Zero shop visits. Please fill in all required details below to book your doorstep tailoring appointment.</p>
     </div>
 
     <?php if ($errorMessage): ?>
-      <div class="card" style="background:#FEF2F2; border-color:#F87171; color:#991B1B; padding:14px 20px; margin-bottom:24px;">
-        <i class="fa-solid fa-triangle-exclamation"></i> <?= e($errorMessage) ?>
+      <div class="card" style="background:#FEF2F2; border-color:#F87171; color:#991B1B; padding:16px 20px; margin-bottom:24px; display:flex; align-items:center; gap:12px; font-weight:600;">
+        <i class="fa-solid fa-circle-exclamation" style="font-size:20px; color:#DC2626;"></i>
+        <div><?= e($errorMessage) ?></div>
       </div>
     <?php endif; ?>
 
-    <form action="<?= APP_URL ?>/book.php" method="POST" class="card" style="padding:36px; border-radius:var(--radius-lg); box-shadow:var(--shadow-md);">
+    <form action="<?= APP_URL ?>/book.php" method="POST" class="card" style="padding:36px; border-radius:var(--radius-lg); box-shadow:var(--shadow-md);" id="bookingForm">
       
       <!-- Step 1: Service Selection -->
       <div style="margin-bottom:32px;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:10px;">
           <div style="display:flex; align-items:center; gap:10px;">
             <span style="width:28px; height:28px; border-radius:50%; background:#0B132B; color:#D4AF37; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:13px;">1</span>
-            <h3 style="font-size:20px; font-weight:700;">Select Garment Service</h3>
+            <h3 style="font-size:20px; font-weight:700;">Select Garment Service <span style="color:var(--accent-rose);">*</span></h3>
           </div>
         </div>
 
         <div class="form-group">
-          <label class="form-label">Garment Category & Tailoring Type</label>
+          <label class="form-label">Garment Category & Tailoring Type <span style="color:var(--accent-rose);">*</span></label>
           <select name="service_id" class="form-control form-select" required>
-            <?php foreach ($services as $s): ?>
-              <option value="<?= $s['id'] ?>" <?= $s['id'] == $selectedServiceId ? 'selected' : '' ?>>
+            <option value="" disabled <?= empty($selectedServiceId) && !isset($_POST['service_id']) ? 'selected' : '' ?>>-- Please Select a Garment Service --</option>
+            <?php foreach ($services as $s): 
+              $isSelected = isset($_POST['service_id']) ? ((int)$_POST['service_id'] == $s['id']) : ($s['id'] == $selectedServiceId);
+            ?>
+              <option value="<?= $s['id'] ?>" <?= $isSelected ? 'selected' : '' ?>>
                 [<?= strtoupper($s['category']) ?>] <?= e($s['name']) ?> — <?= formatPrice($s['base_price']) ?> (Express: +<?= formatPrice($s['express_price']) ?>)
               </option>
             <?php endforeach; ?>
@@ -230,7 +261,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:10px;">
           <div style="display:flex; align-items:center; gap:10px;">
             <span style="width:28px; height:28px; border-radius:50%; background:#0B132B; color:#D4AF37; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:13px;">2</span>
-            <h3 style="font-size:20px; font-weight:700;">Doorstep Location & Address</h3>
+            <h3 style="font-size:20px; font-weight:700;">Doorstep Address Details <span style="color:var(--accent-rose);">*</span></h3>
           </div>
           <button type="button" id="btn-detect-location" class="btn btn-gold-outline btn-sm">
             <i class="fa-solid fa-crosshairs text-gold"></i> Use My Current GPS Location
@@ -238,43 +269,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
         <div id="geo-status" style="font-size:12.5px; margin-bottom:12px; font-weight:600;"></div>
 
-        <input type="hidden" name="latitude" id="input-lat" value="19.0600">
-        <input type="hidden" name="longitude" id="input-lng" value="72.8258">
+        <input type="hidden" name="latitude" id="input-lat" value="<?= e($_POST['latitude'] ?? '19.0600') ?>">
+        <input type="hidden" name="longitude" id="input-lng" value="<?= e($_POST['longitude'] ?? '72.8258') ?>">
 
         <div class="grid-2">
           <div class="form-group">
-            <label class="form-label">House / Flat / Unit No. *</label>
-            <input type="text" name="house_no" class="form-control" placeholder="e.g. Flat 402" value="Flat 402" required>
+            <label class="form-label">House / Flat / Unit No. <span style="color:var(--accent-rose);">*</span></label>
+            <input type="text" name="house_no" class="form-control" placeholder="e.g. Flat 402 / House No. 12" value="<?= e($_POST['house_no'] ?? '') ?>" required>
           </div>
           <div class="form-group">
-            <label class="form-label">Building / Apartment / Complex</label>
-            <input type="text" name="building" class="form-control" placeholder="e.g. Imperial Heights" value="Imperial Heights">
+            <label class="form-label">Building / Apartment / Complex <span style="color:var(--accent-rose);">*</span></label>
+            <input type="text" name="building" class="form-control" placeholder="e.g. Imperial Heights / Royal Residency" value="<?= e($_POST['building'] ?? '') ?>" required>
           </div>
         </div>
 
         <div class="grid-2">
           <div class="form-group">
-            <label class="form-label">Street & Area *</label>
-            <input type="text" name="street" class="form-control" placeholder="e.g. Pali Hill Road, Bandra West" value="Pali Hill Road" required>
+            <label class="form-label">Street / Road / Lane <span style="color:var(--accent-rose);">*</span></label>
+            <input type="text" name="street" class="form-control" placeholder="e.g. MG Road / Pali Hill Road" value="<?= e($_POST['street'] ?? '') ?>" required>
           </div>
           <div class="form-group">
-            <label class="form-label">Prominent Landmark</label>
-            <input type="text" name="landmark" class="form-control" placeholder="e.g. Near Cafe Basilico" value="Near Cafe Basilico">
+            <label class="form-label">Prominent Landmark <span style="color:var(--accent-rose);">*</span></label>
+            <input type="text" name="landmark" class="form-control" placeholder="e.g. Near City Hospital / Opp. Metro Station" value="<?= e($_POST['landmark'] ?? '') ?>" required>
           </div>
         </div>
 
         <div class="grid-3">
           <div class="form-group">
-            <label class="form-label">Area / Locality *</label>
-            <input type="text" name="area" class="form-control" placeholder="e.g. Bandra West" value="Bandra West" required>
+            <label class="form-label">Area / Locality <span style="color:var(--accent-rose);">*</span></label>
+            <input type="text" name="area" class="form-control" placeholder="e.g. Bandra West / Andheri" value="<?= e($_POST['area'] ?? '') ?>" required>
           </div>
           <div class="form-group">
-            <label class="form-label">City *</label>
-            <input type="text" name="city" class="form-control" value="Mumbai" required>
+            <label class="form-label">City <span style="color:var(--accent-rose);">*</span></label>
+            <input type="text" name="city" class="form-control" placeholder="e.g. Mumbai" value="<?= e($_POST['city'] ?? 'Mumbai') ?>" required>
           </div>
           <div class="form-group">
-            <label class="form-label">Pincode (6-Digits) *</label>
-            <input type="text" name="pincode" class="form-control" value="400050" maxlength="6" required>
+            <label class="form-label">Pincode (6-Digits) <span style="color:var(--accent-rose);">*</span></label>
+            <input type="text" name="pincode" class="form-control" placeholder="e.g. 400050" pattern="[0-9]{6}" maxlength="6" minlength="6" value="<?= e($_POST['pincode'] ?? '') ?>" required>
           </div>
         </div>
       </div>
@@ -285,37 +316,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <div style="margin-bottom:32px;">
         <div style="display:flex; align-items:center; gap:10px; margin-bottom:16px;">
           <span style="width:28px; height:28px; border-radius:50%; background:#0B132B; color:#D4AF37; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:13px;">3</span>
-          <h3 style="font-size:20px; font-weight:700;">Choose Measurement Date & Time Slot</h3>
+          <h3 style="font-size:20px; font-weight:700;">Choose Measurement Date & Time Slot <span style="color:var(--accent-rose);">*</span></h3>
         </div>
 
         <div class="form-group">
-          <label class="form-label">Preferred Date *</label>
-          <input type="date" name="appointment_date" class="form-control" value="<?= date('Y-m-d') ?>" min="<?= date('Y-m-d') ?>" required>
+          <label class="form-label">Preferred Date <span style="color:var(--accent-rose);">*</span></label>
+          <input type="date" name="appointment_date" class="form-control" value="<?= e($_POST['appointment_date'] ?? date('Y-m-d')) ?>" min="<?= date('Y-m-d') ?>" required>
         </div>
 
         <div class="form-group">
-          <label class="form-label">Select 1-Hour Arrival Slot *</label>
-          <input type="hidden" name="time_slot" id="selected-time-slot" value="10:00 AM – 11:00 AM">
+          <label class="form-label">Select 1-Hour Arrival Slot <span style="color:var(--accent-rose);">*</span></label>
+          <?php $currentSlot = $_POST['time_slot'] ?? '10:00 AM – 11:00 AM'; ?>
+          <input type="hidden" name="time_slot" id="selected-time-slot" value="<?= e($currentSlot) ?>" required>
           
           <div class="slot-grid">
-            <div class="slot-item" data-slot="08:00 AM – 09:00 AM">08:00 AM – 09:00 AM</div>
-            <div class="slot-item" data-slot="09:00 AM – 10:00 AM">09:00 AM – 10:00 AM</div>
-            <div class="slot-item selected" data-slot="10:00 AM – 11:00 AM">10:00 AM – 11:00 AM</div>
-            <div class="slot-item" data-slot="11:00 AM – 12:00 PM">11:00 AM – 12:00 PM</div>
-            <div class="slot-item" data-slot="12:00 PM – 01:00 PM">12:00 PM – 01:00 PM</div>
-            <div class="slot-item" data-slot="02:00 PM – 03:00 PM">02:00 PM – 03:00 PM</div>
-            <div class="slot-item" data-slot="03:00 PM – 04:00 PM">03:00 PM – 04:00 PM</div>
-            <div class="slot-item" data-slot="04:00 PM – 05:00 PM">04:00 PM – 05:00 PM</div>
-            <div class="slot-item" data-slot="05:00 PM – 06:00 PM">05:00 PM – 06:00 PM</div>
-            <div class="slot-item" data-slot="06:00 PM – 07:00 PM">06:00 PM – 07:00 PM</div>
+            <?php
+            $slots = [
+              '08:00 AM – 09:00 AM',
+              '09:00 AM – 10:00 AM',
+              '10:00 AM – 11:00 AM',
+              '11:00 AM – 12:00 PM',
+              '12:00 PM – 01:00 PM',
+              '02:00 PM – 03:00 PM',
+              '03:00 PM – 04:00 PM',
+              '04:00 PM – 05:00 PM',
+              '05:00 PM – 06:00 PM',
+              '06:00 PM – 07:00 PM'
+            ];
+            foreach ($slots as $sl):
+            ?>
+              <div class="slot-item <?= ($currentSlot === $sl) ? 'selected' : '' ?>" data-slot="<?= $sl ?>"><?= $sl ?></div>
+            <?php endforeach; ?>
           </div>
         </div>
 
         <div class="form-group" style="margin-top:20px;">
-          <label class="form-label">Delivery SLA Option</label>
+          <label class="form-label">Delivery SLA Option <span style="color:var(--accent-rose);">*</span></label>
+          <?php $currentDelPref = $_POST['delivery_preference'] ?? '24H_EXPRESS'; ?>
           <div class="grid-2">
             <label style="display:flex; align-items:center; gap:12px; background:#F8FAFC; border:1px solid #CBD5E1; padding:16px; border-radius:var(--radius-sm); cursor:pointer;">
-              <input type="radio" name="delivery_preference" value="24H_EXPRESS" checked>
+              <input type="radio" name="delivery_preference" value="24H_EXPRESS" <?= ($currentDelPref === '24H_EXPRESS') ? 'checked' : '' ?> required>
               <div>
                 <strong style="color:#0F172A;"><i class="fa-solid fa-bolt text-gold"></i> 24-Hour Express Delivery</strong>
                 <p style="font-size:12.5px; color:var(--text-muted); margin:0;">Delivered strictly within 24 hours of measurement completion.</p>
@@ -323,7 +363,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </label>
 
             <label style="display:flex; align-items:center; gap:12px; background:#F8FAFC; border:1px solid #CBD5E1; padding:16px; border-radius:var(--radius-sm); cursor:pointer;">
-              <input type="radio" name="delivery_preference" value="STANDARD">
+              <input type="radio" name="delivery_preference" value="STANDARD" <?= ($currentDelPref === 'STANDARD') ? 'checked' : '' ?> required>
               <div>
                 <strong style="color:#0F172A;"><i class="fa-solid fa-clock"></i> Standard Tailoring (36-48h)</strong>
                 <p style="font-size:12.5px; color:var(--text-muted); margin:0;">Standard turnaround time with regular dispatch.</p>
@@ -340,14 +380,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:10px;">
           <div style="display:flex; align-items:center; gap:10px;">
             <span style="width:28px; height:28px; border-radius:50%; background:#0B132B; color:#D4AF37; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:13px;">4</span>
-            <h3 style="font-size:20px; font-weight:700;">Select Payment Method</h3>
+            <h3 style="font-size:20px; font-weight:700;">Select Payment Method <span style="color:var(--accent-rose);">*</span></h3>
           </div>
         </div>
 
+        <?php $currentPayMethod = $_POST['payment_method'] ?? ($codEnabled ? 'COD' : 'CASHFREE_ONLINE'); ?>
         <div class="grid-2" style="gap:16px;">
           <?php if ($codEnabled): ?>
             <label style="display:flex; align-items:center; gap:14px; background:#F8FAFC; border:2px solid #CBD5E1; padding:18px; border-radius:var(--radius-md); cursor:pointer;">
-              <input type="radio" name="payment_method" value="COD" checked>
+              <input type="radio" name="payment_method" value="COD" <?= ($currentPayMethod === 'COD') ? 'checked' : '' ?> required>
               <div>
                 <strong style="font-size:16px; color:#0F172A;"><i class="fa-solid fa-money-bill-wave" style="color:var(--accent-emerald);"></i> Cash on Doorstep / COD</strong>
                 <p style="font-size:13px; color:var(--text-muted); margin:2px 0 0;">Pay when the measurement executive visits your home or on garment handover.</p>
@@ -357,7 +398,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
           <?php if ($cfEnabled): ?>
             <label style="display:flex; align-items:center; gap:14px; background:#F8FAFC; border:2px solid #CBD5E1; padding:18px; border-radius:var(--radius-md); cursor:pointer;">
-              <input type="radio" name="payment_method" value="CASHFREE_ONLINE" <?= !$codEnabled ? 'checked' : '' ?>>
+              <input type="radio" name="payment_method" value="CASHFREE_ONLINE" <?= ($currentPayMethod === 'CASHFREE_ONLINE' || !$codEnabled) ? 'checked' : '' ?> required>
               <div>
                 <strong style="font-size:16px; color:#0F172A;"><i class="fa-solid fa-credit-card text-gold"></i> Pay Online via Cashfree</strong>
                 <p style="font-size:13px; color:var(--text-muted); margin:2px 0 0;">Instant UPI (GPay/PhonePe), Credit/Debit Card & Net Banking via Cashfree Gateway.</p>
@@ -373,32 +414,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <div style="margin-bottom:32px;">
         <div style="display:flex; align-items:center; gap:10px; margin-bottom:16px;">
           <span style="width:28px; height:28px; border-radius:50%; background:#0B132B; color:#D4AF37; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:13px;">5</span>
-          <h3 style="font-size:20px; font-weight:700;">Customer Contact Information</h3>
+          <h3 style="font-size:20px; font-weight:700;">Customer Contact Information <span style="color:var(--accent-rose);">*</span></h3>
         </div>
 
         <div class="grid-3">
           <div class="form-group">
-            <label class="form-label">Full Name *</label>
-            <input type="text" name="customer_name" class="form-control" placeholder="e.g. Rahul Sharma" value="<?= e($currentUser['name'] ?? 'Rahul Sharma') ?>" required>
+            <label class="form-label">Full Name <span style="color:var(--accent-rose);">*</span></label>
+            <input type="text" name="customer_name" class="form-control" placeholder="e.g. Rahul Sharma" value="<?= e($_POST['customer_name'] ?? ($currentUser['name'] ?? '')) ?>" required>
           </div>
           <div class="form-group">
-            <label class="form-label">Mobile Number *</label>
-            <input type="tel" name="customer_mobile" class="form-control" placeholder="e.g. 9876543210" value="<?= e($currentUser['mobile'] ?? '9876543210') ?>" required>
+            <label class="form-label">Mobile Number (10 Digits) <span style="color:var(--accent-rose);">*</span></label>
+            <input type="tel" name="customer_mobile" class="form-control" placeholder="e.g. 9876543210" pattern="[0-9]{10}" maxlength="10" minlength="10" value="<?= e($_POST['customer_mobile'] ?? ($currentUser['mobile'] ?? '')) ?>" required>
           </div>
           <div class="form-group">
-            <label class="form-label">Email Address</label>
-            <input type="email" name="customer_email" class="form-control" placeholder="e.g. rahul@example.com" value="<?= e($currentUser['email'] ?? 'rahul.sharma@example.com') ?>">
+            <label class="form-label">Email Address <span style="color:var(--accent-rose);">*</span></label>
+            <input type="email" name="customer_email" class="form-control" placeholder="e.g. rahul@example.com" value="<?= e($_POST['customer_email'] ?? ($currentUser['email'] ?? '')) ?>" required>
           </div>
         </div>
 
         <div class="form-group">
           <label class="form-label">Fitting / Style Instructions (Optional)</label>
-          <textarea name="special_notes" rows="2" class="form-control" placeholder="e.g. Sleeve thoda loose rakhna, preference for cutaway collars..."></textarea>
+          <textarea name="special_notes" rows="2" class="form-control" placeholder="e.g. Sleeve thoda loose rakhna, preference for cutaway collars..."><?= e($_POST['special_notes'] ?? '') ?></textarea>
         </div>
       </div>
 
-      <button type="submit" class="btn btn-gold btn-lg btn-block">
-        <i class="fa-solid fa-calendar-check"></i> Confirm Doorstep Measurement Appointment
+      <button type="submit" class="btn btn-gold btn-lg btn-block" style="font-size:16px; font-weight:800; padding:16px;">
+        <i class="fa-solid fa-calendar-check"></i> Confirm & Book Doorstep Appointment
       </button>
     </form>
 
