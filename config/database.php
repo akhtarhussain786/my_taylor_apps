@@ -48,6 +48,37 @@ function getDbConnection() {
                 die("<h3>Database Connection Error</h3><p>" . htmlspecialchars($e->getMessage()) . "</p><p>Please make sure MySQL is running in XAMPP and run <a href='database/setup.php'>database/setup.php</a></p>");
             }
         }
+
+        // Ensure password_resets table exists
+        try {
+            $pdo->exec("
+                CREATE TABLE IF NOT EXISTS `password_resets` (
+                  `id` INT AUTO_INCREMENT PRIMARY KEY,
+                  `email` VARCHAR(150) NOT NULL,
+                  `token` VARCHAR(100) NOT NULL UNIQUE,
+                  `expires_at` DATETIME NOT NULL,
+                  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                  INDEX `idx_token` (`token`),
+                  INDEX `idx_email` (`email`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+            ");
+
+            // Ensure mytaylor302@gmail.com admin exists
+            $chkAdmin = $pdo->prepare("SELECT id FROM `users` WHERE `email` = 'mytaylor302@gmail.com'");
+            $chkAdmin->execute();
+            if (!$chkAdmin->fetch()) {
+                $hash = password_hash('password123', PASSWORD_BCRYPT);
+                // Check if admin@mytaylor.com exists to update, otherwise insert
+                $upd = $pdo->prepare("UPDATE `users` SET `email` = 'mytaylor302@gmail.com' WHERE `email` = 'admin@mytaylor.com' OR `id` = 1");
+                $upd->execute();
+                if ($upd->rowCount() === 0) {
+                    $ins = $pdo->prepare("INSERT INTO `users` (`name`, `email`, `mobile`, `password_hash`, `role`, `status`) VALUES ('Admin Master', 'mytaylor302@gmail.com', '9800000000', ?, 'admin', 'active') ON DUPLICATE KEY UPDATE `email` = 'mytaylor302@gmail.com'");
+                    $ins->execute([$hash]);
+                }
+            }
+        } catch (Exception $e) {
+            // Non-blocking schema assurance
+        }
     }
     return $pdo;
 }

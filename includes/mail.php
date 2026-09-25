@@ -433,3 +433,53 @@ HTML;
         return false;
     }
 }
+
+/**
+ * Trigger: Automated Password Reset Recovery Email
+ */
+function sendPasswordResetEmail($pdo, $email, $token) {
+    try {
+        $stmt = $pdo->prepare("SELECT `name`, `role` FROM `users` WHERE `email` = ?");
+        $stmt->execute([$email]);
+        $user = $stmt->fetch();
+
+        $userName = $user['name'] ?? 'Valued Member';
+        $resetUrl = APP_URL . '/reset-password.php?token=' . urlencode($token);
+        $escapedName = htmlspecialchars($userName);
+        $escapedEmail = htmlspecialchars($email);
+
+        $bodyHtml = <<<HTML
+<h2 style="color:#0F172A; margin-top:0; font-size:22px;">Reset Your Password 🔒</h2>
+<p>Dear <strong>{$escapedName}</strong>,</p>
+<p>We received a secure request to reset the password associated with your MY TAYLOR account (<strong>{$escapedEmail}</strong>).</p>
+
+<div class="info-box" style="border-left: 4px solid #D4AF37;">
+  <p style="margin:0; font-size:14px; color:#334155; line-height:1.6;">
+    Click the button below to create a new password. For your security, this authorization link will expire in <strong>60 minutes</strong>.
+  </p>
+</div>
+
+<p style="margin:30px 0 24px; text-align:center;">
+  <a href="{$resetUrl}" class="btn-gold" style="display:inline-block; padding:14px 32px; font-size:15px; text-decoration:none;">Reset Account Password &rarr;</a>
+</p>
+
+<div style="background:#F1F5F9; border-radius:6px; padding:12px 16px; margin:20px 0; font-size:12px; color:#475569; word-break:break-all;">
+  <strong>Direct Link:</strong><br>
+  <a href="{$resetUrl}" style="color:#0284C7; text-decoration:underline;">{$resetUrl}</a>
+</div>
+
+<p style="font-size:12.5px; color:#64748B; margin-top:24px; border-top:1px solid #E2E8F0; padding-top:16px;">
+  <em>If you did not initiate this request, you can safely disregard this email. Your password will remain unchanged and your account remains secure.</em>
+</p>
+HTML;
+
+        $plainText = "Hello {$userName},\n\nWe received a password reset request for your MY TAYLOR account ({$email}).\n\nTo reset your password, please open the following link in your browser:\n{$resetUrl}\n\nThis link will expire in 60 minutes.\n\nIf you did not request this, please ignore this email.\n\nMY TAYLOR Concierge Team";
+
+        $fullHtml = getEmailLayoutTemplate($bodyHtml, "Reset password request for your MY TAYLOR account");
+        return sendSmtpEmail($email, $userName, "Password Reset Request | MY TAYLOR", $fullHtml, $plainText);
+    } catch (Exception $e) {
+        error_log("Failed sending password reset email: " . $e->getMessage());
+        return ['success' => false, 'message' => $e->getMessage()];
+    }
+}
+

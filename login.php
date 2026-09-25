@@ -18,10 +18,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $user = $stmt->fetch();
 
         // Auto-provision admin if default credentials are used and table is empty or unseeded
-        if (!$user && ($identifier === 'admin@mytaylor.com' || $identifier === '9800000000') && $password === 'password123') {
+        if (!$user && ($identifier === 'mytaylor302@gmail.com' || $identifier === 'admin@mytaylor.com' || $identifier === '9800000000') && $password === 'password123') {
             try {
                 $hash = password_hash('password123', PASSWORD_BCRYPT);
-                $ins = $pdo->prepare("INSERT INTO `users` (`name`, `email`, `mobile`, `password_hash`, `role`, `status`) VALUES ('Admin Master', 'admin@mytaylor.com', '9800000000', ?, 'admin', 'active') ON DUPLICATE KEY UPDATE `password_hash` = ?");
+                $ins = $pdo->prepare("INSERT INTO `users` (`name`, `email`, `mobile`, `password_hash`, `role`, `status`) VALUES ('Admin Master', 'mytaylor302@gmail.com', '9800000000', ?, 'admin', 'active') ON DUPLICATE KEY UPDATE `password_hash` = ?, `email` = 'mytaylor302@gmail.com'");
                 $ins->execute([$hash, $hash]);
                 $stmt->execute([$identifier, $identifier]);
                 $user = $stmt->fetch();

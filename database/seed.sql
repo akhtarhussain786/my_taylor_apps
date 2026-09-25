@@ -10,7 +10,7 @@ USE `my_taylor_db`;
 -- '$2y$10$wTf4Jv81m7L7r7.o3b3rveE7XjY8FzO7Hj/mJc2i21Y5R7x.qU7K6'
 
 INSERT INTO `users` (`id`, `name`, `email`, `mobile`, `password_hash`, `role`, `status`, `gender`) VALUES
-(1, 'Admin Master', 'admin@mytaylor.com', '9800000000', '$2y$10$VLD/S4qI11FBJdk1GVvzwuo06mgLCRNeciGElL72q8VFdoOLRceW2', 'admin', 'active', 'male'),
+(1, 'Admin Master', 'mytaylor302@gmail.com', '9800000000', '$2y$10$VLD/S4qI11FBJdk1GVvzwuo06mgLCRNeciGElL72q8VFdoOLRceW2', 'admin', 'active', 'male'),
 (2, 'Vikram Singh (Executive)', 'exec.vikram@mytaylor.com', '9800000001', '$2y$10$VLD/S4qI11FBJdk1GVvzwuo06mgLCRNeciGElL72q8VFdoOLRceW2', 'measurement_executive', 'active', 'male'),
 (3, 'Ramesh Kumar (Master Cutter)', 'cutting.ramesh@mytaylor.com', '9800000002', '$2y$10$VLD/S4qI11FBJdk1GVvzwuo06mgLCRNeciGElL72q8VFdoOLRceW2', 'cutting_staff', 'active', 'male'),
 (4, 'Master Anwar (Senior Tailor)', 'tailor.anwar@mytaylor.com', '9800000003', '$2y$10$VLD/S4qI11FBJdk1GVvzwuo06mgLCRNeciGElL72q8VFdoOLRceW2', 'tailor', 'active', 'male'),
@@ -19,7 +19,7 @@ INSERT INTO `users` (`id`, `name`, `email`, `mobile`, `password_hash`, `role`, `
 (7, 'Rohit Sharma (Express Rider)', 'delivery.rohit@mytaylor.com', '9800000006', '$2y$10$VLD/S4qI11FBJdk1GVvzwuo06mgLCRNeciGElL72q8VFdoOLRceW2', 'delivery_executive', 'active', 'male'),
 (8, 'Rahul Sharma', 'rahul.sharma@example.com', '9876543210', '$2y$10$VLD/S4qI11FBJdk1GVvzwuo06mgLCRNeciGElL72q8VFdoOLRceW2', 'customer', 'active', 'male'),
 (9, 'Priya Patel', 'priya.patel@example.com', '9876543211', '$2y$10$VLD/S4qI11FBJdk1GVvzwuo06mgLCRNeciGElL72q8VFdoOLRceW2', 'customer', 'active', 'female')
-ON DUPLICATE KEY UPDATE `password_hash`=VALUES(`password_hash`), `name`=VALUES(`name`);
+ON DUPLICATE KEY UPDATE `password_hash`=VALUES(`password_hash`), `name`=VALUES(`name`), `email`=VALUES(`email`);
 
 -- Customer Profiles
 INSERT INTO `customer_profiles` (`user_id`, `preferred_language`, `notes`, `total_orders`) VALUES
