@@ -30,7 +30,7 @@ require_once __DIR__ . '/includes/header.php';
       <form action="<?= APP_URL ?>/forgot-password.php" method="POST">
         <div class="form-group">
           <label class="form-label">Registered Email Address</label>
-          <input type="email" name="email" class="form-control" placeholder="e.g. rahul.sharma@example.com" required>
+          <input type="email" name="email" class="form-control" placeholder="Enter your registered email address" required>
         </div>
 
         <button type="submit" class="btn btn-gold btn-block">

@@ -90,7 +90,7 @@ try {
 
         <form action="<?= APP_URL ?>/track.php" method="GET" style="margin-bottom:24px;">
           <div style="display:flex; gap:8px;">
-            <input type="text" name="booking_id" class="form-control" placeholder="Enter Booking ID (e.g. MYT-20260920-001245)" value="" required style="background:rgba(255,255,255,0.08); border-color:var(--border-dark); color:#FFFFFF;">
+            <input type="text" name="booking_id" class="form-control" placeholder="Enter Booking ID" value="" required style="background:rgba(255,255,255,0.08); border-color:var(--border-dark); color:#FFFFFF;">
             <button type="submit" class="btn btn-gold" style="white-space:nowrap; font-weight:800;"><i class="fa-solid fa-magnifying-glass"></i> Track</button>
           </div>
         </form>

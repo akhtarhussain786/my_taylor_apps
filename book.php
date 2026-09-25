@@ -64,11 +64,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!empty($missingFields)) {
         $errorMessage = "Booking aage badhane ke liye sabhi details bharna anivarya (Required) hai: " . implode(', ', $missingFields) . ".";
     } elseif (strlen($cleanMobile) !== 10) {
-        $errorMessage = "Kripya sahi 10-digit mobile number enter karein (e.g. 9876543210).";
+        $errorMessage = "Kripya valid 10-digit mobile number enter karein.";
     } elseif (!filter_var($customerEmail, FILTER_VALIDATE_EMAIL)) {
-        $errorMessage = "Kripya valid email address enter karein (e.g. name@example.com).";
+        $errorMessage = "Kripya valid email address enter karein.";
     } elseif (!preg_match('/^[0-9]{6}$/', $pincode)) {
-        $errorMessage = "Kripya valid 6-digit Indian Pincode enter karein (e.g. 400050).";
+        $errorMessage = "Kripya valid 6-digit Pincode enter karein.";
     } elseif (strtotime($appointmentDate) < strtotime(date('Y-m-d'))) {
         $errorMessage = "Appointment date aaj ya aane wale dino ki honi chahiye.";
     } else {
@@ -275,37 +275,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="grid-2">
           <div class="form-group">
             <label class="form-label">House / Flat / Unit No. <span style="color:var(--accent-rose);">*</span></label>
-            <input type="text" name="house_no" class="form-control" placeholder="e.g. Flat 402 / House No. 12" value="<?= e($_POST['house_no'] ?? '') ?>" required>
+            <input type="text" name="house_no" class="form-control" placeholder="House / Flat / Unit No." value="<?= e($_POST['house_no'] ?? '') ?>" required>
           </div>
           <div class="form-group">
             <label class="form-label">Building / Apartment / Complex <span style="color:var(--accent-rose);">*</span></label>
-            <input type="text" name="building" class="form-control" placeholder="e.g. Imperial Heights / Royal Residency" value="<?= e($_POST['building'] ?? '') ?>" required>
+            <input type="text" name="building" class="form-control" placeholder="Building / Apartment / Complex" value="<?= e($_POST['building'] ?? '') ?>" required>
           </div>
         </div>
 
         <div class="grid-2">
           <div class="form-group">
             <label class="form-label">Street / Road / Lane <span style="color:var(--accent-rose);">*</span></label>
-            <input type="text" name="street" class="form-control" placeholder="e.g. MG Road / Pali Hill Road" value="<?= e($_POST['street'] ?? '') ?>" required>
+            <input type="text" name="street" class="form-control" placeholder="Street / Road / Lane" value="<?= e($_POST['street'] ?? '') ?>" required>
           </div>
           <div class="form-group">
             <label class="form-label">Prominent Landmark <span style="color:var(--accent-rose);">*</span></label>
-            <input type="text" name="landmark" class="form-control" placeholder="e.g. Near City Hospital / Opp. Metro Station" value="<?= e($_POST['landmark'] ?? '') ?>" required>
+            <input type="text" name="landmark" class="form-control" placeholder="Prominent Landmark" value="<?= e($_POST['landmark'] ?? '') ?>" required>
           </div>
         </div>
 
         <div class="grid-3">
           <div class="form-group">
             <label class="form-label">Area / Locality <span style="color:var(--accent-rose);">*</span></label>
-            <input type="text" name="area" class="form-control" placeholder="e.g. Bandra West / Andheri" value="<?= e($_POST['area'] ?? '') ?>" required>
+            <input type="text" name="area" class="form-control" placeholder="Area / Locality" value="<?= e($_POST['area'] ?? '') ?>" required>
           </div>
           <div class="form-group">
             <label class="form-label">City <span style="color:var(--accent-rose);">*</span></label>
-            <input type="text" name="city" class="form-control" placeholder="e.g. Mumbai" value="<?= e($_POST['city'] ?? 'Mumbai') ?>" required>
+            <input type="text" name="city" class="form-control" placeholder="City" value="<?= e($_POST['city'] ?? '') ?>" required>
           </div>
           <div class="form-group">
             <label class="form-label">Pincode (6-Digits) <span style="color:var(--accent-rose);">*</span></label>
-            <input type="text" name="pincode" class="form-control" placeholder="e.g. 400050" pattern="[0-9]{6}" maxlength="6" minlength="6" value="<?= e($_POST['pincode'] ?? '') ?>" required>
+            <input type="text" name="pincode" class="form-control" placeholder="Pincode" pattern="[0-9]{6}" maxlength="6" minlength="6" value="<?= e($_POST['pincode'] ?? '') ?>" required>
           </div>
         </div>
       </div>
@@ -420,21 +420,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="grid-3">
           <div class="form-group">
             <label class="form-label">Full Name <span style="color:var(--accent-rose);">*</span></label>
-            <input type="text" name="customer_name" class="form-control" placeholder="e.g. Rahul Sharma" value="<?= e($_POST['customer_name'] ?? ($currentUser['name'] ?? '')) ?>" required>
+            <input type="text" name="customer_name" class="form-control" placeholder="Full Name" value="<?= e($_POST['customer_name'] ?? ($currentUser['name'] ?? '')) ?>" required>
           </div>
           <div class="form-group">
             <label class="form-label">Mobile Number (10 Digits) <span style="color:var(--accent-rose);">*</span></label>
-            <input type="tel" name="customer_mobile" class="form-control" placeholder="e.g. 9876543210" pattern="[0-9]{10}" maxlength="10" minlength="10" value="<?= e($_POST['customer_mobile'] ?? ($currentUser['mobile'] ?? '')) ?>" required>
+            <input type="tel" name="customer_mobile" class="form-control" placeholder="Mobile Number" pattern="[0-9]{10}" maxlength="10" minlength="10" value="<?= e($_POST['customer_mobile'] ?? ($currentUser['mobile'] ?? '')) ?>" required>
           </div>
           <div class="form-group">
             <label class="form-label">Email Address <span style="color:var(--accent-rose);">*</span></label>
-            <input type="email" name="customer_email" class="form-control" placeholder="e.g. rahul@example.com" value="<?= e($_POST['customer_email'] ?? ($currentUser['email'] ?? '')) ?>" required>
+            <input type="email" name="customer_email" class="form-control" placeholder="Email Address" value="<?= e($_POST['customer_email'] ?? ($currentUser['email'] ?? '')) ?>" required>
           </div>
         </div>
 
         <div class="form-group">
           <label class="form-label">Fitting / Style Instructions (Optional)</label>
-          <textarea name="special_notes" rows="2" class="form-control" placeholder="e.g. Sleeve thoda loose rakhna, preference for cutaway collars..."><?= e($_POST['special_notes'] ?? '') ?></textarea>
+          <textarea name="special_notes" rows="2" class="form-control" placeholder="Any fitting or styling instructions..."><?= e($_POST['special_notes'] ?? '') ?></textarea>
         </div>
       </div>
 

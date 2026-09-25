@@ -58,7 +58,7 @@ if (!empty($bookingId)) {
     <!-- Search Bar -->
     <form action="<?= APP_URL ?>/track.php" method="GET" style="max-width:560px; margin:24px auto 0;">
       <div style="display:flex; gap:10px;">
-        <input type="text" name="booking_id" class="form-control" placeholder="Enter Booking ID (e.g. MYT-20260920-001245)" value="<?= e($bookingId) ?>" required>
+        <input type="text" name="booking_id" class="form-control" placeholder="Enter Booking ID" value="<?= e($bookingId) ?>" required>
         <button type="submit" class="btn btn-gold" style="white-space:nowrap;"><i class="fa-solid fa-magnifying-glass"></i> Track Live</button>
       </div>
     </form>
