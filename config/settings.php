@@ -46,23 +46,29 @@ function initSettingsTable($pdo) {
 // Get single setting
 function getSetting($key, $default = null) {
     static $settingsCache = null;
-    $pdo = getDbConnection();
-    
-    if ($settingsCache === null) {
-        initSettingsTable($pdo);
-        $stmt = $pdo->query("SELECT `setting_key`, `setting_value` FROM `system_settings`");
-        $settingsCache = $stmt->fetchAll(PDO::FETCH_KEY_PAIR);
+    try {
+        $pdo = getDbConnection();
+        if ($settingsCache === null) {
+            initSettingsTable($pdo);
+            $stmt = $pdo->query("SELECT `setting_key`, `setting_value` FROM `system_settings`");
+            $settingsCache = $stmt->fetchAll(PDO::FETCH_KEY_PAIR);
+        }
+        return $settingsCache[$key] ?? $default;
+    } catch (Exception $e) {
+        return $default;
     }
-    
-    return $settingsCache[$key] ?? $default;
 }
 
 // Update settings array
 function saveSettings($settingsArray) {
-    $pdo = getDbConnection();
-    initSettingsTable($pdo);
-    $stmt = $pdo->prepare("REPLACE INTO `system_settings` (`setting_key`, `setting_value`) VALUES (?, ?)");
-    foreach ($settingsArray as $k => $v) {
-        $stmt->execute([$k, (string)$v]);
+    try {
+        $pdo = getDbConnection();
+        initSettingsTable($pdo);
+        $stmt = $pdo->prepare("REPLACE INTO `system_settings` (`setting_key`, `setting_value`) VALUES (?, ?)");
+        foreach ($settingsArray as $k => $v) {
+            $stmt->execute([$k, (string)$v]);
+        }
+    } catch (Exception $e) {
+        // Log or handle gracefully
     }
 }

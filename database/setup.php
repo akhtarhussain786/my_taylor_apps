@@ -7,6 +7,10 @@
 define('ROOT_PATH', dirname(__DIR__));
 require_once ROOT_PATH . '/config/database.php';
 
+if (php_sapi_name() !== 'cli') {
+    echo "<!DOCTYPE html><html><head><title>MY TAYLOR Database Setup</title><style>body{background:#0F172A;color:#F8FAFC;font-family:monospace;padding:30px;line-height:1.6;}pre{background:#1E293B;padding:20px;border-radius:8px;border:1px solid #334155;color:#E2E8F0;font-size:14px;}</style></head><body><h2>MY TAYLOR Database Setup & Migration</h2><pre>";
+}
+
 echo "========================================================\n";
 echo "    MY TAYLOR - Database Initializer & Migration Tool   \n";
 echo "========================================================\n\n";
@@ -26,15 +30,19 @@ try {
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
         ]);
     } catch (PDOException $e) {
-        // Try connecting to server root if db doesn't exist (Localhost only)
-        $pdoRoot = new PDO("mysql:host={$host};port={$port};charset=utf8mb4", $user, $pass, [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-        ]);
-        $pdoRoot->exec("CREATE DATABASE IF NOT EXISTS `{$dbname}` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
-        $pdo = new PDO("mysql:host={$host};port={$port};dbname={$dbname};charset=utf8mb4", $user, $pass, [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-        ]);
+        if (strpos($_SERVER['HTTP_HOST'] ?? '', 'mytaylor.in') === false) {
+            // Localhost: try creating database
+            $pdoRoot = new PDO("mysql:host={$host};port={$port};charset=utf8mb4", $user, $pass, [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+            ]);
+            $pdoRoot->exec("CREATE DATABASE IF NOT EXISTS `{$dbname}` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
+            $pdo = new PDO("mysql:host={$host};port={$port};dbname={$dbname};charset=utf8mb4", $user, $pass, [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+            ]);
+        } else {
+            throw $e;
+        }
     }
     echo "  -> Connected successfully!\n\n";
 
@@ -69,12 +77,12 @@ try {
     echo "========================================================\n";
 
     if (php_sapi_name() !== 'cli') {
-        echo "<br><a href='../index.php' style='display:inline-block;padding:12px 24px;background:#0B132B;color:#D4AF37;text-decoration:none;border-radius:6px;font-family:sans-serif;'>Launch MY TAYLOR Website</a>";
+        echo "</pre><br><a href='../index.php' style='display:inline-block;padding:12px 24px;background:#D4AF37;color:#0B132B;text-decoration:none;border-radius:6px;font-family:sans-serif;font-weight:bold;'>Launch MY TAYLOR Website &rarr;</a></body></html>";
     }
 
 } catch (Exception $e) {
     echo "\n[ERROR] Database setup failed:\n" . $e->getMessage() . "\n";
     if (php_sapi_name() !== 'cli') {
-        http_response_code(500);
+        echo "</pre><div style='background:#7F1D1D;color:#FECACA;padding:16px;border-radius:6px;margin-top:10px;'><strong>Setup Error:</strong> " . htmlspecialchars($e->getMessage()) . "</div></body></html>";
     }
 }
