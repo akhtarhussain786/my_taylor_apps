@@ -76,6 +76,36 @@ function getDbConnection() {
                     $ins->execute([$hash]);
                 }
             }
+            // Ensure testimonials table exists and is populated
+            $pdo->exec("
+                CREATE TABLE IF NOT EXISTS `testimonials` (
+                  `id` INT AUTO_INCREMENT PRIMARY KEY,
+                  `customer_name` VARCHAR(100) NOT NULL,
+                  `customer_role` VARCHAR(100) DEFAULT 'Verified Client',
+                  `location` VARCHAR(100) DEFAULT 'Mumbai',
+                  `rating` INT DEFAULT 5,
+                  `review_text` TEXT NOT NULL,
+                  `image_url` VARCHAR(255) DEFAULT NULL,
+                  `garment_type` VARCHAR(100) DEFAULT 'Bespoke Suit',
+                  `status` ENUM('active', 'inactive') DEFAULT 'active',
+                  `display_order` INT DEFAULT 0,
+                  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+            ");
+
+            $testiCount = (int)$pdo->query("SELECT COUNT(*) FROM `testimonials`")->fetchColumn();
+            if ($testiCount === 0) {
+                $insTesti = $pdo->prepare("INSERT INTO `testimonials` (`customer_name`, `customer_role`, `location`, `rating`, `review_text`, `image_url`, `garment_type`, `status`, `display_order`) VALUES (?, ?, ?, ?, ?, ?, ?, 'active', ?)");
+                $sampleReviews = [
+                    ['Vikramaditya Mehta', 'Managing Director, Horizon Capital', 'Bandra West, Mumbai', 5, 'Needed a bespoke Italian-cut 2-piece suit for an international investor summit on 24 hours notice. The master measurement executive arrived at my apartment with laser dockets, and the tailored garment was delivered to my doorstep next afternoon. Immaculate silhouette and pristine stitching!', 'assets/images/testimonial_1.jpg', 'Bespoke Suit & Shirt', 1],
+                    ['Ananya Deshmukh', 'Fashion Designer & Stylist', 'Juhu, Mumbai', 5, 'The padded princess-cut designer saree blouse was executed with French seam precision and zero fabric pulling. The 24-hour express doorstep delivery turnaround is revolutionary in Mumbai bespoke fashion. Absolutely ecstatic with the finish!', 'assets/images/testimonial_2.jpg', 'Designer Saree Blouse', 2],
+                    ['Rohan Singhania', 'Tech Founder & VP Engineering', 'Powai, Mumbai', 5, 'Live tracking my shirts from cutting bay to tailor station felt like watching an Apple keynote. The collar firmness and custom sleeve monogram are top-tier. No tailor in Mumbai matches this digital convenience and craft.', 'assets/images/testimonial_3.jpg', 'Custom Egyptian Shirts', 3],
+                    ['Dr. Radhika Sen', 'Senior Consultant Surgeon', 'South Mumbai', 5, 'As a doctor with erratic hospital shifts, visiting tailor shops was impossible. MY TAYLOR scheduled a 7:30 PM measurement visit, took 15 anatomical points, and delivered 2 formal trousers and a blazer flawlessly within 24 hours.', 'assets/images/testimonial_4.jpg', 'Tailored Trousers & Blazer', 4]
+                ];
+                foreach ($sampleReviews as $r) {
+                    $insTesti->execute($r);
+                }
+            }
         } catch (Exception $e) {
             // Non-blocking schema assurance
         }

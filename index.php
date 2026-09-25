@@ -74,7 +74,7 @@ $p3Desc = getSetting('promise_3_desc', 'Complete luxury concierge at your home o
 
 $whatsapp = getSetting('company_whatsapp', '9800000000');
 
-// Fetch active services safely
+// Fetch active services & testimonials safely
 $services = [];
 $testimonials = [];
 try {
@@ -83,6 +83,51 @@ try {
 } catch (Exception $e) {
     // Database tables might not be migrated yet
     $dbErrorNotice = true;
+}
+
+if (empty($testimonials)) {
+    $testimonials = [
+        [
+            'id'            => 1,
+            'customer_name' => 'Vikramaditya Mehta',
+            'customer_role' => 'Managing Director, Horizon Capital',
+            'location'      => 'Bandra West, Mumbai',
+            'rating'        => 5,
+            'review_text'   => 'Needed a bespoke Italian-cut 2-piece suit for an international investor summit on 24 hours notice. The master measurement executive arrived at my apartment with laser dockets, and the tailored garment was delivered to my doorstep next afternoon. Immaculate silhouette and pristine stitching!',
+            'image_url'     => 'assets/images/testimonial_1.jpg',
+            'garment_type'  => 'Bespoke Suit & Shirt'
+        ],
+        [
+            'id'            => 2,
+            'customer_name' => 'Ananya Deshmukh',
+            'customer_role' => 'Fashion Designer & Stylist',
+            'location'      => 'Juhu, Mumbai',
+            'rating'        => 5,
+            'review_text'   => 'The padded princess-cut designer saree blouse was executed with French seam precision and zero fabric pulling. The 24-hour express doorstep delivery turnaround is revolutionary in Mumbai bespoke fashion. Absolutely ecstatic with the finish!',
+            'image_url'     => 'assets/images/testimonial_2.jpg',
+            'garment_type'  => 'Designer Saree Blouse'
+        ],
+        [
+            'id'            => 3,
+            'customer_name' => 'Rohan Singhania',
+            'customer_role' => 'Tech Founder & VP Engineering',
+            'location'      => 'Powai, Mumbai',
+            'rating'        => 5,
+            'review_text'   => 'Live tracking my shirts from cutting bay to tailor station felt like watching an Apple keynote. The collar firmness and custom sleeve monogram are top-tier. No tailor in Mumbai matches this digital convenience and craft.',
+            'image_url'     => 'assets/images/testimonial_3.jpg',
+            'garment_type'  => 'Custom Egyptian Shirts'
+        ],
+        [
+            'id'            => 4,
+            'customer_name' => 'Dr. Radhika Sen',
+            'customer_role' => 'Senior Consultant Surgeon',
+            'location'      => 'South Mumbai',
+            'rating'        => 5,
+            'review_text'   => 'As a doctor with erratic hospital shifts, visiting tailor shops was impossible. MY TAYLOR scheduled a 7:30 PM measurement visit, took 15 anatomical points, and delivered 2 formal trousers and a blazer flawlessly within 24 hours.',
+            'image_url'     => 'assets/images/testimonial_4.jpg',
+            'garment_type'  => 'Tailored Trousers & Blazer'
+        ]
+    ];
 }
 ?>
 
