@@ -68,3 +68,13 @@ INSERT INTO `fabrics` (`id`, `sku`, `name`, `category`, `color`, `pattern`, `pri
 (5, 'FAB-SAT-005', 'Royal Satin Cotton', 'Satin Cotton', 'Midnight Black', 'Solid Satin', 799.00, 95.00, 20.00)
 ON DUPLICATE KEY UPDATE `name`=VALUES(`name`);
 
+-- Customer Testimonials & Reviews
+INSERT INTO `testimonials` (`id`, `customer_name`, `customer_role`, `location`, `rating`, `review_text`, `image_url`, `garment_type`, `status`, `display_order`) VALUES
+(1, 'Vikram Singhania', 'Managing Director, Singhania Capital', 'Bandra West, Mumbai', 5, 'I needed a bespoke tuxedo tailored within 24 hours for an international summit in Dubai. The measurement executive arrived at my home with swatches, and the finished tuxedo was delivered the next evening with Savile Row precision. Truly exceptional service!', 'assets/images/men_bespoke.jpg', '3-Piece Bespoke Tuxedo', 'active', 1),
+(2, 'Ananya Iyer', 'Fashion Stylist & Creative Lead', 'Indiranagar, Bangalore', 5, 'Finding a master tailor for intricate princess-cut designer blouses without visiting crowded markets used to be impossible. MY TAYLOR took 15 precise anatomical points in my living room, and the fit was 100% flawless on the first try.', 'assets/images/women_atelier.jpg', 'Designer Saree Blouse', 'active', 2),
+(3, 'Karan Mehra', 'Tech Founder & YC Alum', 'Cyber City, Delhi NCR', 5, 'The digital measurement docket is a complete game changer. Once measured, I reordered 5 Egyptian cotton shirts with 1-click. Delivered crisp, monogrammed, and fitted to perfection in under 24 hours.', 'assets/images/hero_tailor.jpg', 'Egyptian Cotton Shirts', 'active', 3),
+(4, 'Dr. Radhika Sen', 'Surgeon & Sartorial Enthusiast', 'South Extension, New Delhi', 5, 'Luxury atelier craftsmanship combined with doorstep concierge convenience. Their master cutters and German Gutermann stitching quality are unmatched. Zero store visits and absolute peace of mind.', 'assets/images/women_atelier.jpg', 'Bespoke Anarkali Suit', 'active', 4),
+(5, 'Rohan Malhotra', 'Architect & Design Principal', 'Juhu, Mumbai', 5, 'The 24-Hour express SLA guarantee is 100% genuine. Live tracking showed every single stage from master cutting to stitching, QC, and dispatch. MY TAYLOR is the future of luxury tailoring in India.', 'assets/images/men_bespoke.jpg', 'Italian Linen Blazer', 'active', 5)
+ON DUPLICATE KEY UPDATE `customer_name`=VALUES(`customer_name`), `review_text`=VALUES(`review_text`);
+
+
