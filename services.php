@@ -30,11 +30,11 @@ $fabrics = $pdo->query("SELECT * FROM `fabrics` WHERE `status` = 'in_stock' ORDE
 
     <!-- Category Filter Tabs -->
     <div style="display:flex; justify-content:center; gap:10px; flex-wrap:wrap;">
-      <a href="<?= APP_URL ?>/services.php?cat=all" class="btn <?= $selectedCat === 'all' ? 'btn-gold' : 'btn-dark' ?> btn-sm">All Garments</a>
-      <a href="<?= APP_URL ?>/services.php?cat=men" class="btn <?= $selectedCat === 'men' ? 'btn-gold' : 'btn-dark' ?> btn-sm"><i class="fa-solid fa-mars"></i> Men's Collection</a>
-      <a href="<?= APP_URL ?>/services.php?cat=women" class="btn <?= $selectedCat === 'women' ? 'btn-gold' : 'btn-dark' ?> btn-sm"><i class="fa-solid fa-venus"></i> Women's Atelier</a>
-      <a href="<?= APP_URL ?>/services.php?cat=custom" class="btn <?= $selectedCat === 'custom' ? 'btn-gold' : 'btn-dark' ?> btn-sm"><i class="fa-solid fa-wand-magic-sparkles"></i> Custom Tailoring</a>
-      <a href="<?= APP_URL ?>/services.php?cat=alteration" class="btn <?= $selectedCat === 'alteration' ? 'btn-gold' : 'btn-dark' ?> btn-sm"><i class="fa-solid fa-scissors"></i> Alterations</a>
+      <a href="<?= APP_URL ?>/services?cat=all" class="btn <?= $selectedCat === 'all' ? 'btn-gold' : 'btn-dark' ?> btn-sm">All Garments</a>
+      <a href="<?= APP_URL ?>/services?cat=men" class="btn <?= $selectedCat === 'men' ? 'btn-gold' : 'btn-dark' ?> btn-sm"><i class="fa-solid fa-mars"></i> Men's Collection</a>
+      <a href="<?= APP_URL ?>/services?cat=women" class="btn <?= $selectedCat === 'women' ? 'btn-gold' : 'btn-dark' ?> btn-sm"><i class="fa-solid fa-venus"></i> Women's Atelier</a>
+      <a href="<?= APP_URL ?>/services?cat=custom" class="btn <?= $selectedCat === 'custom' ? 'btn-gold' : 'btn-dark' ?> btn-sm"><i class="fa-solid fa-wand-magic-sparkles"></i> Custom Tailoring</a>
+      <a href="<?= APP_URL ?>/services?cat=alteration" class="btn <?= $selectedCat === 'alteration' ? 'btn-gold' : 'btn-dark' ?> btn-sm"><i class="fa-solid fa-scissors"></i> Alterations</a>
     </div>
   </div>
 </section>
@@ -77,7 +77,7 @@ $fabrics = $pdo->query("SELECT * FROM `fabrics` WHERE `status` = 'in_stock' ORDE
             </div>
 
             <div style="display:flex; gap:10px;">
-              <a href="<?= APP_URL ?>/book.php?service_id=<?= $srv['id'] ?>" class="btn btn-gold btn-block">
+              <a href="<?= APP_URL ?>/book?service_id=<?= $srv['id'] ?>" class="btn btn-gold btn-block">
                 <i class="fa-solid fa-calendar-plus"></i> Book Now
               </a>
             </div>

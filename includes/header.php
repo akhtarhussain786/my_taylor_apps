@@ -37,7 +37,7 @@ $whatsappNo = getSetting('company_whatsapp', '9800000000');
       <span class="ribbon-text"><i class="fa-solid fa-bolt text-gold"></i> <?= e($topAnnouncement) ?></span>
     </div>
     <div class="top-ribbon-right">
-      <a href="<?= APP_URL ?>/book.php" class="ribbon-link ribbon-book">
+      <a href="<?= APP_URL ?>/book" class="ribbon-link ribbon-book">
         <i class="fa-solid fa-calendar-check"></i> Book Doorstep Visit
       </a>
       <span class="ribbon-divider">|</span>
@@ -62,7 +62,7 @@ $whatsappNo = getSetting('company_whatsapp', '9800000000');
     <header class="navbar-custom">
       <div class="nav-wrapper">
         <!-- Brand Logo -->
-        <a href="<?= APP_URL ?>/index.php" class="brand-logo" title="MY TAYLOR — Bespoke Luxury 24H Tailoring">
+        <a href="<?= APP_URL ?>/" class="brand-logo" title="MY TAYLOR — Bespoke Luxury 24H Tailoring">
           <img src="<?= APP_URL ?>/logo-white.png" alt="MY TAYLOR Logo" onerror="this.src='<?= APP_URL ?>/logo-tight.png'">
           <div class="brand-text">
             <span class="brand-tagline" style="font-size:10px; letter-spacing:1.5px; font-weight:800; color:var(--gold-primary); text-transform:uppercase;">Tailored in 24 Hours</span>
@@ -83,22 +83,22 @@ $whatsappNo = getSetting('company_whatsapp', '9800000000');
           </div>
 
           <!-- Nav Items -->
-          <a href="<?= APP_URL ?>/index.php" class="nav-link <?= $activePage === 'index' ? 'active' : '' ?>"><i class="fa-solid fa-house text-gold"></i> Home</a>
-          <a href="<?= APP_URL ?>/services.php" class="nav-link <?= $activePage === 'services' ? 'active' : '' ?>"><i class="fa-solid fa-scissors text-gold"></i> Services</a>
-          <a href="<?= APP_URL ?>/book.php" class="nav-link <?= $activePage === 'book' ? 'active' : '' ?>"><i class="fa-solid fa-calendar-check text-gold"></i> Book Appointment</a>
-          <a href="<?= APP_URL ?>/track.php" class="nav-link <?= $activePage === 'track' ? 'active' : '' ?>"><i class="fa-solid fa-location-crosshairs text-gold"></i> Track Order</a>
+          <a href="<?= APP_URL ?>/" class="nav-link <?= $activePage === 'index' ? 'active' : '' ?>"><i class="fa-solid fa-house text-gold"></i> Home</a>
+          <a href="<?= APP_URL ?>/services" class="nav-link <?= $activePage === 'services' ? 'active' : '' ?>"><i class="fa-solid fa-scissors text-gold"></i> Services</a>
+          <a href="<?= APP_URL ?>/book" class="nav-link <?= $activePage === 'book' ? 'active' : '' ?>"><i class="fa-solid fa-calendar-check text-gold"></i> Book Appointment</a>
+          <a href="<?= APP_URL ?>/track" class="nav-link <?= $activePage === 'track' ? 'active' : '' ?>"><i class="fa-solid fa-location-crosshairs text-gold"></i> Track Order</a>
           <?php if ($currentUser && $currentUser['role'] === 'customer'): ?>
-            <a href="<?= APP_URL ?>/dashboard.php" class="nav-link <?= $activePage === 'dashboard' ? 'active' : '' ?>"><i class="fa-solid fa-ruler-combined text-gold"></i> My Profile & Orders</a>
+            <a href="<?= APP_URL ?>/dashboard" class="nav-link <?= $activePage === 'dashboard' ? 'active' : '' ?>"><i class="fa-solid fa-ruler-combined text-gold"></i> My Profile & Orders</a>
           <?php endif; ?>
           
           <!-- Mobile-only CTA & Concierge inside drawer -->
           <div class="mobile-only-nav">
-            <a href="<?= APP_URL ?>/book.php" class="btn btn-gold btn-sm btn-pulse-gold" style="width:100%; justify-content:center; margin-bottom:10px; font-weight:800; font-size:14px; padding:12px 16px;"><i class="fa-solid fa-calendar-check"></i> Book Appointment Now</a>
+            <a href="<?= APP_URL ?>/book" class="btn btn-gold btn-sm btn-pulse-gold" style="width:100%; justify-content:center; margin-bottom:10px; font-weight:800; font-size:14px; padding:12px 16px;"><i class="fa-solid fa-calendar-check"></i> Book Appointment Now</a>
             <?php if ($currentUser && $currentUser['role'] === 'customer'): ?>
-              <a href="<?= APP_URL ?>/dashboard.php" class="btn btn-dark btn-sm" style="width:100%; justify-content:center; margin-bottom:8px;"><i class="fa-solid fa-user-check text-gold"></i> My Account (<?= e($currentUser['name']) ?>)</a>
-              <a href="<?= APP_URL ?>/logout.php" class="btn btn-gold-outline btn-sm" style="width:100%; justify-content:center;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
+              <a href="<?= APP_URL ?>/dashboard" class="btn btn-dark btn-sm" style="width:100%; justify-content:center; margin-bottom:8px;"><i class="fa-solid fa-user-check text-gold"></i> My Account (<?= e($currentUser['name']) ?>)</a>
+              <a href="<?= APP_URL ?>/logout" class="btn btn-gold-outline btn-sm" style="width:100%; justify-content:center;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
             <?php else: ?>
-              <a href="<?= APP_URL ?>/login.php" class="btn btn-gold-outline btn-sm" style="width:100%; justify-content:center;"><i class="fa-solid fa-user"></i> Customer Login</a>
+              <a href="<?= APP_URL ?>/login" class="btn btn-gold-outline btn-sm" style="width:100%; justify-content:center;"><i class="fa-solid fa-user"></i> Customer Login</a>
             <?php endif; ?>
 
             <!-- Quick Concierge Contacts in Drawer -->
@@ -118,22 +118,22 @@ $whatsappNo = getSetting('company_whatsapp', '9800000000');
 
         <!-- Action Buttons (Purely Customer-Facing on Desktop) -->
         <div class="nav-actions">
-          <a href="<?= APP_URL ?>/book.php" class="btn btn-gold btn-sm btn-pulse-gold"><i class="fa-solid fa-calendar-check"></i> Book Appointment</a>
+          <a href="<?= APP_URL ?>/book" class="btn btn-gold btn-sm btn-pulse-gold"><i class="fa-solid fa-calendar-check"></i> Book Appointment</a>
           <?php if ($currentUser && $currentUser['role'] === 'customer'): ?>
             <div style="display:flex; align-items:center; gap:8px;">
-              <a href="<?= APP_URL ?>/dashboard.php" class="btn btn-dark btn-sm" title="My Account">
+              <a href="<?= APP_URL ?>/dashboard" class="btn btn-dark btn-sm" title="My Account">
                 <i class="fa-solid fa-user-check text-gold"></i> <?= e($currentUser['name']) ?>
               </a>
-              <a href="<?= APP_URL ?>/logout.php" class="btn btn-gold-outline btn-sm" title="Logout"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+              <a href="<?= APP_URL ?>/logout" class="btn btn-gold-outline btn-sm" title="Logout"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
             </div>
           <?php else: ?>
-            <a href="<?= APP_URL ?>/login.php" class="btn btn-gold-outline btn-sm"><i class="fa-solid fa-user"></i> Login</a>
+            <a href="<?= APP_URL ?>/login" class="btn btn-gold-outline btn-sm"><i class="fa-solid fa-user"></i> Login</a>
           <?php endif; ?>
         </div>
 
         <!-- Mobile Right Controls (Instant Book Button + Hamburger Toggle) -->
         <div class="mobile-nav-controls">
-          <a href="<?= APP_URL ?>/book.php" class="btn btn-gold btn-sm mobile-header-book-btn">
+          <a href="<?= APP_URL ?>/book" class="btn btn-gold btn-sm mobile-header-book-btn">
             <i class="fa-solid fa-calendar-check"></i> Book Now
           </a>
           <button type="button" id="mobileMenuToggle" class="mobile-menu-btn" aria-label="Toggle Navigation Menu">

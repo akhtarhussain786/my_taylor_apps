@@ -24,11 +24,11 @@ require_once __DIR__ . '/../config/config.php';
       <div class="footer-col">
         <h4>Tailoring Services</h4>
         <ul class="footer-links">
-          <li><a href="<?= APP_URL ?>/services.php?cat=men"><i class="fa-solid fa-angle-right text-gold"></i> Men's Bespoke Shirts</a></li>
-          <li><a href="<?= APP_URL ?>/services.php?cat=men"><i class="fa-solid fa-angle-right text-gold"></i> Tailored Formal Trousers</a></li>
-          <li><a href="<?= APP_URL ?>/services.php?cat=men"><i class="fa-solid fa-angle-right text-gold"></i> Bespoke Blazers & Suits</a></li>
-          <li><a href="<?= APP_URL ?>/services.php?cat=women"><i class="fa-solid fa-angle-right text-gold"></i> Designer Saree Blouses</a></li>
-          <li><a href="<?= APP_URL ?>/services.php?cat=alteration"><i class="fa-solid fa-angle-right text-gold"></i> Express Fit Alterations</a></li>
+          <li><a href="<?= APP_URL ?>/services?cat=men"><i class="fa-solid fa-angle-right text-gold"></i> Men's Bespoke Shirts</a></li>
+          <li><a href="<?= APP_URL ?>/services?cat=men"><i class="fa-solid fa-angle-right text-gold"></i> Tailored Formal Trousers</a></li>
+          <li><a href="<?= APP_URL ?>/services?cat=men"><i class="fa-solid fa-angle-right text-gold"></i> Bespoke Blazers & Suits</a></li>
+          <li><a href="<?= APP_URL ?>/services?cat=women"><i class="fa-solid fa-angle-right text-gold"></i> Designer Saree Blouses</a></li>
+          <li><a href="<?= APP_URL ?>/services?cat=alteration"><i class="fa-solid fa-angle-right text-gold"></i> Express Fit Alterations</a></li>
         </ul>
       </div>
 
@@ -36,10 +36,10 @@ require_once __DIR__ . '/../config/config.php';
       <div class="footer-col">
         <h4>Customer Concierge</h4>
         <ul class="footer-links">
-          <li><a href="<?= APP_URL ?>/book.php"><i class="fa-solid fa-angle-right text-gold"></i> Book Doorstep Appointment</a></li>
-          <li><a href="<?= APP_URL ?>/track.php"><i class="fa-solid fa-angle-right text-gold"></i> Live Order Tracking</a></li>
-          <li><a href="<?= APP_URL ?>/dashboard.php"><i class="fa-solid fa-angle-right text-gold"></i> Digital Measurement Profile</a></li>
-          <li><a href="<?= APP_URL ?>/login.php"><i class="fa-solid fa-angle-right text-gold"></i> Customer Sign In</a></li>
+          <li><a href="<?= APP_URL ?>/book"><i class="fa-solid fa-angle-right text-gold"></i> Book Doorstep Appointment</a></li>
+          <li><a href="<?= APP_URL ?>/track"><i class="fa-solid fa-angle-right text-gold"></i> Live Order Tracking</a></li>
+          <li><a href="<?= APP_URL ?>/dashboard"><i class="fa-solid fa-angle-right text-gold"></i> Digital Measurement Profile</a></li>
+          <li><a href="<?= APP_URL ?>/login"><i class="fa-solid fa-angle-right text-gold"></i> Customer Sign In</a></li>
         </ul>
       </div>
 
@@ -55,7 +55,7 @@ require_once __DIR__ . '/../config/config.php';
           <a href="https://wa.me/<?= preg_replace('/\D/', '', getSetting('company_whatsapp', '9800000000')) ?>" target="_blank" class="btn btn-gold btn-sm" style="flex:1; font-size:12px;">
             <i class="fa-brands fa-whatsapp"></i> Chat with Us
           </a>
-          <a href="<?= APP_URL ?>/book.php" class="btn btn-dark btn-sm" style="flex:1; font-size:12px; border-color:rgba(212,175,55,0.3);">
+          <a href="<?= APP_URL ?>/book" class="btn btn-dark btn-sm" style="flex:1; font-size:12px; border-color:rgba(212,175,55,0.3);">
             <i class="fa-solid fa-tape text-gold"></i> Book Fit
           </a>
         </div>
@@ -79,11 +79,11 @@ require_once __DIR__ . '/../config/config.php';
 <!-- Floating Sticky Mobile Bottom Action Bar (Visible on Mobile / Tablets) -->
 <div class="mobile-bottom-bar" id="mobileBottomBar">
   <div class="mobile-bottom-bar-inner">
-    <a href="<?= APP_URL ?>/book.php" class="mobile-bottom-book-cta">
+    <a href="<?= APP_URL ?>/book" class="mobile-bottom-book-cta">
       <i class="fa-solid fa-calendar-check"></i>
       <span>Book Appointment</span>
     </a>
-    <a href="<?= APP_URL ?>/track.php" class="mobile-bottom-icon-btn" title="Track Order">
+    <a href="<?= APP_URL ?>/track" class="mobile-bottom-icon-btn" title="Track Order">
       <i class="fa-solid fa-location-crosshairs text-gold"></i>
       <span>Track</span>
     </a>
@@ -99,7 +99,7 @@ require_once __DIR__ . '/../config/config.php';
 </div>
 
 <!-- Floating Quick Book Widget (Desktop & Large Screens) -->
-<a href="<?= APP_URL ?>/book.php" class="floating-quick-book" id="desktopFloatingBook" title="Book Doorstep Appointment">
+<a href="<?= APP_URL ?>/book" class="floating-quick-book" id="desktopFloatingBook" title="Book Doorstep Appointment">
   <span class="floating-book-icon"><i class="fa-solid fa-calendar-check"></i></span>
   <span class="floating-book-content">
     <strong>Book Doorstep Fit</strong>

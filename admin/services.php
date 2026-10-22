@@ -102,7 +102,7 @@ $services = $pdo->query("SELECT * FROM `services` ORDER BY `category`, `id` ASC"
     <p>Manage all apparel items, tailoring charges, and 24H express fees synced with the booking dropdown.</p>
   </div>
   <div style="display:flex; gap:10px;">
-    <a href="<?= APP_URL ?>/book.php" target="_blank" class="btn btn-sm" style="background:#0F172A; color:#D4AF37; font-weight:700; border-radius:8px;">
+    <a href="<?= APP_URL ?>/book" target="_blank" class="btn btn-sm" style="background:#0F172A; color:#D4AF37; font-weight:700; border-radius:8px;">
       <i class="fa-solid fa-eye"></i> View Live Dropdown
     </a>
   </div>
@@ -131,14 +131,14 @@ $services = $pdo->query("SELECT * FROM `services` ORDER BY `category`, `id` ASC"
       <?php endif; ?>
     </h3>
     <?php if ($editService): ?>
-      <a href="<?= APP_URL ?>/admin/services.php" class="btn btn-sm" style="background:#F1F5F9; color:#475569; font-weight:700; border-radius:6px;">
+      <a href="<?= APP_URL ?>/admin/services" class="btn btn-sm" style="background:#F1F5F9; color:#475569; font-weight:700; border-radius:6px;">
         <i class="fa-solid fa-xmark"></i> Cancel Edit Mode
       </a>
     <?php endif; ?>
   </div>
 
   <div class="admin-card-body">
-    <form action="<?= APP_URL ?>/admin/services.php" method="POST">
+    <form action="<?= APP_URL ?>/admin/services" method="POST">
       <input type="hidden" name="action" value="<?= $editService ? 'update_service' : 'create_service' ?>">
       <?php if ($editService): ?>
         <input type="hidden" name="service_id" value="<?= $editService['id'] ?>">
@@ -253,7 +253,7 @@ $services = $pdo->query("SELECT * FROM `services` ORDER BY `category`, `id` ASC"
               <span style="font-size:12.5px; font-weight:600;"><i class="fa-solid fa-bolt text-gold"></i> <?= (int)$s['estimated_hours'] ?>h</span>
             </td>
             <td>
-              <form action="<?= APP_URL ?>/admin/services.php" method="POST" style="margin:0;">
+              <form action="<?= APP_URL ?>/admin/services" method="POST" style="margin:0;">
                 <input type="hidden" name="action" value="toggle_status">
                 <input type="hidden" name="service_id" value="<?= $s['id'] ?>">
                 <button type="submit" class="badge-status <?= $s['status'] === 'active' ? 'delivered' : 'qc' ?>" style="border:none; cursor:pointer;" title="Click to toggle active/inactive">
@@ -263,11 +263,11 @@ $services = $pdo->query("SELECT * FROM `services` ORDER BY `category`, `id` ASC"
             </td>
             <td style="text-align:right;">
               <div style="display:inline-flex; gap:8px;">
-                <a href="<?= APP_URL ?>/admin/services.php?edit_id=<?= $s['id'] ?>" class="btn btn-sm" style="background:#0F172A; color:#FFFFFF; font-size:12px; padding:6px 12px; border-radius:6px;">
+                <a href="<?= APP_URL ?>/admin/services?edit_id=<?= $s['id'] ?>" class="btn btn-sm" style="background:#0F172A; color:#FFFFFF; font-size:12px; padding:6px 12px; border-radius:6px;">
                   <i class="fa-solid fa-pen-to-square text-gold"></i> Edit
                 </a>
 
-                <form action="<?= APP_URL ?>/admin/services.php" method="POST" onsubmit="return confirm('Are you sure you want to delete this garment?');" style="margin:0;">
+                <form action="<?= APP_URL ?>/admin/services" method="POST" onsubmit="return confirm('Are you sure you want to delete this garment?');" style="margin:0;">
                   <input type="hidden" name="action" value="delete_service">
                   <input type="hidden" name="service_id" value="<?= $s['id'] ?>">
                   <button type="submit" class="btn btn-sm" style="background:#FEE2E2; color:#DC2626; font-size:12px; padding:6px 12px; border-radius:6px; border:none; cursor:pointer;">

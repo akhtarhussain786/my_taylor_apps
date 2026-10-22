@@ -140,7 +140,7 @@ $testimonials = $pdo->query("SELECT * FROM `testimonials` ORDER BY `display_orde
     <h2 style="font-size:24px; font-weight:800; color:#0F172A; margin:0;">Customer Testimonials & Reviews</h2>
     <p style="color:#64748B; font-size:13.5px; margin:4px 0 0;">Manage luxury customer feedback, upload portraits, and control website testimonial carousel.</p>
   </div>
-  <a href="<?= APP_URL ?>/index.php#testimonials" target="_blank" class="btn btn-gold-outline btn-sm">
+  <a href="<?= APP_URL ?>/#testimonials" target="_blank" class="btn btn-gold-outline btn-sm">
     <i class="fa-solid fa-arrow-up-right-from-square"></i> Preview on Website
   </a>
 </div>
@@ -154,11 +154,11 @@ $testimonials = $pdo->query("SELECT * FROM `testimonials` ORDER BY `display_orde
         <?= $editItem ? '<i class="fa-solid fa-pen-to-square text-gold"></i> Edit Testimonial' : '<i class="fa-solid fa-plus-circle text-gold"></i> Add New Testimonial' ?>
       </h3>
       <?php if ($editItem): ?>
-        <a href="<?= APP_URL ?>/admin/testimonials.php" class="btn btn-sm" style="background:#F1F5F9; color:#475569; font-weight:700; border-radius:6px;">Cancel</a>
+        <a href="<?= APP_URL ?>/admin/testimonials" class="btn btn-sm" style="background:#F1F5F9; color:#475569; font-weight:700; border-radius:6px;">Cancel</a>
       <?php endif; ?>
     </div>
 
-    <form action="<?= APP_URL ?>/admin/testimonials.php" method="POST" enctype="multipart/form-data">
+    <form action="<?= APP_URL ?>/admin/testimonials" method="POST" enctype="multipart/form-data">
       <input type="hidden" name="action" value="<?= $editItem ? 'update' : 'create' ?>">
       <?php if ($editItem): ?>
         <input type="hidden" name="id" value="<?= $editItem['id'] ?>">
@@ -286,7 +286,7 @@ $testimonials = $pdo->query("SELECT * FROM `testimonials` ORDER BY `display_orde
                 </span>
               </td>
               <td>
-                <form action="<?= APP_URL ?>/admin/testimonials.php" method="POST" style="margin:0;">
+                <form action="<?= APP_URL ?>/admin/testimonials" method="POST" style="margin:0;">
                   <input type="hidden" name="action" value="toggle_status">
                   <input type="hidden" name="id" value="<?= $t['id'] ?>">
                   <input type="hidden" name="current_status" value="<?= $t['status'] ?>">
@@ -297,10 +297,10 @@ $testimonials = $pdo->query("SELECT * FROM `testimonials` ORDER BY `display_orde
               </td>
               <td style="text-align:right;">
                 <div style="display:inline-flex; gap:6px;">
-                  <a href="<?= APP_URL ?>/admin/testimonials.php?edit_id=<?= $t['id'] ?>" class="btn btn-sm" style="background:#0F172A; color:#FFFFFF; font-size:12px; padding:6px 12px; border-radius:6px;">
+                  <a href="<?= APP_URL ?>/admin/testimonials?edit_id=<?= $t['id'] ?>" class="btn btn-sm" style="background:#0F172A; color:#FFFFFF; font-size:12px; padding:6px 12px; border-radius:6px;">
                     <i class="fa-solid fa-pen"></i> Edit
                   </a>
-                  <form action="<?= APP_URL ?>/admin/testimonials.php" method="POST" onsubmit="return confirm('Are you sure you want to delete this testimonial?');" style="margin:0;">
+                  <form action="<?= APP_URL ?>/admin/testimonials" method="POST" onsubmit="return confirm('Are you sure you want to delete this testimonial?');" style="margin:0;">
                     <input type="hidden" name="action" value="delete">
                     <input type="hidden" name="id" value="<?= $t['id'] ?>">
                     <button type="submit" class="btn btn-sm" style="background:#FEE2E2; color:#DC2626; font-size:12px; padding:6px 10px; border-radius:6px; border:none; cursor:pointer;">

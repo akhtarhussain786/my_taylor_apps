@@ -82,7 +82,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'reorder' && isset($_GET['orde
 
         logAudit($newId, null, $userId, 'REORDER_PLACED', null, 'CUTTING_IN_PROGRESS', "Customer placed 1-Click Reorder {$newBookingId}");
 
-        header("Location: " . APP_URL . "/track.php?booking_id=" . urlencode($newBookingId));
+        header("Location: " . APP_URL . "/track?booking_id=" . urlencode($newBookingId));
         exit;
     }
 }
@@ -99,7 +99,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'reorder' && isset($_GET['orde
       </p>
     </div>
     <div style="display:flex; gap:12px;">
-      <a href="<?= APP_URL ?>/book.php" class="btn btn-gold"><i class="fa-solid fa-tape"></i> Book New Doorstep Appointment</a>
+      <a href="<?= APP_URL ?>/book" class="btn btn-gold"><i class="fa-solid fa-tape"></i> Book New Doorstep Appointment</a>
     </div>
   </div>
 
@@ -118,7 +118,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'reorder' && isset($_GET['orde
         <?php if (empty($orders)): ?>
           <div class="card" style="text-align:center; padding:32px;">
             <p style="color:var(--text-muted);">You have not placed any tailoring orders yet.</p>
-            <a href="<?= APP_URL ?>/book.php" class="btn btn-gold btn-sm" style="margin-top:10px;">Book First Appointment</a>
+            <a href="<?= APP_URL ?>/book" class="btn btn-gold btn-sm" style="margin-top:10px;">Book First Appointment</a>
           </div>
         <?php endif; ?>
 
@@ -151,15 +151,15 @@ if (isset($_GET['action']) && $_GET['action'] === 'reorder' && isset($_GET['orde
 
             <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid #E2E8F0; padding-top:12px; flex-wrap:wrap; gap:10px;">
               <div style="display:flex; gap:10px;">
-                <a href="<?= APP_URL ?>/track.php?booking_id=<?= urlencode($o['booking_id']) ?>" class="btn btn-gold btn-sm">
+                <a href="<?= APP_URL ?>/track?booking_id=<?= urlencode($o['booking_id']) ?>" class="btn btn-gold btn-sm">
                   <i class="fa-solid fa-location-crosshairs"></i> Track Live
                 </a>
-                <a href="<?= APP_URL ?>/invoice.php?booking_id=<?= urlencode($o['booking_id']) ?>" target="_blank" class="btn btn-dark btn-sm">
+                <a href="<?= APP_URL ?>/invoice?booking_id=<?= urlencode($o['booking_id']) ?>" target="_blank" class="btn btn-dark btn-sm">
                   <i class="fa-solid fa-file-invoice"></i> Invoice
                 </a>
               </div>
               <div>
-                <a href="<?= APP_URL ?>/dashboard.php?action=reorder&order_id=<?= $o['id'] ?>" class="btn btn-gold-outline btn-sm" onclick="return confirm('Place instant 1-Click Re-order for <?= e($o['service_name']) ?> with your saved measurements?');">
+                <a href="<?= APP_URL ?>/dashboard?action=reorder&order_id=<?= $o['id'] ?>" class="btn btn-gold-outline btn-sm" onclick="return confirm('Place instant 1-Click Re-order for <?= e($o['service_name']) ?> with your saved measurements?');">
                   <i class="fa-solid fa-repeat"></i> 1-Click Reorder
                 </a>
               </div>

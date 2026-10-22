@@ -72,7 +72,7 @@ require_once __DIR__ . '/includes/header.php';
             Your account password has been updated securely. You can now log in using your new credentials.
           </p>
 
-          <a href="<?= APP_URL ?>/login.php" class="btn btn-gold btn-block btn-lg" style="text-decoration:none; font-weight:700;">
+          <a href="<?= APP_URL ?>/login" class="btn btn-gold btn-block btn-lg" style="text-decoration:none; font-weight:700;">
             <i class="fa-solid fa-arrow-right-to-bracket"></i> Sign In to Account
           </a>
         </div>
@@ -87,11 +87,11 @@ require_once __DIR__ . '/includes/header.php';
             This password recovery link is either invalid, already used, or has expired (links expire after 60 minutes).
           </p>
 
-          <a href="<?= APP_URL ?>/forgot-password.php" class="btn btn-gold btn-block" style="text-decoration:none; font-weight:700; margin-bottom:12px;">
+          <a href="<?= APP_URL ?>/forgot-password" class="btn btn-gold btn-block" style="text-decoration:none; font-weight:700; margin-bottom:12px;">
             <i class="fa-solid fa-rotate-right"></i> Request New Reset Link
           </a>
 
-          <a href="<?= APP_URL ?>/login.php" style="color:var(--text-muted); font-size:13px; text-decoration:none;">
+          <a href="<?= APP_URL ?>/login" style="color:var(--text-muted); font-size:13px; text-decoration:none;">
             Back to Sign In
           </a>
         </div>
@@ -113,7 +113,7 @@ require_once __DIR__ . '/includes/header.php';
           </div>
         <?php endif; ?>
 
-        <form action="<?= APP_URL ?>/reset-password.php" method="POST">
+        <form action="<?= APP_URL ?>/reset-password" method="POST">
           <input type="hidden" name="token" value="<?= e($token) ?>">
 
           <div class="form-group" style="margin-bottom:18px;">

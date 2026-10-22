@@ -79,7 +79,7 @@ foreach ($orders as $o) {
               
               <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px; padding-top:8px; border-top:1px dashed #E2E8F0; font-size:11px;">
                 <span style="color:var(--accent-emerald); font-weight:700;"><?= formatPrice($item['total_amount']) ?></span>
-                <a href="<?= APP_URL ?>/track.php?booking_id=<?= urlencode($item['booking_id']) ?>" target="_blank" style="color:#2563EB; text-decoration:none; font-weight:700;">
+                <a href="<?= APP_URL ?>/track?booking_id=<?= urlencode($item['booking_id']) ?>" target="_blank" style="color:#2563EB; text-decoration:none; font-weight:700;">
                   Track <i class="fa-solid fa-arrow-up-right-from-square"></i>
                 </a>
               </div>

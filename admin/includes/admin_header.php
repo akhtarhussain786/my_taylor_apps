@@ -12,7 +12,7 @@ $pdo = getDbConnection();
 $currentUser = getCurrentUser();
 
 if (!$currentUser || $currentUser['role'] !== 'admin') {
-    header("Location: " . APP_URL . "/login.php");
+    header("Location: " . APP_URL . "/login");
     exit;
 }
 
@@ -47,7 +47,7 @@ $activeStaffCount = (int)$pdo->query("SELECT COUNT(*) FROM `users` WHERE `role` 
   <aside class="admin-sidebar" id="adminSidebar">
     <!-- Sidebar Header & Brand -->
     <div class="admin-sidebar-header">
-      <a href="<?= APP_URL ?>/admin/index.php" class="admin-sidebar-brand">
+      <a href="<?= APP_URL ?>/admin/" class="admin-sidebar-brand">
         <img src="<?= APP_URL ?>/logo-white.png" alt="MY TAYLOR Logo" onerror="this.src='<?= APP_URL ?>/logo-tight.png'">
         <div class="admin-brand-info">
           <span><i class="fa-solid fa-crown"></i> Master Admin Hub</span>
@@ -63,13 +63,13 @@ $activeStaffCount = (int)$pdo->query("SELECT COUNT(*) FROM `users` WHERE `role` 
       <div class="admin-nav-section-label">Operations Core</div>
       <ul class="admin-nav-list">
         <li class="admin-nav-item">
-          <a href="<?= APP_URL ?>/admin/index.php" class="admin-nav-link <?= $activeAdminPage === 'index' ? 'active' : '' ?>">
+          <a href="<?= APP_URL ?>/admin/" class="admin-nav-link <?= $activeAdminPage === 'index' ? 'active' : '' ?>">
             <i class="fa-solid fa-gauge-high"></i>
             <span>Command Center</span>
           </a>
         </li>
         <li class="admin-nav-item">
-          <a href="<?= APP_URL ?>/admin/appointments.php" class="admin-nav-link <?= $activeAdminPage === 'appointments' ? 'active' : '' ?>">
+          <a href="<?= APP_URL ?>/admin/appointments" class="admin-nav-link <?= $activeAdminPage === 'appointments' ? 'active' : '' ?>">
             <i class="fa-solid fa-calendar-check"></i>
             <span>Appointments</span>
             <?php if ($pendingAptCount > 0): ?>
@@ -78,7 +78,7 @@ $activeStaffCount = (int)$pdo->query("SELECT COUNT(*) FROM `users` WHERE `role` 
           </a>
         </li>
         <li class="admin-nav-item">
-          <a href="<?= APP_URL ?>/admin/orders.php" class="admin-nav-link <?= $activeAdminPage === 'orders' ? 'active' : '' ?>">
+          <a href="<?= APP_URL ?>/admin/orders" class="admin-nav-link <?= $activeAdminPage === 'orders' ? 'active' : '' ?>">
             <i class="fa-solid fa-box-open"></i>
             <span>24H Express Orders</span>
             <?php if ($activeOrderCount > 0): ?>
@@ -87,7 +87,7 @@ $activeStaffCount = (int)$pdo->query("SELECT COUNT(*) FROM `users` WHERE `role` 
           </a>
         </li>
         <li class="admin-nav-item">
-          <a href="<?= APP_URL ?>/admin/production.php" class="admin-nav-link <?= $activeAdminPage === 'production' ? 'active' : '' ?>">
+          <a href="<?= APP_URL ?>/admin/production" class="admin-nav-link <?= $activeAdminPage === 'production' ? 'active' : '' ?>">
             <i class="fa-solid fa-industry"></i>
             <span>Tailoring & Workshop</span>
           </a>
@@ -97,20 +97,20 @@ $activeStaffCount = (int)$pdo->query("SELECT COUNT(*) FROM `users` WHERE `role` 
       <div class="admin-nav-section-label">Management & Catalog</div>
       <ul class="admin-nav-list">
         <li class="admin-nav-item">
-          <a href="<?= APP_URL ?>/admin/services.php" class="admin-nav-link <?= $activeAdminPage === 'services' ? 'active' : '' ?>">
+          <a href="<?= APP_URL ?>/admin/services" class="admin-nav-link <?= $activeAdminPage === 'services' ? 'active' : '' ?>">
             <i class="fa-solid fa-scissors"></i>
             <span>Garments & Pricing</span>
           </a>
         </li>
         <li class="admin-nav-item">
-          <a href="<?= APP_URL ?>/admin/staff.php" class="admin-nav-link <?= $activeAdminPage === 'staff' ? 'active' : '' ?>">
+          <a href="<?= APP_URL ?>/admin/staff" class="admin-nav-link <?= $activeAdminPage === 'staff' ? 'active' : '' ?>">
             <i class="fa-solid fa-users-gear"></i>
             <span>Staff & Delivery Boys</span>
             <span class="admin-badge-count"><?= $activeStaffCount ?></span>
           </a>
         </li>
         <li class="admin-nav-item">
-          <a href="<?= APP_URL ?>/admin/customers.php" class="admin-nav-link <?= $activeAdminPage === 'customers' ? 'active' : '' ?>">
+          <a href="<?= APP_URL ?>/admin/customers" class="admin-nav-link <?= $activeAdminPage === 'customers' ? 'active' : '' ?>">
             <i class="fa-solid fa-address-book"></i>
             <span>Customers & Fit Data</span>
           </a>
@@ -120,31 +120,31 @@ $activeStaffCount = (int)$pdo->query("SELECT COUNT(*) FROM `users` WHERE `role` 
       <div class="admin-nav-section-label">Website & Gateway</div>
       <ul class="admin-nav-list">
         <li class="admin-nav-item">
-          <a href="<?= APP_URL ?>/admin/website-content.php" class="admin-nav-link <?= $activeAdminPage === 'website-content' ? 'active' : '' ?>">
+          <a href="<?= APP_URL ?>/admin/website-content" class="admin-nav-link <?= $activeAdminPage === 'website-content' ? 'active' : '' ?>">
             <i class="fa-solid fa-desktop"></i>
             <span>Website CMS & Texts</span>
           </a>
         </li>
         <li class="admin-nav-item">
-          <a href="<?= APP_URL ?>/admin/testimonials.php" class="admin-nav-link <?= $activeAdminPage === 'testimonials' ? 'active' : '' ?>">
+          <a href="<?= APP_URL ?>/admin/testimonials" class="admin-nav-link <?= $activeAdminPage === 'testimonials' ? 'active' : '' ?>">
             <i class="fa-solid fa-comments"></i>
             <span>Testimonials & Reviews</span>
           </a>
         </li>
         <li class="admin-nav-item">
-          <a href="<?= APP_URL ?>/admin/settings.php" class="admin-nav-link <?= $activeAdminPage === 'settings' ? 'active' : '' ?>">
+          <a href="<?= APP_URL ?>/admin/settings" class="admin-nav-link <?= $activeAdminPage === 'settings' ? 'active' : '' ?>">
             <i class="fa-solid fa-sliders"></i>
             <span>Cashfree & Controls</span>
           </a>
         </li>
         <li class="admin-nav-item">
-          <a href="<?= APP_URL ?>/admin/audit-logs.php" class="admin-nav-link <?= $activeAdminPage === 'audit-logs' ? 'active' : '' ?>">
+          <a href="<?= APP_URL ?>/admin/audit-logs" class="admin-nav-link <?= $activeAdminPage === 'audit-logs' ? 'active' : '' ?>">
             <i class="fa-solid fa-shield-halved"></i>
             <span>Security Audit Trail</span>
           </a>
         </li>
         <li class="admin-nav-item">
-          <a href="<?= APP_URL ?>/index.php" target="_blank" class="admin-nav-link" style="color:var(--admin-gold);">
+          <a href="<?= APP_URL ?>/" target="_blank" class="admin-nav-link" style="color:var(--admin-gold);">
             <i class="fa-solid fa-arrow-up-right-from-square"></i>
             <span>View Public Store</span>
           </a>
@@ -162,7 +162,7 @@ $activeStaffCount = (int)$pdo->query("SELECT COUNT(*) FROM `users` WHERE `role` 
           <div class="admin-user-name"><?= e($currentUser['name'] ?? 'Super Admin') ?></div>
           <div class="admin-user-role"><i class="fa-solid fa-circle" style="color:#10B981; font-size:8px;"></i> Master Admin</div>
         </div>
-        <a href="<?= APP_URL ?>/logout.php" title="Logout" style="color:#94A3B8; font-size:14px; text-decoration:none;">
+        <a href="<?= APP_URL ?>/logout" title="Logout" style="color:#94A3B8; font-size:14px; text-decoration:none;">
           <i class="fa-solid fa-arrow-right-from-bracket"></i>
         </a>
       </div>
@@ -191,12 +191,12 @@ $activeStaffCount = (int)$pdo->query("SELECT COUNT(*) FROM `users` WHERE `role` 
           <span class="sla-text-mobile">24H <strong>LIVE</strong></span>
         </div>
         
-        <a href="<?= APP_URL ?>/admin/settings.php" class="admin-topbar-btn" title="Payment Gateway Settings">
+        <a href="<?= APP_URL ?>/admin/settings" class="admin-topbar-btn" title="Payment Gateway Settings">
           <i class="fa-solid fa-credit-card"></i>
           <span class="btn-text">Cashfree PG</span>
         </a>
 
-        <a href="<?= APP_URL ?>/portal/delivery.php" target="_blank" class="admin-topbar-btn admin-topbar-btn-primary" title="Rider Dispatch Portal">
+        <a href="<?= APP_URL ?>/portal/delivery" target="_blank" class="admin-topbar-btn admin-topbar-btn-primary" title="Rider Dispatch Portal">
           <i class="fa-solid fa-motorcycle"></i>
           <span class="btn-text">Rider Portal</span>
         </a>

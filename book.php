@@ -207,8 +207,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
 
         <div style="display:flex; justify-content:center; gap:16px; flex-wrap:wrap;">
-          <a href="<?= APP_URL ?>/track.php?booking_id=<?= urlencode($successAppointment['appointment_code']) ?>" class="btn btn-gold btn-lg"><i class="fa-solid fa-location-crosshairs"></i> Track Order Live</a>
-          <a href="<?= APP_URL ?>/index.php" class="btn btn-dark btn-lg"><i class="fa-solid fa-house text-gold"></i> Back to Home</a>
+          <a href="<?= APP_URL ?>/track?booking_id=<?= urlencode($successAppointment['appointment_code']) ?>" class="btn btn-gold btn-lg"><i class="fa-solid fa-location-crosshairs"></i> Track Order Live</a>
+          <a href="<?= APP_URL ?>/" class="btn btn-dark btn-lg"><i class="fa-solid fa-house text-gold"></i> Back to Home</a>
         </div>
       </div>
     </div>
@@ -228,7 +228,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </div>
     <?php endif; ?>
 
-    <form action="<?= APP_URL ?>/book.php" method="POST" class="card" style="padding:36px; border-radius:var(--radius-lg); box-shadow:var(--shadow-md);" id="bookingForm">
+    <form action="<?= APP_URL ?>/book" method="POST" class="card" style="padding:36px; border-radius:var(--radius-lg); box-shadow:var(--shadow-md);" id="bookingForm">
       
       <!-- Step 1: Service Selection -->
       <div style="margin-bottom:32px;">

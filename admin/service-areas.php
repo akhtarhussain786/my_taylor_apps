@@ -6,7 +6,7 @@ require_once __DIR__ . '/../includes/auth.php';
 $pdo = getDbConnection();
 $currentUser = getCurrentUser();
 if (!$currentUser || $currentUser['role'] !== 'admin') {
-    header("Location: " . APP_URL . "/login.php");
+    header("Location: " . APP_URL . "/login");
     exit;
 }
 
@@ -58,7 +58,7 @@ $areas = $pdo->query("SELECT * FROM `service_areas` ORDER BY `city`, `pincode` A
       </div>
     </div>
     <div style="display:flex; align-items:center; gap:14px;">
-      <a href="<?= APP_URL ?>/admin/index.php" class="btn btn-gold-outline btn-sm"><i class="fa-solid fa-arrow-left"></i> Dashboard</a>
+      <a href="<?= APP_URL ?>/admin/" class="btn btn-gold-outline btn-sm"><i class="fa-solid fa-arrow-left"></i> Dashboard</a>
     </div>
   </div>
 </div>

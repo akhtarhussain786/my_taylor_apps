@@ -201,10 +201,10 @@ $deliveredCount = (int)$pdo->query("SELECT COUNT(*) FROM `orders` WHERE `order_s
     <button type="button" class="btn btn-sm" onclick="document.getElementById('addStaffModal').style.display='flex';" style="background:var(--admin-gold); color:#0F172A; font-weight:800; border-radius:8px;">
       <i class="fa-solid fa-user-plus"></i> + Add Staff Member
     </button>
-    <a href="<?= APP_URL ?>/admin/services.php" class="btn btn-sm" style="background:#0F172A; color:#FFFFFF; font-weight:700; border-radius:8px;">
+    <a href="<?= APP_URL ?>/admin/services" class="btn btn-sm" style="background:#0F172A; color:#FFFFFF; font-weight:700; border-radius:8px;">
       <i class="fa-solid fa-scissors text-gold"></i> Edit Garment Pricing
     </a>
-    <a href="<?= APP_URL ?>/admin/settings.php" class="btn btn-sm" style="background:#FFFFFF; border:1px solid var(--admin-border); color:#0F172A; font-weight:700; border-radius:8px;">
+    <a href="<?= APP_URL ?>/admin/settings" class="btn btn-sm" style="background:#FFFFFF; border:1px solid var(--admin-border); color:#0F172A; font-weight:700; border-radius:8px;">
       <i class="fa-solid fa-sliders text-gold"></i> Cashfree & Settings
     </a>
   </div>
@@ -272,7 +272,7 @@ $deliveredCount = (int)$pdo->query("SELECT COUNT(*) FROM `orders` WHERE `order_s
       <i class="fa-solid fa-box-open text-gold"></i> 
       Active 24-Hour Express Orders & Live Status Control
     </h3>
-    <a href="<?= APP_URL ?>/admin/orders.php" style="font-size:12.5px; color:var(--admin-gold); text-decoration:none; font-weight:700;">
+    <a href="<?= APP_URL ?>/admin/orders" style="font-size:12.5px; color:var(--admin-gold); text-decoration:none; font-weight:700;">
       View All Orders (<?= $totalOrders ?>) <i class="fa-solid fa-arrow-right"></i>
     </a>
   </div>
@@ -311,7 +311,7 @@ $deliveredCount = (int)$pdo->query("SELECT COUNT(*) FROM `orders` WHERE `order_s
                 <div style="font-size:12px; color:var(--accent-emerald); font-weight:800; margin-top:2px;"><?= formatPrice($o['total_amount']) ?> (Paid)</div>
               </td>
               <td>
-                <form action="<?= APP_URL ?>/admin/index.php" method="POST" style="margin:0;">
+                <form action="<?= APP_URL ?>/admin/" method="POST" style="margin:0;">
                   <input type="hidden" name="action" value="update_order_status">
                   <input type="hidden" name="order_id" value="<?= $o['id'] ?>">
                   <input type="hidden" name="new_status" value="<?= $o['order_status'] ?>">
@@ -326,7 +326,7 @@ $deliveredCount = (int)$pdo->query("SELECT COUNT(*) FROM `orders` WHERE `order_s
                 </form>
               </td>
               <td>
-                <form action="<?= APP_URL ?>/admin/index.php" method="POST" style="margin:0;">
+                <form action="<?= APP_URL ?>/admin/" method="POST" style="margin:0;">
                   <input type="hidden" name="action" value="update_order_status">
                   <input type="hidden" name="order_id" value="<?= $o['id'] ?>">
                   <input type="hidden" name="delivery_boy_id" value="<?= $o['assigned_delivery_id'] ?>">
@@ -343,7 +343,7 @@ $deliveredCount = (int)$pdo->query("SELECT COUNT(*) FROM `orders` WHERE `order_s
                 </form>
               </td>
               <td style="text-align:right;">
-                <a href="<?= APP_URL ?>/track.php?booking_id=<?= urlencode($o['booking_id']) ?>" target="_blank" class="btn btn-sm" style="background:#0F172A; color:#D4AF37; font-size:11.5px; padding:6px 12px; border-radius:6px; font-weight:700;" title="Live Customer Tracking">
+                <a href="<?= APP_URL ?>/track?booking_id=<?= urlencode($o['booking_id']) ?>" target="_blank" class="btn btn-sm" style="background:#0F172A; color:#D4AF37; font-size:11.5px; padding:6px 12px; border-radius:6px; font-weight:700;" title="Live Customer Tracking">
                   <i class="fa-solid fa-location-crosshairs"></i> Track
                 </a>
               </td>
@@ -365,7 +365,7 @@ $deliveredCount = (int)$pdo->query("SELECT COUNT(*) FROM `orders` WHERE `order_s
         <i class="fa-solid fa-calendar-check text-gold"></i>
         Doorstep Appointments (<?= count($appointments) ?>)
       </h3>
-      <a href="<?= APP_URL ?>/admin/appointments.php" style="font-size:12.5px; color:var(--admin-gold); text-decoration:none; font-weight:700;">
+      <a href="<?= APP_URL ?>/admin/appointments" style="font-size:12.5px; color:var(--admin-gold); text-decoration:none; font-weight:700;">
         View All <i class="fa-solid fa-arrow-right"></i>
       </a>
     </div>
@@ -401,7 +401,7 @@ $deliveredCount = (int)$pdo->query("SELECT COUNT(*) FROM `orders` WHERE `order_s
                   <summary style="cursor:pointer; font-weight:700; color:#0F172A;">
                     <i class="fa-solid fa-ruler-combined text-gold"></i> Input Measurements & Convert to 24H Order
                   </summary>
-                  <form action="<?= APP_URL ?>/admin/index.php" method="POST" style="margin-top:14px;">
+                  <form action="<?= APP_URL ?>/admin/" method="POST" style="margin-top:14px;">
                     <input type="hidden" name="action" value="convert_apt_to_order">
                     <input type="hidden" name="appointment_id" value="<?= $apt['id'] ?>">
                     <input type="hidden" name="garment_type" value="<?= e($apt['service_name']) ?>">
@@ -451,7 +451,7 @@ $deliveredCount = (int)$pdo->query("SELECT COUNT(*) FROM `orders` WHERE `order_s
     <div class="admin-card" style="margin-bottom:24px;">
       <div class="admin-card-header">
         <h3><i class="fa-solid fa-motorcycle text-gold"></i> Active Delivery Boys</h3>
-        <a href="<?= APP_URL ?>/admin/staff.php" style="font-size:12.5px; color:var(--admin-gold); text-decoration:none; font-weight:700;">Manage Staff</a>
+        <a href="<?= APP_URL ?>/admin/staff" style="font-size:12.5px; color:var(--admin-gold); text-decoration:none; font-weight:700;">Manage Staff</a>
       </div>
       <div class="admin-card-body" style="padding:18px;">
         <div style="display:flex; flex-direction:column; gap:12px;">
@@ -479,16 +479,16 @@ $deliveredCount = (int)$pdo->query("SELECT COUNT(*) FROM `orders` WHERE `order_s
         <h3><i class="fa-solid fa-sliders text-gold"></i> Quick Management Hub</h3>
       </div>
       <div class="admin-card-body" style="padding:18px; display:flex; flex-direction:column; gap:10px;">
-        <a href="<?= APP_URL ?>/admin/website-content.php" class="btn btn-sm" style="background:#0F172A; color:#FFFFFF; font-weight:700; text-align:left; justify-content:flex-start; padding:10px 14px;">
+        <a href="<?= APP_URL ?>/admin/website-content" class="btn btn-sm" style="background:#0F172A; color:#FFFFFF; font-weight:700; text-align:left; justify-content:flex-start; padding:10px 14px;">
           <i class="fa-solid fa-desktop text-gold" style="margin-right:8px;"></i> Edit Website Headlines & CMS Content
         </a>
-        <a href="<?= APP_URL ?>/admin/testimonials.php" class="btn btn-sm" style="background:#F8FAFC; border:1px solid #CBD5E1; color:#0F172A; font-weight:700; text-align:left; justify-content:flex-start; padding:10px 14px;">
+        <a href="<?= APP_URL ?>/admin/testimonials" class="btn btn-sm" style="background:#F8FAFC; border:1px solid #CBD5E1; color:#0F172A; font-weight:700; text-align:left; justify-content:flex-start; padding:10px 14px;">
           <i class="fa-solid fa-comments text-gold" style="margin-right:8px;"></i> Upload Customer Reviews & Photos
         </a>
-        <a href="<?= APP_URL ?>/admin/services.php" class="btn btn-sm" style="background:#F8FAFC; border:1px solid #CBD5E1; color:#0F172A; font-weight:700; text-align:left; justify-content:flex-start; padding:10px 14px;">
+        <a href="<?= APP_URL ?>/admin/services" class="btn btn-sm" style="background:#F8FAFC; border:1px solid #CBD5E1; color:#0F172A; font-weight:700; text-align:left; justify-content:flex-start; padding:10px 14px;">
           <i class="fa-solid fa-scissors text-gold" style="margin-right:8px;"></i> Add / Edit Garments & Pricing
         </a>
-        <a href="<?= APP_URL ?>/admin/settings.php" class="btn btn-sm" style="background:#F8FAFC; border:1px solid #CBD5E1; color:#0F172A; font-weight:700; text-align:left; justify-content:flex-start; padding:10px 14px;">
+        <a href="<?= APP_URL ?>/admin/settings" class="btn btn-sm" style="background:#F8FAFC; border:1px solid #CBD5E1; color:#0F172A; font-weight:700; text-align:left; justify-content:flex-start; padding:10px 14px;">
           <i class="fa-solid fa-credit-card text-gold" style="margin-right:8px;"></i> Cashfree PG Keys & COD Option
         </a>
       </div>
@@ -507,7 +507,7 @@ $deliveredCount = (int)$pdo->query("SELECT COUNT(*) FROM `orders` WHERE `order_s
       <button type="button" onclick="document.getElementById('addStaffModal').style.display='none';" style="background:none; border:none; font-size:20px; color:#64748B; cursor:pointer;">&times;</button>
     </div>
 
-    <form action="<?= APP_URL ?>/admin/index.php" method="POST">
+    <form action="<?= APP_URL ?>/admin/" method="POST">
       <input type="hidden" name="action" value="add_staff">
       
       <div style="margin-bottom:14px;">

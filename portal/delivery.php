@@ -8,7 +8,7 @@ $pdo = getDbConnection();
 
 $currentUser = getCurrentUser();
 if (!$currentUser || !in_array($currentUser['role'], ['delivery_executive', 'admin'])) {
-    header("Location: " . APP_URL . "/portal/login.php");
+    header("Location: " . APP_URL . "/portal/login");
     exit;
 }
 
@@ -95,8 +95,8 @@ $orders = $pdo->query("
       </div>
     </div>
     <div style="display:flex; align-items:center; gap:12px;">
-      <a href="<?= APP_URL ?>/admin/index.php" class="btn btn-dark btn-sm"><i class="fa-solid fa-shield-halved text-gold"></i> Admin Panel</a>
-      <a href="<?= APP_URL ?>/logout.php" class="btn btn-gold-outline btn-sm"><i class="fa-solid fa-power-off"></i></a>
+      <a href="<?= APP_URL ?>/admin/" class="btn btn-dark btn-sm"><i class="fa-solid fa-shield-halved text-gold"></i> Admin Panel</a>
+      <a href="<?= APP_URL ?>/logout" class="btn btn-gold-outline btn-sm"><i class="fa-solid fa-power-off"></i></a>
     </div>
   </div>
 </div>

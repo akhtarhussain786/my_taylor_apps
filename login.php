@@ -31,11 +31,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($user && password_verify($password, $user['password_hash'])) {
             loginUser($user);
             if ($user['role'] === 'customer') {
-                header("Location: " . APP_URL . "/dashboard.php");
+                header("Location: " . APP_URL . "/dashboard");
             } elseif ($user['role'] === 'admin') {
-                header("Location: " . APP_URL . "/admin/index.php");
+                header("Location: " . APP_URL . "/admin/");
             } else {
-                header("Location: " . APP_URL . "/portal/login.php");
+                header("Location: " . APP_URL . "/portal/login");
             }
             exit;
         } else {
@@ -61,7 +61,7 @@ require_once __DIR__ . '/includes/header.php';
         </div>
       <?php endif; ?>
 
-      <form action="<?= APP_URL ?>/login.php" method="POST">
+      <form action="<?= APP_URL ?>/login" method="POST">
         <div class="form-group">
           <label class="form-label">Mobile Number or Email *</label>
           <input type="text" name="identifier" class="form-control" placeholder="Enter your mobile number or email" value="" required autofocus>
@@ -70,7 +70,7 @@ require_once __DIR__ . '/includes/header.php';
         <div class="form-group">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
             <label class="form-label" style="margin:0;">Password *</label>
-            <a href="<?= APP_URL ?>/forgot-password.php" style="font-size:12px; color:var(--gold-primary); text-decoration:none;">Forgot password?</a>
+            <a href="<?= APP_URL ?>/forgot-password" style="font-size:12px; color:var(--gold-primary); text-decoration:none;">Forgot password?</a>
           </div>
           <input type="password" name="password" class="form-control" placeholder="Enter your password" value="" required>
         </div>
@@ -81,7 +81,7 @@ require_once __DIR__ . '/includes/header.php';
       </form>
 
       <div style="text-align:center; margin-top:24px; font-size:13.5px; color:var(--text-muted);">
-        Don't have an account? <a href="<?= APP_URL ?>/register.php" style="color:var(--gold-primary); font-weight:700; text-decoration:none;">Register Now</a>
+        Don't have an account? <a href="<?= APP_URL ?>/register" style="color:var(--gold-primary); font-weight:700; text-decoration:none;">Register Now</a>
       </div>
     </div>
   </div>

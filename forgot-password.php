@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // If SMTP is not enabled or in local test environment, provide link helper
                 $smtpEnabled = getSetting('smtp_enabled', '0') === '1';
                 if (!$smtpEnabled || (isset($mailResult['success']) && !$mailResult['success'])) {
-                    $resetLinkDemo = APP_URL . '/reset-password.php?token=' . urlencode($token);
+                    $resetLinkDemo = APP_URL . '/reset-password?token=' . urlencode($token);
                 }
             } else {
                 // Security best practice: show identical message even if email not found to avoid user enumeration
@@ -96,7 +96,7 @@ require_once __DIR__ . '/includes/header.php';
         <?php endif; ?>
       <?php endif; ?>
 
-      <form action="<?= APP_URL ?>/forgot-password.php" method="POST">
+      <form action="<?= APP_URL ?>/forgot-password" method="POST">
         <div class="form-group" style="margin-bottom:20px;">
           <label class="form-label" style="font-weight:600; font-size:13px; color:#334155; margin-bottom:6px; display:block;">Registered Email Address</label>
           <div style="position:relative;">
@@ -111,7 +111,7 @@ require_once __DIR__ . '/includes/header.php';
       </form>
 
       <div style="text-align:center; margin-top:24px; font-size:13px; padding-top:18px; border-top:1px solid #F1F5F9;">
-        <a href="<?= APP_URL ?>/login.php" style="color:var(--gold-primary); font-weight:600; text-decoration:none;"><i class="fa-solid fa-arrow-left"></i> Back to Sign In</a>
+        <a href="<?= APP_URL ?>/login" style="color:var(--gold-primary); font-weight:600; text-decoration:none;"><i class="fa-solid fa-arrow-left"></i> Back to Sign In</a>
       </div>
     </div>
   </div>

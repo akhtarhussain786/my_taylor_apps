@@ -111,13 +111,13 @@ $orders = $pdo->query("
             </td>
             <td style="text-align:right; white-space:nowrap;">
               <div style="display:inline-flex; gap:6px; align-items:center;">
-                <a href="<?= APP_URL ?>/track.php?booking_id=<?= urlencode($o['booking_id']) ?>" target="_blank" class="btn btn-sm" style="background:#0F172A; color:#D4AF37; font-size:11.5px; padding:5px 9px; border-radius:6px; text-decoration:none;" title="Live Customer Tracking">
+                <a href="<?= APP_URL ?>/track?booking_id=<?= urlencode($o['booking_id']) ?>" target="_blank" class="btn btn-sm" style="background:#0F172A; color:#D4AF37; font-size:11.5px; padding:5px 9px; border-radius:6px; text-decoration:none;" title="Live Customer Tracking">
                   <i class="fa-solid fa-location-crosshairs"></i> Track
                 </a>
-                <a href="<?= APP_URL ?>/invoice.php?booking_id=<?= urlencode($o['booking_id']) ?>" target="_blank" class="btn btn-sm" style="background:#F1F5F9; color:#0F172A; font-size:11.5px; padding:5px 9px; border-radius:6px; border:1px solid #CBD5E1; text-decoration:none;" title="Print Invoice">
+                <a href="<?= APP_URL ?>/invoice?booking_id=<?= urlencode($o['booking_id']) ?>" target="_blank" class="btn btn-sm" style="background:#F1F5F9; color:#0F172A; font-size:11.5px; padding:5px 9px; border-radius:6px; border:1px solid #CBD5E1; text-decoration:none;" title="Print Invoice">
                   <i class="fa-solid fa-print"></i>
                 </a>
-                <form action="<?= APP_URL ?>/admin/orders.php" method="POST" style="margin:0; display:inline;" onsubmit="return confirm('Kya aap sach me order <?= e($o['booking_id']) ?> ko delete karna chahte hain?');">
+                <form action="<?= APP_URL ?>/admin/orders" method="POST" style="margin:0; display:inline;" onsubmit="return confirm('Kya aap sach me order <?= e($o['booking_id']) ?> ko delete karna chahte hain?');">
                   <input type="hidden" name="delete_order" value="1">
                   <input type="hidden" name="order_id" value="<?= $o['id'] ?>">
                   <button type="submit" class="btn btn-sm" style="background:#FEE2E2; color:#DC2626; border:1px solid #FCA5A5; font-size:11.5px; padding:5px 8px; border-radius:6px; cursor:pointer;" title="Delete Order">

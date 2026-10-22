@@ -34,7 +34,7 @@ $cat1Desc = getSetting('cat_1_desc', "Formal Shirts, 2-Piece & 3-Piece Tuxedos, 
 $cat1Price = getSetting('cat_1_price', 'From ₹599');
 $cat1Image = getSetting('cat_1_image', 'assets/images/men_bespoke.jpg');
 $cat1BtnText = getSetting('cat_1_btn_text', 'Book Measurement');
-$cat1BtnLink = getSetting('cat_1_btn_link', 'book.php');
+$cat1BtnLink = getSetting('cat_1_btn_link', 'book');
 
 $cat2Tag = getSetting('cat_2_tag', "Women's Atelier");
 $cat2Title = getSetting('cat_2_title', "Designer Blouses & Lehengas");
@@ -42,7 +42,7 @@ $cat2Desc = getSetting('cat_2_desc', "Saree Blouses (Princess cut, Padded, Backl
 $cat2Price = getSetting('cat_2_price', 'From ₹699');
 $cat2Image = getSetting('cat_2_image', 'assets/images/women_atelier.jpg');
 $cat2BtnText = getSetting('cat_2_btn_text', 'Book Measurement');
-$cat2BtnLink = getSetting('cat_2_btn_link', 'book.php');
+$cat2BtnLink = getSetting('cat_2_btn_link', 'book');
 
 $cat3Tag = getSetting('cat_3_tag', "24H Express");
 $cat3Title = getSetting('cat_3_title', "Custom Fitting & Alterations");
@@ -50,7 +50,7 @@ $cat3Desc = getSetting('cat_3_desc', "Emergency suit alterations, waist tapering
 $cat3Price = getSetting('cat_3_price', 'From ₹299');
 $cat3Image = getSetting('cat_3_image', 'assets/images/hero_tailor.jpg');
 $cat3BtnText = getSetting('cat_3_btn_text', 'Book Alteration');
-$cat3BtnLink = getSetting('cat_3_btn_link', 'book.php');
+$cat3BtnLink = getSetting('cat_3_btn_link', 'book');
 
 function resolveCmsImg($imgPath) {
     if (empty($imgPath)) return APP_URL . '/assets/images/hero_tailor.jpg';
@@ -149,9 +149,9 @@ if (empty($testimonials)) {
       </p>
 
       <div class="gsap-hero-cta" style="display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin-bottom:36px;">
-        <a href="<?= APP_URL ?>/book.php" class="btn btn-gold btn-lg btn-pulse-gold" style="font-weight:800; font-size:16px; padding:14px 28px; box-shadow:0 8px 25px rgba(212,175,55,0.45);"><i class="fa-solid fa-calendar-check"></i> Book Doorstep Appointment</a>
-        <a href="<?= APP_URL ?>/services.php" class="btn btn-gold-outline btn-lg"><i class="fa-solid fa-scissors text-gold"></i> View Services & Pricing</a>
-        <a href="<?= APP_URL ?>/track.php" class="btn btn-dark btn-lg"><i class="fa-solid fa-location-crosshairs text-gold"></i> Track Order</a>
+        <a href="<?= APP_URL ?>/book" class="btn btn-gold btn-lg btn-pulse-gold" style="font-weight:800; font-size:16px; padding:14px 28px; box-shadow:0 8px 25px rgba(212,175,55,0.45);"><i class="fa-solid fa-calendar-check"></i> Book Doorstep Appointment</a>
+        <a href="<?= APP_URL ?>/services" class="btn btn-gold-outline btn-lg"><i class="fa-solid fa-scissors text-gold"></i> View Services & Pricing</a>
+        <a href="<?= APP_URL ?>/track" class="btn btn-dark btn-lg"><i class="fa-solid fa-location-crosshairs text-gold"></i> Track Order</a>
       </div>
 
       <!-- Hero Value Counters with GSAP Increment -->
@@ -226,7 +226,7 @@ if (empty($testimonials)) {
           </div>
 
           <!-- Direct Big Golden Button -->
-          <a href="<?= APP_URL ?>/book.php" id="heroBookActionBtn" class="btn btn-gold btn-block btn-pulse-gold" style="width:100%; padding:14px 20px; font-size:15px; font-weight:800; border-radius:10px; display:flex; align-items:center; justify-content:center; gap:10px; text-decoration:none; box-shadow:0 8px 24px rgba(212,175,55,0.35);">
+          <a href="<?= APP_URL ?>/book" id="heroBookActionBtn" class="btn btn-gold btn-block btn-pulse-gold" style="width:100%; padding:14px 20px; font-size:15px; font-weight:800; border-radius:10px; display:flex; align-items:center; justify-content:center; gap:10px; text-decoration:none; box-shadow:0 8px 24px rgba(212,175,55,0.35);">
             <i class="fa-solid fa-calendar-check" style="font-size:17px;"></i> 
             <span>Proceed to Book Appointment</span> 
             <i class="fa-solid fa-arrow-right"></i>
@@ -257,7 +257,7 @@ if (empty($testimonials)) {
           </div>
           <p style="color:#94A3B8; font-size:13px; line-height:1.5; margin-bottom:18px;">Track your garment live from doorstep measurement to master cutting, stitching, QC, and express delivery.</p>
 
-          <form action="<?= APP_URL ?>/track.php" method="GET" style="margin-bottom:20px;">
+          <form action="<?= APP_URL ?>/track" method="GET" style="margin-bottom:20px;">
             <div style="display:flex; gap:8px;">
               <input type="text" name="booking_id" class="form-control" placeholder="Enter Booking ID (e.g. MT-2026-XXXX)" value="" required style="background:rgba(255,255,255,0.08); border-color:var(--border-dark); color:#FFFFFF;">
               <button type="submit" class="btn btn-gold" style="white-space:nowrap; font-weight:800;"><i class="fa-solid fa-magnifying-glass"></i> Track</button>
@@ -314,7 +314,7 @@ if (empty($testimonials)) {
   function updateHeroBookLink(serviceId) {
     var btn = document.getElementById('heroBookActionBtn');
     if (btn) {
-      btn.href = '<?= APP_URL ?>/book.php?service_id=' + encodeURIComponent(serviceId);
+      btn.href = '<?= APP_URL ?>/book?service_id=' + encodeURIComponent(serviceId);
     }
   }
 </script>
@@ -329,7 +329,7 @@ if (empty($testimonials)) {
         <p>Book a certified master tailor visit at your home or office. Free measurement docket & 24H handover guaranteed.</p>
       </div>
       <div class="appointment-callout-actions">
-        <a href="<?= APP_URL ?>/book.php" class="btn btn-gold btn-lg btn-pulse-gold" style="font-weight:800;">
+        <a href="<?= APP_URL ?>/book" class="btn btn-gold btn-lg btn-pulse-gold" style="font-weight:800;">
           <i class="fa-solid fa-calendar-check"></i> Book Appointment Now
         </a>
         <a href="https://wa.me/<?= preg_replace('/\D/', '', $whatsapp) ?>" target="_blank" class="btn btn-dark btn-lg" style="border:1px solid rgba(212,175,55,0.4);">
@@ -517,7 +517,7 @@ if (empty($testimonials)) {
         </div>
         <div style="border-top:1px solid rgba(255,255,255,0.08); padding-top:14px; display:flex; justify-content:space-between; align-items:center;">
           <span style="font-size:12px; color:var(--gold-primary); font-weight:700;"><i class="fa-solid fa-circle-check"></i> 100+ Italian Weaves</span>
-          <a href="<?= APP_URL ?>/book.php" class="btn btn-gold-outline btn-sm" style="font-size:11.5px; padding:6px 14px; border-radius:20px;">Book Swatch</a>
+          <a href="<?= APP_URL ?>/book" class="btn btn-gold-outline btn-sm" style="font-size:11.5px; padding:6px 14px; border-radius:20px;">Book Swatch</a>
         </div>
       </div>
 
@@ -544,7 +544,7 @@ if (empty($testimonials)) {
         </div>
         <div style="border-top:1px solid rgba(255,255,255,0.08); padding-top:14px; display:flex; justify-content:space-between; align-items:center;">
           <span style="font-size:12px; color:var(--gold-primary); font-weight:700;"><i class="fa-solid fa-circle-check"></i> 50+ Colors & Stripes</span>
-          <a href="<?= APP_URL ?>/book.php" class="btn btn-gold-outline btn-sm" style="font-size:11.5px; padding:6px 14px; border-radius:20px;">Book Swatch</a>
+          <a href="<?= APP_URL ?>/book" class="btn btn-gold-outline btn-sm" style="font-size:11.5px; padding:6px 14px; border-radius:20px;">Book Swatch</a>
         </div>
       </div>
 
@@ -571,7 +571,7 @@ if (empty($testimonials)) {
         </div>
         <div style="border-top:1px solid rgba(255,255,255,0.08); padding-top:14px; display:flex; justify-content:space-between; align-items:center;">
           <span style="font-size:12px; color:var(--gold-primary); font-weight:700;"><i class="fa-solid fa-circle-check"></i> Certified Pure Silk</span>
-          <a href="<?= APP_URL ?>/book.php" class="btn btn-gold-outline btn-sm" style="font-size:11.5px; padding:6px 14px; border-radius:20px;">Book Swatch</a>
+          <a href="<?= APP_URL ?>/book" class="btn btn-gold-outline btn-sm" style="font-size:11.5px; padding:6px 14px; border-radius:20px;">Book Swatch</a>
         </div>
       </div>
 
@@ -598,7 +598,7 @@ if (empty($testimonials)) {
         </div>
         <div style="border-top:1px solid rgba(255,255,255,0.08); padding-top:14px; display:flex; justify-content:space-between; align-items:center;">
           <span style="font-size:12px; color:var(--gold-primary); font-weight:700;"><i class="fa-solid fa-circle-check"></i> 100% Organic Flax</span>
-          <a href="<?= APP_URL ?>/book.php" class="btn btn-gold-outline btn-sm" style="font-size:11.5px; padding:6px 14px; border-radius:20px;">Book Swatch</a>
+          <a href="<?= APP_URL ?>/book" class="btn btn-gold-outline btn-sm" style="font-size:11.5px; padding:6px 14px; border-radius:20px;">Book Swatch</a>
         </div>
       </div>
 
@@ -643,7 +643,7 @@ if (empty($testimonials)) {
         </div>
 
         <div style="margin-top:24px;">
-          <a href="<?= APP_URL ?>/book.php" class="btn btn-gold btn-measurement-cta"><i class="fa-solid fa-tape"></i> Experience Doorstep Measurement</a>
+          <a href="<?= APP_URL ?>/book" class="btn btn-gold btn-measurement-cta"><i class="fa-solid fa-tape"></i> Experience Doorstep Measurement</a>
         </div>
       </div>
 
@@ -829,7 +829,7 @@ if (empty($testimonials)) {
     <h2 style="font-size:clamp(28px, 4vw, 44px); margin-bottom:14px; color:#FFFFFF;">Ready for Bespoke Luxury Tailoring?</h2>
     <p style="color:#CBD5E1; font-size:16px; margin-bottom:28px;">Book your appointment now. Our master executive will visit your doorstep at your preferred 1-hour slot.</p>
     <div style="display:flex; justify-content:center; gap:16px; flex-wrap:wrap;">
-      <a href="<?= APP_URL ?>/book.php" class="btn btn-gold btn-lg"><i class="fa-solid fa-calendar-check"></i> Book Doorstep Appointment</a>
+      <a href="<?= APP_URL ?>/book" class="btn btn-gold btn-lg"><i class="fa-solid fa-calendar-check"></i> Book Doorstep Appointment</a>
       <a href="https://wa.me/<?= preg_replace('/\D/', '', $whatsapp) ?>" target="_blank" class="btn btn-dark btn-lg" style="border:1px solid var(--gold-primary);"><i class="fa-brands fa-whatsapp text-gold"></i> Chat on WhatsApp</a>
     </div>
   </div>

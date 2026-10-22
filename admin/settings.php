@@ -151,7 +151,7 @@ $smtpFromName = getSetting('smtp_from_name', 'MY TAYLOR Concierge');
   </div>
 <?php endif; ?>
 
-<form action="<?= APP_URL ?>/admin/settings.php" method="POST">
+<form action="<?= APP_URL ?>/admin/settings" method="POST">
 
   <!-- 1. Cashfree Payment Gateway Box -->
   <div class="admin-card" style="border-top: 4px solid var(--admin-gold);">
@@ -345,7 +345,7 @@ $smtpFromName = getSetting('smtp_from_name', 'MY TAYLOR Concierge');
     <p style="font-size: 13.5px; color: #475569; margin-bottom: 14px;">
       Apne SMTP credentials verify karne ke liye yahan koi bhi recipient email address daalein aur <strong>Send Test Email</strong> par click karein.
     </p>
-    <form method="POST" action="<?= APP_URL ?>/admin/settings.php" style="display:flex; gap:10px; max-width:550px; flex-wrap:wrap;">
+    <form method="POST" action="<?= APP_URL ?>/admin/settings" style="display:flex; gap:10px; max-width:550px; flex-wrap:wrap;">
       <input type="email" name="test_email_recipient" class="form-control" placeholder="Enter recipient email (e.g. yourpersonal@gmail.com)" style="flex:1; min-width:260px;" required>
       <button type="submit" name="send_test_email" value="1" class="btn btn-sm" style="background:#2563EB; color:#FFFFFF; font-weight:700; border-radius:8px; padding:10px 22px; white-space:nowrap;">
         <i class="fa-solid fa-paper-plane"></i> Send Test Email

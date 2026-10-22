@@ -22,14 +22,15 @@ function isLoggedIn() {
     return isset($_SESSION['myt_user_id']);
 }
 
-function requireLogin($redirectUrl = 'login.php') {
+function requireLogin($redirectUrl = null) {
     if (!isLoggedIn()) {
-        header("Location: " . $redirectUrl);
+        $target = $redirectUrl ?: (APP_URL . '/login');
+        header("Location: " . $target);
         exit;
     }
 }
 
-function requireRole($roles, $redirectUrl = 'login.php') {
+function requireRole($roles, $redirectUrl = null) {
     requireLogin($redirectUrl);
     $currentUser = getCurrentUser();
     if (!is_array($roles)) {
@@ -38,9 +39,9 @@ function requireRole($roles, $redirectUrl = 'login.php') {
     if (!in_array($currentUser['role'], $roles)) {
         // Forbidden or redirect to their appropriate portal
         if ($currentUser['role'] === 'customer') {
-            header("Location: " . APP_URL . "/dashboard.php");
+            header("Location: " . APP_URL . "/dashboard");
         } else {
-            header("Location: " . APP_URL . "/portal/login.php?msg=unauthorized");
+            header("Location: " . APP_URL . "/portal/login?msg=unauthorized");
         }
         exit;
     }

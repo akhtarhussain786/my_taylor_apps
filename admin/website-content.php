@@ -173,7 +173,7 @@ $address = getSetting('company_address', 'MY TAYLOR Atelier, Bandra West, Mumbai
     <p>Admin control over public website hero banners, images, category cards, headlines, features, and contact details without editing code.</p>
   </div>
   <div style="display:flex; gap:10px;">
-    <a href="<?= APP_URL ?>/index.php" target="_blank" class="btn btn-sm" style="background:#0F172A; color:#D4AF37; font-weight:700; border-radius:8px;">
+    <a href="<?= APP_URL ?>/" target="_blank" class="btn btn-sm" style="background:#0F172A; color:#D4AF37; font-weight:700; border-radius:8px;">
       <i class="fa-solid fa-arrow-up-right-from-square"></i> Preview Live Homepage
     </a>
   </div>
@@ -185,7 +185,7 @@ $address = getSetting('company_address', 'MY TAYLOR Atelier, Bandra West, Mumbai
   </div>
 <?php endif; ?>
 
-<form action="<?= APP_URL ?>/admin/website-content.php" method="POST" enctype="multipart/form-data">
+<form action="<?= APP_URL ?>/admin/website-content" method="POST" enctype="multipart/form-data">
 
   <!-- 1. Top Ribbon & Hero Section Content -->
   <div class="admin-card" style="border-top: 4px solid var(--admin-gold);">

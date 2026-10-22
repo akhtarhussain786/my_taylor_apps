@@ -88,8 +88,8 @@ if ($orderId) {
       <?php endif; ?>
 
       <div style="display:flex; justify-content:center; gap:16px; flex-wrap:wrap;">
-        <a href="<?= APP_URL ?>/track.php<?= $appointment ? '?booking_id=' . urlencode($appointment['appointment_code']) : '' ?>" class="btn btn-gold btn-lg"><i class="fa-solid fa-location-crosshairs"></i> Track Order Live</a>
-        <a href="<?= APP_URL ?>/index.php" class="btn btn-dark btn-lg"><i class="fa-solid fa-house text-gold"></i> Back to Home</a>
+        <a href="<?= APP_URL ?>/track<?= $appointment ? '?booking_id=' . urlencode($appointment['appointment_code']) : '' ?>" class="btn btn-gold btn-lg"><i class="fa-solid fa-location-crosshairs"></i> Track Order Live</a>
+        <a href="<?= APP_URL ?>/" class="btn btn-dark btn-lg"><i class="fa-solid fa-house text-gold"></i> Back to Home</a>
       </div>
 
     <?php else: ?>
@@ -101,7 +101,7 @@ if ($orderId) {
         We could not complete your online transaction. You can choose Cash on Doorstep instead or retry.
       </p>
       <div style="display:flex; justify-content:center; gap:16px;">
-        <a href="<?= APP_URL ?>/book.php" class="btn btn-gold"><i class="fa-solid fa-rotate-right"></i> Try Again</a>
+        <a href="<?= APP_URL ?>/book" class="btn btn-gold"><i class="fa-solid fa-rotate-right"></i> Try Again</a>
       </div>
     <?php endif; ?>
 

@@ -22,28 +22,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Route to appropriate portal by role
             switch ($user['role']) {
                 case 'measurement_executive':
-                    header("Location: " . APP_URL . "/portal/executive.php");
+                    header("Location: " . APP_URL . "/portal/executive");
                     break;
                 case 'cutting_staff':
-                    header("Location: " . APP_URL . "/portal/cutting.php");
+                    header("Location: " . APP_URL . "/portal/cutting");
                     break;
                 case 'tailor':
-                    header("Location: " . APP_URL . "/portal/tailor.php");
+                    header("Location: " . APP_URL . "/portal/tailor");
                     break;
                 case 'qc_staff':
-                    header("Location: " . APP_URL . "/portal/qc.php");
+                    header("Location: " . APP_URL . "/portal/qc");
                     break;
                 case 'packing_staff':
-                    header("Location: " . APP_URL . "/portal/packing.php");
+                    header("Location: " . APP_URL . "/portal/packing");
                     break;
                 case 'delivery_executive':
-                    header("Location: " . APP_URL . "/portal/delivery.php");
+                    header("Location: " . APP_URL . "/portal/delivery");
                     break;
                 case 'admin':
-                    header("Location: " . APP_URL . "/admin/index.php");
+                    header("Location: " . APP_URL . "/admin/");
                     break;
                 default:
-                    header("Location: " . APP_URL . "/portal/executive.php");
+                    header("Location: " . APP_URL . "/portal/executive");
             }
             exit;
         } else {
@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </div>
     <?php endif; ?>
 
-    <form action="<?= APP_URL ?>/portal/login.php" method="POST">
+    <form action="<?= APP_URL ?>/portal/login" method="POST">
       <div class="form-group">
         <label class="form-label" style="color:#CBD5E1;">Staff Email or Mobile *</label>
         <input type="text" name="identifier" class="form-control" placeholder="Enter staff email or mobile" value="" required style="background:rgba(255,255,255,0.06); border-color:var(--border-dark); color:#FFFFFF;">
@@ -86,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <div class="form-group">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
           <label class="form-label" style="color:#CBD5E1; margin:0;">Password *</label>
-          <a href="<?= APP_URL ?>/forgot-password.php" style="font-size:12px; color:var(--gold-primary); text-decoration:none;">Forgot password?</a>
+          <a href="<?= APP_URL ?>/forgot-password" style="font-size:12px; color:var(--gold-primary); text-decoration:none;">Forgot password?</a>
         </div>
         <input type="password" name="password" class="form-control" placeholder="Enter password" value="" required style="background:rgba(255,255,255,0.06); border-color:var(--border-dark); color:#FFFFFF;">
       </div>
@@ -97,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </form>
 
     <div style="margin-top:24px; text-align:center;">
-      <a href="<?= APP_URL ?>/index.php" style="color:var(--text-light-muted); text-decoration:none; font-size:12px;"><i class="fa-solid fa-arrow-left"></i> Back to Website</a>
+      <a href="<?= APP_URL ?>/" style="color:var(--text-light-muted); text-decoration:none; font-size:12px;"><i class="fa-solid fa-arrow-left"></i> Back to Website</a>
     </div>
   </div>
 </div>

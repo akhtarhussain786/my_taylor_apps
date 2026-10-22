@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $user = $uStmt->fetch();
 
             loginUser($user);
-            header("Location: " . APP_URL . "/dashboard.php");
+            header("Location: " . APP_URL . "/dashboard");
             exit;
         }
     }
@@ -61,7 +61,7 @@ require_once __DIR__ . '/includes/header.php';
         </div>
       <?php endif; ?>
 
-      <form action="<?= APP_URL ?>/register.php" method="POST">
+      <form action="<?= APP_URL ?>/register" method="POST">
         <div class="form-group">
           <label class="form-label">Full Name *</label>
           <input type="text" name="name" class="form-control" placeholder="Enter your full name" required>
@@ -104,7 +104,7 @@ require_once __DIR__ . '/includes/header.php';
       </form>
 
       <div style="text-align:center; margin-top:24px; font-size:13.5px; color:var(--text-muted);">
-        Already have an account? <a href="<?= APP_URL ?>/login.php" style="color:var(--gold-primary); font-weight:700; text-decoration:none;">Sign In</a>
+        Already have an account? <a href="<?= APP_URL ?>/login" style="color:var(--gold-primary); font-weight:700; text-decoration:none;">Sign In</a>
       </div>
     </div>
   </div>

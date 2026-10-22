@@ -116,7 +116,7 @@ $staffMembers = $pdo->query("
     <p>Manage Delivery Boys (Riders), Doorstep Measurement Executives, and Workshop Tailors.</p>
   </div>
   <div style="display:flex; gap:10px;">
-    <a href="<?= APP_URL ?>/portal/delivery.php" target="_blank" class="btn btn-sm" style="background:#0F172A; color:#D4AF37; font-weight:700; border-radius:8px;">
+    <a href="<?= APP_URL ?>/portal/delivery" target="_blank" class="btn btn-sm" style="background:#0F172A; color:#D4AF37; font-weight:700; border-radius:8px;">
       <i class="fa-solid fa-motorcycle"></i> Open Rider App View
     </a>
   </div>
@@ -145,14 +145,14 @@ $staffMembers = $pdo->query("
       <?php endif; ?>
     </h3>
     <?php if ($editStaff): ?>
-      <a href="<?= APP_URL ?>/admin/staff.php" class="btn btn-sm" style="background:#F1F5F9; color:#475569; font-weight:700; border-radius:6px;">
+      <a href="<?= APP_URL ?>/admin/staff" class="btn btn-sm" style="background:#F1F5F9; color:#475569; font-weight:700; border-radius:6px;">
         <i class="fa-solid fa-xmark"></i> Cancel Edit Mode
       </a>
     <?php endif; ?>
   </div>
 
   <div class="admin-card-body">
-    <form action="<?= APP_URL ?>/admin/staff.php" method="POST">
+    <form action="<?= APP_URL ?>/admin/staff" method="POST">
       <input type="hidden" name="action" value="<?= $editStaff ? 'update_staff' : 'create_staff' ?>">
       <?php if ($editStaff): ?>
         <input type="hidden" name="staff_id" value="<?= $editStaff['id'] ?>">
@@ -267,7 +267,7 @@ $staffMembers = $pdo->query("
               <?php endif; ?>
             </td>
             <td>
-              <form action="<?= APP_URL ?>/admin/staff.php" method="POST" style="margin:0;">
+              <form action="<?= APP_URL ?>/admin/staff" method="POST" style="margin:0;">
                 <input type="hidden" name="action" value="toggle_status">
                 <input type="hidden" name="staff_id" value="<?= $u['id'] ?>">
                 <button type="submit" class="badge-status <?= $u['status'] === 'active' ? 'delivered' : 'qc' ?>" style="border:none; cursor:pointer;" title="Click to toggle status">
@@ -277,11 +277,11 @@ $staffMembers = $pdo->query("
             </td>
             <td style="text-align:right;">
               <div style="display:inline-flex; gap:8px;">
-                <a href="<?= APP_URL ?>/admin/staff.php?edit_id=<?= $u['id'] ?>" class="btn btn-sm" style="background:#0F172A; color:#FFFFFF; font-size:12px; padding:6px 12px; border-radius:6px;">
+                <a href="<?= APP_URL ?>/admin/staff?edit_id=<?= $u['id'] ?>" class="btn btn-sm" style="background:#0F172A; color:#FFFFFF; font-size:12px; padding:6px 12px; border-radius:6px;">
                   <i class="fa-solid fa-pen text-gold"></i> Edit
                 </a>
 
-                <form action="<?= APP_URL ?>/admin/staff.php" method="POST" onsubmit="return confirm('Are you sure you want to delete this staff member?');" style="margin:0;">
+                <form action="<?= APP_URL ?>/admin/staff" method="POST" onsubmit="return confirm('Are you sure you want to delete this staff member?');" style="margin:0;">
                   <input type="hidden" name="action" value="delete_staff">
                   <input type="hidden" name="staff_id" value="<?= $u['id'] ?>">
                   <button type="submit" class="btn btn-sm" style="background:#FEE2E2; color:#DC2626; font-size:12px; padding:6px 12px; border-radius:6px; border:none; cursor:pointer;">

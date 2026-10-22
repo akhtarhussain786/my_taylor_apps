@@ -1,0 +1,19 @@
+RewriteEngine On
+
+# 1. Prevent loop on internal rewrites
+RewriteCond %{ENV:REDIRECT_STATUS} 200
+RewriteRule ^ - [L]
+
+# 2. Redirect /index.php to root (works for / or /subfolder/)
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ (\S*)/index\.php(?:\s|\?) [NC]
+RewriteRule ^ %1/ [R=301,L,NE]
+
+# 3. Redirect /file.php to /file (works for local and live domains without double escaping)
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ (\S+)\.php(?:\s|\?) [NC]
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ %1 [R=301,L,NE]
+
+# 4. Internally route clean extensionless URL to corresponding .php file
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.+?)/?$ $1.php [L,QSA]

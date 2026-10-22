@@ -101,7 +101,7 @@ $apts = $pdo->query("
               </div>
             </td>
             <td>
-              <form action="<?= APP_URL ?>/admin/appointments.php" method="POST" style="margin:0;">
+              <form action="<?= APP_URL ?>/admin/appointments" method="POST" style="margin:0;">
                 <input type="hidden" name="assign_exec" value="1">
                 <input type="hidden" name="appointment_id" value="<?= $a['id'] ?>">
                 <select name="executive_id" onchange="this.form.submit()" style="font-size:12px; padding:6px 10px; border-radius:6px; border:1px solid #CBD5E1; background:#F8FAFC;">
@@ -121,10 +121,10 @@ $apts = $pdo->query("
             </td>
             <td style="text-align:right; white-space:nowrap;">
               <div style="display:inline-flex; gap:6px; align-items:center;">
-                <a href="<?= APP_URL ?>/portal/executive.php" target="_blank" class="btn btn-sm" style="background:#0F172A; color:#D4AF37; font-size:11.5px; padding:6px 10px; border-radius:6px; text-decoration:none;">
+                <a href="<?= APP_URL ?>/portal/executive" target="_blank" class="btn btn-sm" style="background:#0F172A; color:#D4AF37; font-size:11.5px; padding:6px 10px; border-radius:6px; text-decoration:none;">
                   <i class="fa-solid fa-ruler"></i> Measurement Pad
                 </a>
-                <form action="<?= APP_URL ?>/admin/appointments.php" method="POST" style="margin:0; display:inline;" onsubmit="return confirm('Kya aap sach me appointment <?= e($a['appointment_code']) ?> ko delete karna chahte hain?');">
+                <form action="<?= APP_URL ?>/admin/appointments" method="POST" style="margin:0; display:inline;" onsubmit="return confirm('Kya aap sach me appointment <?= e($a['appointment_code']) ?> ko delete karna chahte hain?');">
                   <input type="hidden" name="delete_appointment" value="1">
                   <input type="hidden" name="appointment_id" value="<?= $a['id'] ?>">
                   <button type="submit" class="btn btn-sm" style="background:#FEE2E2; color:#DC2626; border:1px solid #FCA5A5; font-size:11.5px; padding:6px 10px; border-radius:6px; cursor:pointer;" title="Delete Appointment">

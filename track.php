@@ -56,7 +56,7 @@ if (!empty($bookingId)) {
     <p class="section-desc">Real-time status updates from doorstep measurement to cutting, stitching, QC, and 24-hour express delivery.</p>
 
     <!-- Search Bar -->
-    <form action="<?= APP_URL ?>/track.php" method="GET" style="max-width:560px; margin:24px auto 0;">
+    <form action="<?= APP_URL ?>/track" method="GET" style="max-width:560px; margin:24px auto 0;">
       <div style="display:flex; gap:10px;">
         <input type="text" name="booking_id" class="form-control" placeholder="Enter Booking ID" value="<?= e($bookingId) ?>" required>
         <button type="submit" class="btn btn-gold" style="white-space:nowrap;"><i class="fa-solid fa-magnifying-glass"></i> Track Live</button>
@@ -188,7 +188,7 @@ if (!empty($bookingId)) {
           <div class="card" style="margin-bottom:24px; background:#F8FAFC;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid #E2E8F0; padding-bottom:8px;">
               <h4 style="font-size:16px; margin:0;">Garment Summary</h4>
-              <a href="<?= APP_URL ?>/invoice.php?booking_id=<?= e($order['booking_id']) ?>" target="_blank" class="btn btn-dark btn-sm" style="font-size:11px;">
+              <a href="<?= APP_URL ?>/invoice?booking_id=<?= e($order['booking_id']) ?>" target="_blank" class="btn btn-dark btn-sm" style="font-size:11px;">
                 <i class="fa-solid fa-file-invoice"></i> Invoice
               </a>
             </div>
