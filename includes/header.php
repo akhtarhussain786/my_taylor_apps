@@ -37,8 +37,12 @@ $whatsappNo = getSetting('company_whatsapp', '9800000000');
       <span style="color:#F1F5F9;"><i class="fa-solid fa-bolt text-gold"></i> <?= e($topAnnouncement) ?></span>
     </div>
     <div style="display:flex; align-items:center; gap:16px;">
+      <a href="<?= APP_URL ?>/book.php" style="color:var(--gold-primary); text-decoration:none; font-weight:800; font-size:12px; display:inline-flex; align-items:center; gap:5px;">
+        <i class="fa-solid fa-calendar-check"></i> Book Doorstep Visit
+      </a>
+      <span style="opacity:0.4;">|</span>
       <a href="https://wa.me/<?= preg_replace('/\D/', '', $whatsappNo) ?>" target="_blank" style="color:var(--gold-primary); text-decoration:none; font-weight:700; font-size:12px;">
-        <i class="fa-brands fa-whatsapp"></i> WhatsApp Concierge
+        <i class="fa-brands fa-whatsapp"></i> WhatsApp
       </a>
       <span style="opacity:0.4;">|</span>
       <a href="tel:<?= preg_replace('/\s+/', '', $supportPhone) ?>" style="color:var(--text-light-muted); text-decoration:none; font-weight:600; font-size:12px;">
@@ -89,11 +93,11 @@ $whatsappNo = getSetting('company_whatsapp', '9800000000');
           
           <!-- Mobile-only CTA & Concierge inside drawer -->
           <div class="mobile-only-nav">
+            <a href="<?= APP_URL ?>/book.php" class="btn btn-gold btn-sm btn-pulse-gold" style="width:100%; justify-content:center; margin-bottom:10px; font-weight:800; font-size:14px; padding:12px 16px;"><i class="fa-solid fa-calendar-check"></i> Book Appointment Now</a>
             <?php if ($currentUser && $currentUser['role'] === 'customer'): ?>
-              <a href="<?= APP_URL ?>/dashboard.php" class="btn btn-gold btn-sm" style="width:100%; justify-content:center; margin-bottom:10px;"><i class="fa-solid fa-user"></i> My Account (<?= e($currentUser['name']) ?>)</a>
-              <a href="<?= APP_URL ?>/logout.php" class="btn btn-dark btn-sm" style="width:100%; justify-content:center;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
+              <a href="<?= APP_URL ?>/dashboard.php" class="btn btn-dark btn-sm" style="width:100%; justify-content:center; margin-bottom:8px;"><i class="fa-solid fa-user-check text-gold"></i> My Account (<?= e($currentUser['name']) ?>)</a>
+              <a href="<?= APP_URL ?>/logout.php" class="btn btn-gold-outline btn-sm" style="width:100%; justify-content:center;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
             <?php else: ?>
-              <a href="<?= APP_URL ?>/book.php" class="btn btn-gold btn-sm" style="width:100%; justify-content:center; margin-bottom:10px; font-weight:800;"><i class="fa-solid fa-tape"></i> Book Appointment</a>
               <a href="<?= APP_URL ?>/login.php" class="btn btn-gold-outline btn-sm" style="width:100%; justify-content:center;"><i class="fa-solid fa-user"></i> Customer Login</a>
             <?php endif; ?>
 
@@ -114,23 +118,28 @@ $whatsappNo = getSetting('company_whatsapp', '9800000000');
 
         <!-- Action Buttons (Purely Customer-Facing on Desktop) -->
         <div class="nav-actions">
+          <a href="<?= APP_URL ?>/book.php" class="btn btn-gold btn-sm btn-pulse-gold"><i class="fa-solid fa-calendar-check"></i> Book Appointment</a>
           <?php if ($currentUser && $currentUser['role'] === 'customer'): ?>
-            <div style="display:flex; align-items:center; gap:10px;">
-              <a href="<?= APP_URL ?>/dashboard.php" class="btn btn-dark btn-sm">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <a href="<?= APP_URL ?>/dashboard.php" class="btn btn-dark btn-sm" title="My Account">
                 <i class="fa-solid fa-user-check text-gold"></i> <?= e($currentUser['name']) ?>
               </a>
               <a href="<?= APP_URL ?>/logout.php" class="btn btn-gold-outline btn-sm" title="Logout"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
             </div>
           <?php else: ?>
             <a href="<?= APP_URL ?>/login.php" class="btn btn-gold-outline btn-sm"><i class="fa-solid fa-user"></i> Login</a>
-            <a href="<?= APP_URL ?>/book.php" class="btn btn-gold btn-sm"><i class="fa-solid fa-tape"></i> Book Appointment</a>
           <?php endif; ?>
         </div>
 
-        <!-- Mobile Hamburger Toggle Button -->
-        <button type="button" id="mobileMenuToggle" class="mobile-menu-btn" aria-label="Toggle Navigation Menu">
-          <i class="fa-solid fa-bars"></i>
-        </button>
+        <!-- Mobile Right Controls (Instant Book Button + Hamburger Toggle) -->
+        <div class="mobile-nav-controls">
+          <a href="<?= APP_URL ?>/book.php" class="btn btn-gold btn-sm mobile-header-book-btn">
+            <i class="fa-solid fa-calendar-check"></i> Book Now
+          </a>
+          <button type="button" id="mobileMenuToggle" class="mobile-menu-btn" aria-label="Toggle Navigation Menu">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+        </div>
       </div>
     </header>
   </div>

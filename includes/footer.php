@@ -76,6 +76,38 @@ require_once __DIR__ . '/../config/config.php';
   </div>
 </footer>
 
+<!-- Floating Sticky Mobile Bottom Action Bar (Visible on Mobile / Tablets) -->
+<div class="mobile-bottom-bar" id="mobileBottomBar">
+  <div class="mobile-bottom-bar-inner">
+    <a href="<?= APP_URL ?>/book.php" class="mobile-bottom-book-cta">
+      <i class="fa-solid fa-calendar-check"></i>
+      <span>Book Appointment</span>
+    </a>
+    <a href="<?= APP_URL ?>/track.php" class="mobile-bottom-icon-btn" title="Track Order">
+      <i class="fa-solid fa-location-crosshairs text-gold"></i>
+      <span>Track</span>
+    </a>
+    <a href="https://wa.me/<?= preg_replace('/\D/', '', getSetting('company_whatsapp', '9800000000')) ?>" target="_blank" class="mobile-bottom-icon-btn" title="WhatsApp Concierge">
+      <i class="fa-brands fa-whatsapp" style="color:#10B981;"></i>
+      <span>WhatsApp</span>
+    </a>
+    <a href="tel:<?= preg_replace('/\s+/', '', getSetting('company_phone', '+919800000000')) ?>" class="mobile-bottom-icon-btn" title="Call Concierge">
+      <i class="fa-solid fa-phone text-gold"></i>
+      <span>Call</span>
+    </a>
+  </div>
+</div>
+
+<!-- Floating Quick Book Widget (Desktop & Large Screens) -->
+<a href="<?= APP_URL ?>/book.php" class="floating-quick-book" id="desktopFloatingBook" title="Book Doorstep Appointment">
+  <span class="floating-book-icon"><i class="fa-solid fa-calendar-check"></i></span>
+  <span class="floating-book-content">
+    <strong>Book Doorstep Fit</strong>
+    <small>24-Hour Bespoke SLA</small>
+  </span>
+  <i class="fa-solid fa-arrow-right floating-book-arrow"></i>
+</a>
+
 <!-- Scripts -->
 <script src="<?= APP_URL ?>/assets/js/app.js"></script>
 </body>

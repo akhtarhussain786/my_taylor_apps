@@ -149,9 +149,9 @@ if (empty($testimonials)) {
       </p>
 
       <div class="gsap-hero-cta" style="display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin-bottom:36px;">
-        <a href="<?= APP_URL ?>/book.php" class="btn btn-gold btn-lg"><i class="fa-solid fa-tape"></i> Book Doorstep Measurement</a>
-        <a href="<?= APP_URL ?>/track.php" class="btn btn-gold-outline btn-lg"><i class="fa-solid fa-location-crosshairs"></i> Track Order Live</a>
-        <a href="<?= APP_URL ?>/services.php" class="btn btn-dark btn-lg"><i class="fa-solid fa-scissors text-gold"></i> View Catalog</a>
+        <a href="<?= APP_URL ?>/book.php" class="btn btn-gold btn-lg btn-pulse-gold" style="font-weight:800; font-size:16px; padding:14px 28px; box-shadow:0 8px 25px rgba(212,175,55,0.45);"><i class="fa-solid fa-calendar-check"></i> Book Doorstep Appointment</a>
+        <a href="<?= APP_URL ?>/services.php" class="btn btn-gold-outline btn-lg"><i class="fa-solid fa-scissors text-gold"></i> View Services & Pricing</a>
+        <a href="<?= APP_URL ?>/track.php" class="btn btn-dark btn-lg"><i class="fa-solid fa-location-crosshairs text-gold"></i> Track Order</a>
       </div>
 
       <!-- Hero Value Counters with GSAP Increment -->
@@ -174,38 +174,171 @@ if (empty($testimonials)) {
       </div>
     </div>
 
-    <!-- Right Quick Track & Serviceability Widget -->
+    <!-- Right Quick Fast-Booking & Order Hub Widget -->
     <div>
-      <div class="hero-card gsap-hero-card" style="background:rgba(14,23,47,0.9); backdrop-filter:blur(20px); border:1px solid rgba(212,175,55,0.35); border-radius:var(--radius-lg); padding:32px; box-shadow:0 25px 50px rgba(0,0,0,0.6);">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
-          <h3 style="font-size:20px; font-weight:700; color:#FFFFFF; margin:0;"><i class="fa-solid fa-bolt text-gold"></i> Live Order Tracker</h3>
-          <span class="badge-status badge-gold">24H Live SLA</span>
+      <div class="hero-card gsap-hero-card" style="background:rgba(14,23,47,0.95); backdrop-filter:blur(25px); border:1.5px solid rgba(212,175,55,0.45); border-radius:var(--radius-lg); padding:28px; box-shadow:0 25px 60px rgba(0,0,0,0.7);">
+        
+        <!-- Interactive Hub Switcher Tabs -->
+        <div class="hero-card-tabs" style="display:flex; background:rgba(255,255,255,0.06); padding:4px; border-radius:12px; margin-bottom:20px; border:1px solid rgba(212,175,55,0.25);">
+          <button type="button" id="tabBtnBook" class="hero-tab-btn active" onclick="switchHeroTab('book')" style="flex:1.2; padding:10px 14px; border-radius:8px; border:none; font-weight:800; font-size:13px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; transition:all 0.25s; background:var(--gold-gradient); color:#070D1E;">
+            <i class="fa-solid fa-calendar-check"></i> Book Appointment
+          </button>
+          <button type="button" id="tabBtnTrack" class="hero-tab-btn" onclick="switchHeroTab('track')" style="flex:0.8; padding:10px 14px; border-radius:8px; border:none; font-weight:700; font-size:13px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; transition:all 0.25s; background:transparent; color:#94A3B8;">
+            <i class="fa-solid fa-location-crosshairs"></i> Track Order
+          </button>
         </div>
-        <p style="color:#94A3B8; font-size:13.5px; margin-bottom:18px;">Track your garment live from doorstep measurement to master cutting, stitching, QC, and express delivery.</p>
 
-        <form action="<?= APP_URL ?>/track.php" method="GET" style="margin-bottom:24px;">
-          <div style="display:flex; gap:8px;">
-            <input type="text" name="booking_id" class="form-control" placeholder="Enter Booking ID" value="" required style="background:rgba(255,255,255,0.08); border-color:var(--border-dark); color:#FFFFFF;">
-            <button type="submit" class="btn btn-gold" style="white-space:nowrap; font-weight:800;"><i class="fa-solid fa-magnifying-glass"></i> Track</button>
+        <!-- TAB 1: BOOK APPOINTMENT (DEFAULT ACTIVE) -->
+        <div id="heroTabBookingContent">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px;">
+            <div>
+              <span class="badge-24h" style="font-size:11px; padding:3px 10px; margin-bottom:6px;"><i class="fa-solid fa-bolt"></i> Doorstep Fitting</span>
+              <h3 style="font-size:21px; font-weight:800; color:#FFFFFF; margin:0;">Book Master Tailor Visit</h3>
+            </div>
+            <span class="badge-status badge-gold" style="font-size:11px;">100% Free Visit</span>
           </div>
-        </form>
+          
+          <p style="color:#CBD5E1; font-size:13px; line-height:1.5; margin-bottom:16px;">
+            Certified specialist arrives with fabric swatches, takes 15 anatomical measurements & your bespoke garment is delivered in 24 hours.
+          </p>
 
-        <hr style="border-color:rgba(255,255,255,0.08); margin:20px 0;">
-
-        <!-- Doorstep Booking Quick Feature -->
-        <div style="display:flex; align-items:center; gap:14px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:var(--radius-sm); padding:14px;">
-          <div style="width:42px; height:42px; border-radius:50%; background:rgba(212,175,55,0.15); color:var(--gold-primary); display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0;">
-            <i class="fa-solid fa-house-user"></i>
+          <!-- Quick Garment Selector -->
+          <div style="margin-bottom:16px;">
+            <label style="display:block; font-size:12px; font-weight:700; color:var(--gold-primary); text-transform:uppercase; letter-spacing:0.8px; margin-bottom:6px;">Select Garment / Service:</label>
+            <div style="position:relative;">
+              <select id="heroGarmentSelect" class="form-control" style="background:#070D1E; border:1px solid rgba(212,175,55,0.4); color:#FFFFFF; font-size:13.5px; padding:11px 14px; border-radius:8px; width:100%; appearance:none; -webkit-appearance:none; cursor:pointer;" onchange="updateHeroBookLink(this.value)">
+                <?php if (!empty($services)): ?>
+                  <?php foreach ($services as $srv): ?>
+                    <option value="<?= $srv['id'] ?>" <?= $srv['id'] == 1 ? 'selected' : '' ?>>
+                      <?= e($srv['name']) ?> (From ₹<?= number_format($srv['base_price']) ?>)
+                    </option>
+                  <?php endforeach; ?>
+                <?php else: ?>
+                  <option value="1" selected>Men's Bespoke Formal Suit (From ₹3,499)</option>
+                  <option value="2">Men's Handcrafted Egyptian Shirt (From ₹799)</option>
+                  <option value="3">Designer Saree Blouse (Princess Cut) (From ₹899)</option>
+                  <option value="4">Bridal & Festive Lehenga (From ₹2,499)</option>
+                  <option value="5">24H Express Fit Alteration (From ₹299)</option>
+                <?php endif; ?>
+              </select>
+              <i class="fa-solid fa-chevron-down text-gold" style="position:absolute; right:14px; top:50%; transform:translateY(-50%); pointer-events:none; font-size:12px;"></i>
+            </div>
           </div>
-          <div>
-            <strong style="color:#FFFFFF; font-size:14px;">Doorstep Fitting Specialist</strong>
-            <p style="color:#94A3B8; font-size:12px; margin:2px 0 0;">Arrives at your home with fabric swatches & measurement docket.</p>
+
+          <!-- Direct Big Golden Button -->
+          <a href="<?= APP_URL ?>/book.php" id="heroBookActionBtn" class="btn btn-gold btn-block btn-pulse-gold" style="width:100%; padding:14px 20px; font-size:15px; font-weight:800; border-radius:10px; display:flex; align-items:center; justify-content:center; gap:10px; text-decoration:none; box-shadow:0 8px 24px rgba(212,175,55,0.35);">
+            <i class="fa-solid fa-calendar-check" style="font-size:17px;"></i> 
+            <span>Proceed to Book Appointment</span> 
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
+
+          <!-- Key Guarantees Chips -->
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:16px;">
+            <div style="display:flex; align-items:center; gap:8px; background:rgba(255,255,255,0.04); padding:8px 10px; border-radius:6px; border:1px solid rgba(255,255,255,0.06); font-size:11.5px; color:#E2E8F0;">
+              <i class="fa-solid fa-check text-gold"></i> Free Doorstep Visit
+            </div>
+            <div style="display:flex; align-items:center; gap:8px; background:rgba(255,255,255,0.04); padding:8px 10px; border-radius:6px; border:1px solid rgba(255,255,255,0.06); font-size:11.5px; color:#E2E8F0;">
+              <i class="fa-solid fa-bolt text-gold"></i> 24-Hour Express Handover
+            </div>
+            <div style="display:flex; align-items:center; gap:8px; background:rgba(255,255,255,0.04); padding:8px 10px; border-radius:6px; border:1px solid rgba(255,255,255,0.06); font-size:11.5px; color:#E2E8F0;">
+              <i class="fa-solid fa-ruler-combined text-gold"></i> 15-Point Fit Guarantee
+            </div>
+            <div style="display:flex; align-items:center; gap:8px; background:rgba(255,255,255,0.04); padding:8px 10px; border-radius:6px; border:1px solid rgba(255,255,255,0.06); font-size:11.5px; color:#E2E8F0;">
+              <i class="fa-solid fa-shield-halved text-gold"></i> Pay on Delivery (COD)
+            </div>
           </div>
         </div>
+
+        <!-- TAB 2: TRACK ORDER (SECONDARY) -->
+        <div id="heroTabTrackingContent" style="display:none;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <h3 style="font-size:20px; font-weight:700; color:#FFFFFF; margin:0;"><i class="fa-solid fa-bolt text-gold"></i> Live Order Tracker</h3>
+            <span class="badge-status badge-gold">24H Live SLA</span>
+          </div>
+          <p style="color:#94A3B8; font-size:13px; line-height:1.5; margin-bottom:18px;">Track your garment live from doorstep measurement to master cutting, stitching, QC, and express delivery.</p>
+
+          <form action="<?= APP_URL ?>/track.php" method="GET" style="margin-bottom:20px;">
+            <div style="display:flex; gap:8px;">
+              <input type="text" name="booking_id" class="form-control" placeholder="Enter Booking ID (e.g. MT-2026-XXXX)" value="" required style="background:rgba(255,255,255,0.08); border-color:var(--border-dark); color:#FFFFFF;">
+              <button type="submit" class="btn btn-gold" style="white-space:nowrap; font-weight:800;"><i class="fa-solid fa-magnifying-glass"></i> Track</button>
+            </div>
+          </form>
+
+          <div style="display:flex; align-items:center; gap:14px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:var(--radius-sm); padding:12px;">
+            <div style="width:38px; height:38px; border-radius:50%; background:rgba(212,175,55,0.15); color:var(--gold-primary); display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0;">
+              <i class="fa-solid fa-house-user"></i>
+            </div>
+            <div>
+              <strong style="color:#FFFFFF; font-size:13.5px;">Already Booked an Appointment?</strong>
+              <p style="color:#94A3B8; font-size:12px; margin:2px 0 0;">Enter your ID or check SMS confirmation to view stage.</p>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
 </section>
+
+<script>
+  function switchHeroTab(tab) {
+    var bookContent = document.getElementById('heroTabBookingContent');
+    var trackContent = document.getElementById('heroTabTrackingContent');
+    var btnBook = document.getElementById('tabBtnBook');
+    var btnTrack = document.getElementById('tabBtnTrack');
+    if (tab === 'book') {
+      if (bookContent) bookContent.style.display = 'block';
+      if (trackContent) trackContent.style.display = 'none';
+      if (btnBook) {
+        btnBook.style.background = 'var(--gold-gradient)';
+        btnBook.style.color = '#070D1E';
+      }
+      if (btnTrack) {
+        btnTrack.style.background = 'transparent';
+        btnTrack.style.color = '#94A3B8';
+      }
+    } else {
+      if (bookContent) bookContent.style.display = 'none';
+      if (trackContent) trackContent.style.display = 'block';
+      if (btnTrack) {
+        btnTrack.style.background = 'var(--gold-gradient)';
+        btnTrack.style.color = '#070D1E';
+      }
+      if (btnBook) {
+        btnBook.style.background = 'transparent';
+        btnBook.style.color = '#94A3B8';
+      }
+    }
+  }
+
+  function updateHeroBookLink(serviceId) {
+    var btn = document.getElementById('heroBookActionBtn');
+    if (btn) {
+      btn.href = '<?= APP_URL ?>/book.php?service_id=' + encodeURIComponent(serviceId);
+    }
+  }
+</script>
+
+<!-- Instant Appointment Booking Callout Strip -->
+<div class="appointment-callout-strip">
+  <div class="container">
+    <div class="appointment-callout-content">
+      <div class="appointment-callout-text">
+        <span class="callout-tag"><i class="fa-solid fa-bolt"></i> FAST DOORSTEP TAILORING</span>
+        <h3>Want Perfect Fitting Clothes Without Stepping Out?</h3>
+        <p>Book a certified master tailor visit at your home or office. Free measurement docket & 24H handover guaranteed.</p>
+      </div>
+      <div class="appointment-callout-actions">
+        <a href="<?= APP_URL ?>/book.php" class="btn btn-gold btn-lg btn-pulse-gold" style="font-weight:800;">
+          <i class="fa-solid fa-calendar-check"></i> Book Appointment Now
+        </a>
+        <a href="https://wa.me/<?= preg_replace('/\D/', '', $whatsapp) ?>" target="_blank" class="btn btn-dark btn-lg" style="border:1px solid rgba(212,175,55,0.4);">
+          <i class="fa-brands fa-whatsapp" style="color:#10B981;"></i> WhatsApp Booking
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- 2. Trust Bar & Press Accolades -->
 <div style="background:#050914; border-bottom:1px solid rgba(212,175,55,0.15); padding:18px 0;">
