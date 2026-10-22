@@ -111,6 +111,59 @@ h1, h2, h3, h4, h5, h6 {
   padding: 0 20px;
 }
 
+/* Top Announcement Luxury Ribbon */
+.top-announcement-ribbon {
+  background: #070D1E;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+  padding: 7px 0;
+  font-size: 12.5px;
+  color: var(--text-light-muted);
+}
+
+.top-ribbon-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.top-ribbon-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.top-ribbon-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.ribbon-link {
+  color: var(--text-light-muted);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 12px;
+  transition: color 0.2s;
+}
+
+.ribbon-link:hover {
+  color: var(--gold-primary);
+}
+
+.ribbon-link.ribbon-book {
+  color: var(--gold-primary);
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.ribbon-divider {
+  opacity: 0.4;
+}
+
 /* Dark Sticky Header & Floating Pill Navbar */
 .header-floating-wrapper {
   background: #070D1E;
@@ -1118,22 +1171,105 @@ canvas#sig-canvas {
 }
 
 @media (max-width: 860px) {
+  /* Clean 1-Line Top Announcement Ribbon on Mobile */
+  .top-announcement-ribbon {
+    padding: 6px 10px !important;
+  }
+
+  .top-ribbon-container {
+    justify-content: center !important;
+    gap: 0 !important;
+  }
+
+  .top-ribbon-left {
+    justify-content: center !important;
+    text-align: center;
+    width: 100%;
+  }
+
+  .top-ribbon-left .ribbon-text {
+    font-size: 11.5px !important;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    max-width: 100%;
+  }
+
+  .top-ribbon-right {
+    display: none !important; /* Hide cluttered duplicate links; mobile bottom bar handles them */
+  }
+
+  /* Compact Floating Header Bar on Mobile */
   .header-floating-wrapper {
-    padding: 6px 0 10px;
+    padding: 5px 0 7px !important;
+  }
+
+  .header-floating-container {
+    padding: 0 10px !important;
   }
 
   .navbar-custom {
-    padding: 6px 14px;
-    border-radius: 40px;
+    padding: 5px 12px !important;
+    border-radius: 40px !important;
     margin: 0 auto;
+    overflow: visible !important;
+  }
+
+  .nav-wrapper {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    gap: 8px !important;
+  }
+
+  .brand-logo {
+    gap: 0 !important;
+    flex-shrink: 0 !important;
+  }
+
+  .brand-logo img {
+    height: 30px !important;
+    max-height: 30px !important;
+    width: auto !important;
+  }
+
+  .brand-text {
+    display: none !important; /* Hide tagline on mobile so navbar never overflows */
   }
 
   .mobile-nav-controls {
     display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .mobile-header-book-btn {
+    padding: 6px 11px !important;
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    border-radius: 20px !important;
+    white-space: nowrap !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    box-shadow: 0 2px 8px rgba(212, 175, 55, 0.4) !important;
   }
 
   .mobile-menu-btn {
     display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 36px !important;
+    height: 36px !important;
+    border-radius: 8px !important;
+    font-size: 15px !important;
+    flex-shrink: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
   }
   
   .nav-actions {

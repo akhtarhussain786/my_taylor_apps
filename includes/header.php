@@ -31,21 +31,21 @@ $whatsappNo = getSetting('company_whatsapp', '9800000000');
 <body>
 
 <!-- Luxury Consumer Top Ribbon -->
-<div style="background:#070D1E; border-bottom:1px solid rgba(212,175,55,0.15); padding:7px 0; font-size:12.5px; color:var(--text-light-muted);">
-  <div class="container" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
-    <div style="display:flex; align-items:center; gap:12px;">
-      <span style="color:#F1F5F9;"><i class="fa-solid fa-bolt text-gold"></i> <?= e($topAnnouncement) ?></span>
+<div class="top-announcement-ribbon">
+  <div class="container top-ribbon-container">
+    <div class="top-ribbon-left">
+      <span class="ribbon-text"><i class="fa-solid fa-bolt text-gold"></i> <?= e($topAnnouncement) ?></span>
     </div>
-    <div style="display:flex; align-items:center; gap:16px;">
-      <a href="<?= APP_URL ?>/book.php" style="color:var(--gold-primary); text-decoration:none; font-weight:800; font-size:12px; display:inline-flex; align-items:center; gap:5px;">
+    <div class="top-ribbon-right">
+      <a href="<?= APP_URL ?>/book.php" class="ribbon-link ribbon-book">
         <i class="fa-solid fa-calendar-check"></i> Book Doorstep Visit
       </a>
-      <span style="opacity:0.4;">|</span>
-      <a href="https://wa.me/<?= preg_replace('/\D/', '', $whatsappNo) ?>" target="_blank" style="color:var(--gold-primary); text-decoration:none; font-weight:700; font-size:12px;">
+      <span class="ribbon-divider">|</span>
+      <a href="https://wa.me/<?= preg_replace('/\D/', '', $whatsappNo) ?>" target="_blank" class="ribbon-link">
         <i class="fa-brands fa-whatsapp"></i> WhatsApp
       </a>
-      <span style="opacity:0.4;">|</span>
-      <a href="tel:<?= preg_replace('/\s+/', '', $supportPhone) ?>" style="color:var(--text-light-muted); text-decoration:none; font-weight:600; font-size:12px;">
+      <span class="ribbon-divider">|</span>
+      <a href="tel:<?= preg_replace('/\s+/', '', $supportPhone) ?>" class="ribbon-link">
         <i class="fa-solid fa-phone text-gold"></i> <?= e($supportPhone) ?>
       </a>
     </div>
@@ -57,7 +57,7 @@ $whatsappNo = getSetting('company_whatsapp', '9800000000');
 
 <!-- Sticky Dark Floating Header Bar -->
 <div class="header-floating-wrapper">
-  <div class="container" style="padding:0 20px;">
+  <div class="container header-floating-container">
     <!-- Main Sticky Pill Navbar -->
     <header class="navbar-custom">
       <div class="nav-wrapper">
